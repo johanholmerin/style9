@@ -1,0 +1,21 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "curly": ["error", "multi-line"],
+    "linebreak-style": ["error", "unix"],
+    "max-len": ["error", 80, { "ignoreComments": true }],
+    "new-cap": "off",
+    "no-case-declarations": "error",
+    "no-confusing-arrow": "error",
+    "no-var": "error",
+    "prefer-const": "error"
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}

@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mixed 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\",
+    opacity: \\"c1\\"
+  },
+  red: {
+    color: \\"c2\\"
+  }
+};
+const _foo = foo;
+\\"c2 \\" + (_foo ? \\"c1 \\" : \\"\\");"
+`;
+
+exports[`moves test 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\"
+  }
+};
+
+const _foo = foo();
+
+_foo ? \\"c0 \\" : \\"\\";"
+`;
+
+exports[`object 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\",
+    opacity: \\"c1\\"
+  },
+  red: {
+    color: \\"c2\\"
+  }
+};
+const _foo = foo;
+const _bar = bar;
+(_bar ? \\"c2 \\" : _foo ? \\"c0 \\" : \\"\\") + (_foo ? \\"c1 \\" : \\"\\");"
+`;
+
+exports[`property access 1`] = `
+"import style9 from 'style9';
+const styles1 = {
+  default: {
+    color: \\"c0\\"
+  }
+};
+const styles2 = {
+  red: {
+    color: \\"c2\\"
+  }
+};
+style9(styles1.default, styles2.red);"
+`;
+
+exports[`string literals 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\",
+    opacity: \\"c1\\"
+  },
+  red: {
+    color: \\"c2\\"
+  }
+};
+\\"c2 \\" + \\"c1 \\";"
+`;
+
+exports[`ternary 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\",
+    opacity: \\"c1\\"
+  },
+  red: {
+    color: \\"c2\\"
+  }
+};
+const _foo = foo;
+(_foo ? \\"c0 \\" : \\"c2 \\") + (_foo ? \\"c1 \\" : \\"\\");"
+`;

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accepts an array 1`] = `".c9{text-decoration-line:overline underline}"`;
+
+exports[`converts fontSize pixels 1`] = `".c8{font-size:0.875rem}"`;
+
+exports[`converts to pixels 1`] = `".c1{padding-left:2px}"`;
+
+exports[`does not converts to pixels 1`] = `".c2{opacity:1}"`;
+
+exports[`does not override longhand 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    paddingTop: \\"c3\\",
+    paddingRight: \\"c4\\",
+    paddingBottom: \\"c5\\",
+    paddingLeft: \\"c7\\"
+  }
+};
+\\"c3 \\" + (\\"c4 \\" + (\\"c5 \\" + \\"c7 \\"));"
+`;
+
+exports[`does not override longhand 2`] = `".c3{padding-top:1rem}.c4{padding-right:1rem}.c5{padding-bottom:1rem}.c7{padding-left:2rem}"`;
+
+exports[`expands shorthand 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    paddingTop: \\"c3\\",
+    paddingRight: \\"c4\\",
+    paddingBottom: \\"c5\\",
+    paddingLeft: \\"c6\\"
+  }
+};
+\\"c3 \\" + (\\"c4 \\" + (\\"c5 \\" + \\"c6 \\"));"
+`;
+
+exports[`expands shorthand 2`] = `".c3{padding-top:1rem}.c4{padding-right:1rem}.c5{padding-bottom:1rem}.c6{padding-left:1rem}"`;
+
+exports[`removes unused styles 1`] = `
+"import style9 from 'style9';
+const styles = {};"
+`;
+
+exports[`removes unused styles 2`] = `""`;
+
+exports[`supports constants 1`] = `".c0{color:blue}"`;
