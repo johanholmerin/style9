@@ -45,4 +45,20 @@ const styles = {};"
 
 exports[`removes unused styles 2`] = `""`;
 
+exports[`supports arrow function 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c0\\"
+  }
+};
+
+const get = state => {
+  const _state = state;
+  return _state ? \\"c0 \\" : \\"\\";
+};"
+`;
+
+exports[`supports arrow function 2`] = `".c0{color:blue}"`;
+
 exports[`supports constants 1`] = `".c0{color:blue}"`;

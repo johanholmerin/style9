@@ -138,3 +138,19 @@ const styles = style9.create({
   expect(code).toMatchSnapshot();
   expect(styles).toMatchSnapshot();
 });
+
+it('supports arrow function', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+const get = state => styles(state && 'default');
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});

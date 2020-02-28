@@ -82,6 +82,10 @@ function getNodeValue(node) {
 function extractNode(path, node) {
   const name = path.scope.generateUidBasedOnNode(node);
 
+  if (path.scope.path.type !== 'Program') {
+    path.scope.path.ensureBlock();
+  }
+
   path.getStatementParent().insertBefore(
     t.variableDeclaration('const', [
       t.variableDeclarator(t.identifier(name), node)
