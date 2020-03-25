@@ -17,6 +17,7 @@
     "lint": "eslint {*.js,__tests__/*.js}"
   },
   "jest": {
+    "testEnvironment": "node",
     "testPathIgnorePatterns": ["__tests__/compile.js"]
   }
 }
