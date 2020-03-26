@@ -38,20 +38,8 @@ function camelToHyphen(string) {
  * Resolve the value of a node path
  */
 function resolvePathValue(path) {
-  if (t.isArrayExpression(path)) {
-    return path.get('elements').map(resolvePathValue);
-  }
-
-  if (t.isStringLiteral(path) || t.isNumericLiteral(path)) {
-    return path.node.value;
-  }
-
-  if (t.isIdentifier(path)) {
-    const declaration = path.scope.bindings[path.node.name].path;
-    t.assertVariableDeclaration(declaration.parent, { kind: 'const' });
-    return resolvePathValue(declaration.get('init'));
-  }
-
+  const { value, confident } = path.evaluate();
+  if (confident) return value;
   throw new Error(`Invalid value type ${path.node.type}`);
 }
 
