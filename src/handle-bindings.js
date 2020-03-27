@@ -2,7 +2,8 @@ const {
   expandProperty,
   resolvePathValue,
   getClass,
-  getDeclaration
+  getDeclaration,
+  getKeyframes
 } = require('./utils.js');
 const testASTShape = require('./test-ast-shape.js');
 const t = require('@babel/types');
@@ -95,6 +96,18 @@ function handleCreate(identifier) {
   return generateStyles(styles);
 }
 
+function handleKeyframes(identifier) {
+  const callExpr = identifier.parentPath.parentPath;
+  const objExpr = callExpr.get('arguments.0');
+
+  const rules = getStyles(objExpr);
+  const { name, declaration } = getKeyframes(rules);
+
+  callExpr.replaceWith(t.stringLiteral(name));
+
+  return declaration;
+}
+
 function isPropertyCall(node, name) {
   return testASTShape(node, {
     parent: {
@@ -118,8 +131,16 @@ function isPropertyCall(node, name) {
 function handleBinding(node) {
   if (node.parentPath.isCallExpression()) return [];
   if (isPropertyCall(node, 'create')) return handleCreate(node);
+  if (isPropertyCall(node, 'keyframes')) return handleKeyframes(node);
 
   throw node.buildCodeFrameError('Invalid use');
 }
 
-module.exports = handleBinding;
+function handleBindings(bindings) {
+  return bindings
+    // Process keyframes first
+    .sort(binding => isPropertyCall(binding, 'keyframes') ? -1 : 1)
+    .flatMap(handleBinding);
+}
+
+module.exports = handleBindings;

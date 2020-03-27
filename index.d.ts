@@ -15,6 +15,7 @@ declare namespace style9 {
       | { [key in keyof T]?: boolean | undefined | null }
     )[]) => string
   );
+  export function keyframes(rules: Styles): string;
 }
 
 export default style9;

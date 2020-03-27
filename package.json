@@ -5,6 +5,7 @@
     "@babel/core": "^7.8.0",
     "@babel/types": "^7.8.3",
     "@rollup/pluginutils": "^3.0.4",
+    "murmurhash-js": "^1.0.0",
     "postcss-discard-duplicates": "^4.0.2"
   },
   "devDependencies": {
@@ -18,6 +19,8 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["__tests__/compile.js"]
+    "testPathIgnorePatterns": [
+      "__tests__/compile.js"
+    ]
   }
 }

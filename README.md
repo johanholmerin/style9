@@ -68,9 +68,19 @@ const styles = style9.create({
   text: {
     // Font size is converted to REMs to follow users settings
     fontSize: 14
+  },
+  fadeIn: {
+    // Animation names are created by calling style9.keyframes
+    animationName: style9.keyframes({
+      from: {
+        opacity: 0
+      },
+      to: {
+        opacity: 1
+      }
+    });
   }
 });
-
 ```
 
 ## Babel

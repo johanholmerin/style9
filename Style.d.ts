@@ -57,7 +57,12 @@ export default interface Style extends ViewStyle, TextStyle {}
 
 type BorderStyle = 'solid' | 'dotted' | 'dashed';
 
-interface ViewStyle extends FlexStyle, TransformsStyle, TransitionStyle {
+interface ViewStyle extends
+  FlexStyle,
+  TransformsStyle,
+  TransitionStyle,
+  AnimationStyle
+{
   backfaceVisibility?: 'visible' | 'hidden';
   backgroundColor?: string;
   backgroundClip?: 'border-box' | 'padding-box' | 'content-box';
@@ -236,4 +241,15 @@ interface TransitionStyle {
   transitionDuration?: string;
   transitionTimingFunction?: string;
   transitionDelay?: string;
+}
+
+interface AnimationStyle {
+  animationName?: string;
+  animationDuration?: string;
+  animationTimingFunction?: string;
+  animationDelay?: string;
+  animationDirection?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+  animationIterationCount?: 'infinite' | number;
+  animationFillMode?: 'none' | 'forwards' | 'backwards' | 'both';
+  animationPlayState?: 'running' | 'paused';
 }

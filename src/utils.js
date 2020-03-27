@@ -1,5 +1,6 @@
 const t = require('@babel/types');
 const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants.js');
+const hash = require('murmurhash-js');
 
 function expandProperty(prop) {
   return SHORTHAND_EXPANSIONS[prop] || [prop];
@@ -21,13 +22,8 @@ function normalizeValue(prop, value) {
 // Class can't start with number
 const CLASS_PREFIX = 'c';
 
-// CSS values cache
-const VALUES = [];
-
-function getClass(prop, value) {
-  const key = JSON.stringify([prop, value]);
-  if (!VALUES.includes(key)) VALUES.push(key);
-  return CLASS_PREFIX + VALUES.indexOf(key).toString(36);
+function getClass(...args) {
+  return CLASS_PREFIX + hash(JSON.stringify(args)).toString(36);
 }
 
 function camelToHyphen(string) {
@@ -46,6 +42,43 @@ function resolvePathValue(path) {
 function getDeclaration(prop, value) {
   const cls = getClass(prop, value);
   return `.${cls}{${camelToHyphen(prop)}:${normalizeValue(prop, value)}}`;
+}
+
+function normalizeTime(time) {
+  if (time === 'from') return '0%';
+  if (time === 'to') return '100%';
+  return time;
+}
+
+function stringifyKeyframes(rules) {
+  let str = '';
+
+  for (const time in rules) {
+    str += `${normalizeTime(time)}{`;
+
+    for (const key in rules[time]) {
+      const value = rules[time][key];
+
+      for (const prop of expandProperty(key)) {
+        // Longhand takes precedent
+        if (prop in rules[time] && prop !== key) continue;
+
+        str += `${camelToHyphen(prop)}:${normalizeValue(prop, value)};`;
+      }
+    }
+
+    // Remove last semicolon
+    str = str.slice(0, -1) + '}';
+  }
+
+  return str;
+}
+
+function getKeyframes(rules) {
+  const rulesString = stringifyKeyframes(rules);
+  const name = getClass(rulesString);
+  const declaration = `@keyframes ${name}{${rulesString}}`;
+  return { name, declaration };
 }
 
 /**
@@ -74,5 +107,6 @@ module.exports = {
   resolvePathValue,
   getClass,
   getDeclaration,
-  extractNode
+  extractNode,
+  getKeyframes
 };
