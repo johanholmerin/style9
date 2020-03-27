@@ -110,3 +110,19 @@ style9(styles1.default, styles2.red)
   const { code } = compile(input);
   expect(code).toMatchSnapshot();
 });
+
+it('hoists function call', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+styles({
+  default: foo()
+})
+  `;
+  const { code } = compile(input);
+  expect(code).toMatchSnapshot();
+});

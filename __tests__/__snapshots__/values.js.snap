@@ -46,10 +46,7 @@ const styles = {
   }
 };
 
-const get = state => {
-  const _state = state;
-  return _state ? \\"c0 \\" : \\"\\";
-};"
+const get = state => state ? \\"c0 \\" : \\"\\";"
 `;
 
 exports[`supports arrow function 2`] = `".c0{color:blue}"`;

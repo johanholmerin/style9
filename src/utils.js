@@ -52,6 +52,8 @@ function getDeclaration(prop, value) {
  * Move node to a constant and return an identifier
  */
 function extractNode(path, node) {
+  if (t.isIdentifier(node)) return node;
+
   const name = path.scope.generateUidBasedOnNode(node);
 
   if (path.scope.path.type !== 'Program') {
