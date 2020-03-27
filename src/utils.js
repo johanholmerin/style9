@@ -38,30 +38,14 @@ function camelToHyphen(string) {
  * Resolve the value of a node path
  */
 function resolvePathValue(path) {
-  const { value, confident } = path.evaluate();
+  const { value, confident, deopt } = path.evaluate();
   if (confident) return value;
-  throw new Error(`Invalid value type ${path.node.type}`);
+  throw deopt.buildCodeFrameError('Could not evaluate value');
 }
 
 function getDeclaration(prop, value) {
   const cls = getClass(prop, value);
   return `.${cls}{${camelToHyphen(prop)}:${normalizeValue(prop, value)}}`;
-}
-
-/**
- * Get JS value from AST node
- * Support object expressions and string literals
- */
-function getNodeValue(node) {
-  if (t.isObjectExpression(node)) {
-    return Object.fromEntries(
-      node.properties.map(prop => [prop.key.name, getNodeValue(prop.value)])
-    );
-  }
-
-  t.assertStringLiteral(node);
-
-  return node.value;
 }
 
 /**
@@ -86,7 +70,6 @@ function extractNode(path, node) {
 module.exports = {
   expandProperty,
   resolvePathValue,
-  getNodeValue,
   getClass,
   getDeclaration,
   extractNode

@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint {*.js,__tests__/*.js}"
+    "lint": "eslint {*.js,src/*.js,__tests__/*.js}"
   },
   "jest": {
     "testEnvironment": "node",

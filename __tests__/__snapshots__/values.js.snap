@@ -38,13 +38,6 @@ const styles = {
 
 exports[`expands shorthand 2`] = `".c3{padding-top:1rem}.c4{padding-right:1rem}.c5{padding-bottom:1rem}.c6{padding-left:1rem}"`;
 
-exports[`removes unused styles 1`] = `
-"import style9 from 'style9';
-const styles = {};"
-`;
-
-exports[`removes unused styles 2`] = `""`;
-
 exports[`supports arrow function 1`] = `
 "import style9 from 'style9';
 const styles = {
