@@ -45,10 +45,12 @@ function getClasses(styles) {
 
 function replaceUseCalls(uses, classes) {
   for (const use of uses) {
-    if (!use.parentPath.isCallExpression()) continue;
-
-    const expr = generateExpression(use, classes);
-    use.parentPath.replaceWith(expr);
+    if (use.parentPath.isCallExpression() && use.parent.callee === use.node) {
+      const expr = generateExpression(use, classes);
+      use.parentPath.replaceWith(expr);
+    } else if (!use.parentPath.isMemberExpression()) {
+      throw use.parentPath.buildCodeFrameError('Invalid use');
+    }
   }
 }
 
@@ -85,13 +87,16 @@ function handleCreate(identifier) {
   const callExpr = identifier.parentPath.parentPath;
   const objExpr = callExpr.get('arguments.0');
   const varDec = callExpr.parentPath;
+  if (!varDec.isVariableDeclarator()) {
+    throw varDec.buildCodeFrameError('Style has to be assigned to variable');
+  }
   const uses = varDec.scope.bindings[varDec.node.id.name].referencePaths;
 
   const styles = getStyles(objExpr);
   const classes = getClasses(styles);
 
   replaceDeclaration(callExpr, classes);
-  if (varDec.isVariableDeclarator()) replaceUseCalls(uses, classes);
+  replaceUseCalls(uses, classes);
 
   return generateStyles(styles);
 }
@@ -139,7 +144,7 @@ function handleBinding(node) {
 function handleBindings(bindings) {
   return bindings
     // Process keyframes first
-    .sort(binding => isPropertyCall(binding, 'keyframes') ? -1 : 1)
+    .sort(binding => (isPropertyCall(binding, 'keyframes') ? -1 : 1))
     .flatMap(handleBinding);
 }
 

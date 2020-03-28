@@ -154,3 +154,28 @@ const get = state => styles(state && 'default');
   expect(code).toMatchSnapshot();
   expect(styles).toMatchSnapshot();
 });
+
+it('does not work without declaration', () => {
+  const input = `
+import style9 from 'style9';
+style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+  `;
+  expect(() => compile(input)).toThrow();
+});
+
+it('only supports Member- and CallExpression on styles', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+foo(styles);
+  `;
+  expect(() => compile(input)).toThrow();
+});
