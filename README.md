@@ -48,7 +48,7 @@ style9(styles.blue, otherStyles.yellow);
 // Styles have to be statically defined, but constants are supported
 const RED = 'red';
 
-const styles = style9.create({
+const moreStyles = style9.create({
   red: {
     color: RED
   },
@@ -78,7 +78,8 @@ const styles = style9.create({
       to: {
         opacity: 1
       }
-    });
+    }),
+    animationDuration: '1s'
   }
 });
 ```
