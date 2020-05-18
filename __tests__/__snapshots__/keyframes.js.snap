@@ -2,32 +2,32 @@
 
 exports[`converts from 1`] = `
 "import style9 from 'style9';
-\\"lbvhnp\\";"
+\\"clbvhnp\\";"
 `;
 
-exports[`converts from 2`] = `"@keyframes lbvhnp{0%{color:blue}}"`;
+exports[`converts from 2`] = `"@keyframes clbvhnp{0%{color:blue}}"`;
 
 exports[`converts to 1`] = `
 "import style9 from 'style9';
-\\"1yehff3\\";"
+\\"c1yehff3\\";"
 `;
 
-exports[`converts to 2`] = `"@keyframes 1yehff3{100%{color:blue}}"`;
+exports[`converts to 2`] = `"@keyframes c1yehff3{100%{color:blue}}"`;
 
 exports[`supports keyframes 1`] = `
 "import style9 from 'style9';
-\\"5c3aul\\";"
+\\"c5c3aul\\";"
 `;
 
-exports[`supports keyframes 2`] = `"@keyframes 5c3aul{0%{color:blue}100%}}"`;
+exports[`supports keyframes 2`] = `"@keyframes c5c3aul{0%{color:blue}100%}}"`;
 
 exports[`supports settings animationName directly 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    animationName: \\"9986pv\\"
+    animationName: \\"c1649e32\\"
   }
 };"
 `;
 
-exports[`supports settings animationName directly 2`] = `".9986pv{animation-name:1px3r7c}@keyframes 1px3r7c{0%{opacity:0}}"`;
+exports[`supports settings animationName directly 2`] = `".c1649e32{animation-name:c1px3r7c}@keyframes c1px3r7c{0%{opacity:0}}"`;

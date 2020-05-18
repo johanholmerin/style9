@@ -4,66 +4,66 @@ exports[`hoists function call 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\"
+    color: \\"cdu2tfg\\"
   }
 };
 
 const _foo = foo();
 
-_foo ? \\"du2tfg \\" : \\"\\";"
+_foo ? \\"cdu2tfg \\" : \\"\\";"
 `;
 
 exports[`mixed 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\",
-    opacity: \\"1w3b0fg\\"
+    color: \\"cdu2tfg\\",
+    opacity: \\"c1w3b0fg\\"
   },
   red: {
-    color: \\"s58kxv\\"
+    color: \\"cs58kxv\\"
   }
 };
-\\"s58kxv \\" + (foo ? \\"1w3b0fg \\" : \\"\\");"
+\\"cs58kxv \\" + (foo ? \\"c1w3b0fg \\" : \\"\\");"
 `;
 
 exports[`moves test 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\"
+    color: \\"cdu2tfg\\"
   }
 };
 
 const _foo = foo();
 
-_foo ? \\"du2tfg \\" : \\"\\";"
+_foo ? \\"cdu2tfg \\" : \\"\\";"
 `;
 
 exports[`object 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\",
-    opacity: \\"1w3b0fg\\"
+    color: \\"cdu2tfg\\",
+    opacity: \\"c1w3b0fg\\"
   },
   red: {
-    color: \\"s58kxv\\"
+    color: \\"cs58kxv\\"
   }
 };
-(bar ? \\"s58kxv \\" : foo ? \\"du2tfg \\" : \\"\\") + (foo ? \\"1w3b0fg \\" : \\"\\");"
+(bar ? \\"cs58kxv \\" : foo ? \\"cdu2tfg \\" : \\"\\") + (foo ? \\"c1w3b0fg \\" : \\"\\");"
 `;
 
 exports[`property access 1`] = `
 "import style9 from 'style9';
 const styles1 = {
   default: {
-    color: \\"du2tfg\\"
+    color: \\"cdu2tfg\\"
   }
 };
 const styles2 = {
   red: {
-    color: \\"s58kxv\\"
+    color: \\"cs58kxv\\"
   }
 };
 style9(styles1.default, styles2.red);"
@@ -73,26 +73,26 @@ exports[`string literals 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\",
-    opacity: \\"1w3b0fg\\"
+    color: \\"cdu2tfg\\",
+    opacity: \\"c1w3b0fg\\"
   },
   red: {
-    color: \\"s58kxv\\"
+    color: \\"cs58kxv\\"
   }
 };
-\\"s58kxv \\" + \\"1w3b0fg \\";"
+\\"cs58kxv \\" + \\"c1w3b0fg \\";"
 `;
 
 exports[`ternary 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"du2tfg\\",
-    opacity: \\"1w3b0fg\\"
+    color: \\"cdu2tfg\\",
+    opacity: \\"c1w3b0fg\\"
   },
   red: {
-    color: \\"s58kxv\\"
+    color: \\"cs58kxv\\"
   }
 };
-(foo ? \\"du2tfg \\" : \\"s58kxv \\") + (foo ? \\"1w3b0fg \\" : \\"\\");"
+(foo ? \\"cdu2tfg \\" : \\"cs58kxv \\") + (foo ? \\"c1w3b0fg \\" : \\"\\");"
 `;
