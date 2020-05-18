@@ -114,3 +114,17 @@ export default {
   ]
 };
 ```
+
+## Webpack
+
+```javascript
+const Style9Plugin = require('style9/webpack');
+
+module.exports = {
+  plugins: [
+    new Style9Plugin({
+      name: 'index.css'
+    })
+  ]
+};
+```
