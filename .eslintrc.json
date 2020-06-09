@@ -12,7 +12,8 @@
     "no-case-declarations": "error",
     "no-confusing-arrow": "error",
     "no-var": "error",
-    "prefer-const": "error"
+    "prefer-const": "error",
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }]
   },
   "env": {
     "node": true,
