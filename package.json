@@ -6,7 +6,8 @@
     "@babel/types": "^7.8.3",
     "@rollup/pluginutils": "^3.0.4",
     "murmurhash-js": "^1.0.0",
-    "postcss-discard-duplicates": "^4.0.2"
+    "postcss-discard-duplicates": "^4.0.2",
+    "webpack-virtual-modules": "^0.2.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

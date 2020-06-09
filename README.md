@@ -119,12 +119,24 @@ export default {
 
 ```javascript
 const Style9Plugin = require('style9/webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(tsx|ts|js|mjs|jsx)$/,
+        use: Style9Plugin.loader
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
+  },
   plugins: [
-    new Style9Plugin({
-      name: 'index.css'
-    })
+    new Style9Plugin(),
+    new MiniCssExtractPlugin()
   ]
 };
 ```
