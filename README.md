@@ -149,3 +149,13 @@ const withStyle9 = require('style9/next');
 
 module.exports = withStyle9()(withTM());
 ```
+
+## Gatsby
+
+```javascript
+module.exports = {
+  plugins: [
+    'style9/gatsby'
+  ]
+}
+```

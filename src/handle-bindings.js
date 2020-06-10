@@ -49,7 +49,27 @@ function replaceUseCalls(uses, classes) {
       const expr = generateExpression(use, classes);
       use.parentPath.replaceWith(expr);
     } else if (!use.parentPath.isMemberExpression()) {
-      throw use.parentPath.buildCodeFrameError('Invalid use');
+      // The return value from `style9.create` should be a function, but the
+      // compiler turns it into an object. Therefore only access to properties
+      // is allowed. React Hot Loader accesses all bindings, so a temporary
+      // workaround is required. React Fast Refresh does not have this problem.
+
+      const isHMR = testASTShape(use.parentPath, {
+        type: 'CallExpression',
+        callee: {
+          type: 'MemberExpression',
+          object: {
+            name: 'reactHotLoader'
+          },
+          property: {
+            name: 'register'
+          }
+        }
+      });
+
+      if (!isHMR) {
+        throw use.parentPath.buildCodeFrameError('Invalid use');
+      }
     }
   }
 }
