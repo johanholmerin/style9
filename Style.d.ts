@@ -82,7 +82,8 @@ interface ViewStyle extends
   TransformsStyle,
   TransitionStyle,
   AnimationStyle,
-  SnapStyle
+  SnapStyle,
+  SvgStyle
 {
   backfaceVisibility?: 'visible' | 'hidden';
   backgroundColor?: string;
@@ -333,4 +334,59 @@ interface SnapStyle {
   scrollMarginBottom?: number | string;
   scrollMarginLeft?: number | string;
   scrollSnapAlign?: ScrollSnapAlign | [ScrollSnapAlign, ScrollSnapAlign];
+}
+
+interface SvgStyle {
+  alignmentBaseline?: (
+    | 'auto'
+    | 'baseline'
+    | 'before-edge'
+    | 'text-before-edge'
+    | 'middle'
+    | 'central'
+    | 'after-edge'
+    | 'text-after-edge'
+    | 'ideographic'
+    | 'alphabetic'
+    | 'hanging'
+    | 'mathematical'
+  );
+  baselineShift?: number | string;
+  color?: string;
+  colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
+  colorRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+  dominantBaseline?: (
+    | 'auto'
+    | 'text-bottom'
+    | 'alphabetic'
+    | 'ideographic'
+    | 'middle'
+    | 'central'
+    | 'mathematical'
+    | 'hanging'
+    | 'text-top'
+  );
+  fill?: string;
+  fillOpacity?: string;
+  fillRule?: 'nonzero' | 'evenodd';
+  imageRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+  shapeRendering?: (
+    | 'auto'
+    | 'optimizeSpeed'
+    | 'crispEdges'
+    | 'geometricPrecision'
+  );
+  stopColor?: string;
+  stopOpacity?: number;
+  stroke?: string;
+  strokeDasharray?: number | string | (number | string)[];
+  strokeDashoffset?: number | string;
+  strokeLinecap?: 'butt' | 'round' | 'square';
+  strokeLinejoin?: 'miter' | 'round' | 'bevel';
+  strokeMiterlimit?: number;
+  strokeOpacity?: number | string;
+  strokeWidth?: number | string;
+  textAnchor?: 'start' | 'middle' | 'end';
+  vectorEffect?: 'none' | 'non-scaling-stroke';
+  writingMode?: 'lr-tb' | 'rl-tb' | 'tb-rl' | 'lr' | 'rl' | 'tb';
 }
