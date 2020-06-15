@@ -57,6 +57,26 @@ export default interface Style extends ViewStyle, TextStyle {}
 
 type BorderStyle = 'solid' | 'dotted' | 'dashed';
 
+type Appearance = (
+  | 'none'
+  | 'auto'
+  | 'button'
+  | 'textfield'
+  | 'searchfield'
+  | 'textarea'
+  | 'push-button'
+  | 'button-bevel'
+  | 'slider-horizontal'
+  | 'checkbox'
+  | 'radio'
+  | 'square-button'
+  | 'menulist'
+  | 'menulist-button'
+  | 'listbox'
+  | 'meter'
+  | 'progress-bar'
+);
+
 interface ViewStyle extends
   FlexStyle,
   TransformsStyle,
@@ -91,6 +111,10 @@ interface ViewStyle extends
   outlineWidth?: number;
   clear?: 'none' | 'left' | 'right' | 'both';
   float?: 'none' | 'left' | 'right';
+  appearance?: Appearance;
+  filter?: string;
+  WebkitTouchHighlightColor?: string;
+  pointerEvents?: 'none' | 'auto';
 }
 
 type FlexAlignType = (
@@ -220,6 +244,7 @@ interface TextStyle {
   letterSpacing?: number;
   lineHeight?: number;
   textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
+  textAlignLast?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   textDecorationLine?: 'none' | TextDecorationLine | TextDecorationLine[];
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
   textDecorationColor?: string;
@@ -235,6 +260,43 @@ interface TextStyle {
     | 'bottom'
     | number
   );
+  WebkitFontSmoothing?: (
+    | 'none'
+    | 'auto'
+    | 'antialiased'
+    | 'subpixel-antialiased'
+  );
+  MozOsxFontSmoothing?: 'auto' | 'grayscale';
+  textRendering?: (
+    | 'auto'
+    | 'optimizeSpeed'
+    | 'optimizeLegibility'
+    | 'geometricPrecision'
+  );
+  visibility?: 'visible' | 'hidden' | 'collapse';
+  whiteSpace?: (
+    | 'normal'
+    | 'pre'
+    | 'nowrap'
+    | 'pre-wrap'
+    | 'pre-line'
+    | 'break-spaces'
+  );
+  lineBreak?: 'auto' | 'loose' | 'normal' | 'strict' | 'anywhere';
+  overflowWrap?: 'normal' | 'break-word' | 'anywhere';
+  tabSize?: number | string;
+  textIndent?: number | string;
+  textJustify?: 'none' | 'auto' | 'inter-character' | 'inter-word';
+  textTransform?: (
+    | 'none'
+    | 'capitalize'
+    | 'uppercase'
+    | 'lowercase'
+    | 'full-width'
+    | 'full-size-kana'
+  );
+  wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
+  wordSpacing?: 'normal' | number | string;
 }
 
 interface TransitionStyle {
