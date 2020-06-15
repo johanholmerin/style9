@@ -61,7 +61,8 @@ interface ViewStyle extends
   FlexStyle,
   TransformsStyle,
   TransitionStyle,
-  AnimationStyle
+  AnimationStyle,
+  SnapStyle
 {
   backfaceVisibility?: 'visible' | 'hidden';
   backgroundColor?: string;
@@ -252,4 +253,22 @@ interface AnimationStyle {
   animationIterationCount?: 'infinite' | number;
   animationFillMode?: 'none' | 'forwards' | 'backwards' | 'both';
   animationPlayState?: 'running' | 'paused';
+}
+
+type ScrollSnapType = 'none' | 'x' | 'y' | 'block' | 'inline' | 'both';
+
+type ScrollSnapAlign = 'none' | 'start' | 'end' | 'center';
+
+interface SnapStyle {
+  scrollSnapType?: [ScrollSnapType, ('mandatory' | 'proximity')?];
+  scrollSnapStop?: 'normal' | 'always';
+  scrollPaddingTop?: number | string;
+  scrollPaddingRight?: number | string;
+  scrollPaddingBottom?: number | string;
+  scrollPaddingLeft?: number | string;
+  scrollMarginTop?: number | string;
+  scrollMarginRight?: number | string;
+  scrollMarginBottom?: number | string;
+  scrollMarginLeft?: number | string;
+  scrollSnapAlign?: ScrollSnapAlign | [ScrollSnapAlign, ScrollSnapAlign];
 }
