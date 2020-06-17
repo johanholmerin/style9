@@ -110,7 +110,9 @@ function handleCreate(identifier) {
   if (!varDec.isVariableDeclarator()) {
     throw varDec.buildCodeFrameError('Style has to be assigned to variable');
   }
-  const uses = varDec.scope.bindings[varDec.node.id.name].referencePaths;
+  const uses = varDec.get('id').isIdentifier() ?
+    varDec.scope.bindings[varDec.node.id.name].referencePaths :
+    [];
 
   const styles = getStyles(objExpr);
   const classes = getClasses(styles);

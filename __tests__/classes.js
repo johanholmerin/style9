@@ -126,3 +126,17 @@ styles({
   const { code } = compile(input);
   expect(code).toMatchSnapshot();
 });
+
+it('supports destructuring assignment', () => {
+  const input = `
+import style9 from 'style9';
+const { blue } = style9.create({
+  blue: {
+    color: 'blue'
+  }
+});
+console.log(blue)
+  `;
+  const { code } = compile(input);
+  expect(code).toMatchSnapshot();
+});
