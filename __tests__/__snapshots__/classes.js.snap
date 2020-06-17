@@ -95,6 +95,16 @@ const {
 console.log(blue);"
 `;
 
+exports[`supports member expression access 1`] = `
+"import style9 from 'style9';
+const blue = {
+  blue: {
+    color: \\"cdu2tfg\\"
+  }
+}.blue;
+console.log(blue);"
+`;
+
 exports[`ternary 1`] = `
 "import style9 from 'style9';
 const styles = {

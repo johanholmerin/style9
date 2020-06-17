@@ -103,17 +103,27 @@ function generateStyles(styles) {
     );
 }
 
-function handleCreate(identifier) {
-  const callExpr = identifier.parentPath.parentPath;
-  const objExpr = callExpr.get('arguments.0');
-  const varDec = callExpr.parentPath;
+function getUses(varDec) {
+  if (varDec.isMemberExpression()) {
+    return [];
+  }
+
   if (!varDec.isVariableDeclarator()) {
     throw varDec.buildCodeFrameError('Style has to be assigned to variable');
   }
-  const uses = varDec.get('id').isIdentifier() ?
-    varDec.scope.bindings[varDec.node.id.name].referencePaths :
-    [];
 
+  if (varDec.get('id').isIdentifier()) {
+    return varDec.scope.bindings[varDec.node.id.name].referencePaths;
+  }
+
+  return [];
+}
+
+function handleCreate(identifier) {
+  const callExpr = identifier.parentPath.parentPath;
+  const objExpr = callExpr.get('arguments.0');
+
+  const uses = getUses(callExpr.parentPath);
   const styles = getStyles(objExpr);
   const classes = getClasses(styles);
 

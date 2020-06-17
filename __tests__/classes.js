@@ -140,3 +140,17 @@ console.log(blue)
   const { code } = compile(input);
   expect(code).toMatchSnapshot();
 });
+
+it('supports member expression access', () => {
+  const input = `
+import style9 from 'style9';
+const blue = style9.create({
+  blue: {
+    color: 'blue'
+  }
+}).blue;
+console.log(blue)
+  `;
+  const { code } = compile(input);
+  expect(code).toMatchSnapshot();
+});
