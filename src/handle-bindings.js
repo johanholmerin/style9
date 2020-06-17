@@ -68,7 +68,7 @@ function replaceUseCalls(uses, classes) {
       });
 
       if (!isHMR) {
-        throw use.parentPath.buildCodeFrameError('Invalid use');
+        throw use.buildCodeFrameError('Invalid use');
       }
     }
   }
