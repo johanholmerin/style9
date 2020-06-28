@@ -116,6 +116,8 @@ interface ViewStyle extends
   filter?: string;
   WebkitTouchHighlightColor?: string;
   pointerEvents?: 'none' | 'auto';
+  columnWidth?: number | string;
+  columnCount?: number;
 }
 
 type FlexAlignType = (
@@ -207,6 +209,24 @@ interface FlexStyle {
   width?: number | string;
   zIndex?: number;
   direction?: 'inherit' | 'ltr' | 'rtl';
+  gridAutoColumns?: string;
+  gridAutoFlow?: (
+    | 'row'
+    | 'column'
+    | 'dense'
+    | ['row', 'dense']
+    | ['column', 'dense']
+  );
+  gridAutoRows?: string;
+  gridColumnEnd?: string;
+  gridColumnGap?: string;
+  gridColumnStart?: string;
+  gridRowEnd?: string;
+  gridRowGap?: string;
+  gridRowStart?: string;
+  grid-template-areas?: string;
+  grid-template-columns?: string;
+  grid-template-rows?: string;
 }
 
 export interface TransformsStyle {
@@ -242,25 +262,15 @@ interface TextStyle {
     | '800'
     | '900'
   );
-  letterSpacing?: number;
-  lineHeight?: number;
+  letterSpacing?: number | string;
+  lineHeight?: number | string;
   textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   textAlignLast?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   textDecorationLine?: 'none' | TextDecorationLine | TextDecorationLine[];
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
   textDecorationColor?: string;
   textShadow?: string;
-  verticalAlign?: (
-    | 'baseline'
-    | 'sub'
-    | 'super'
-    | 'text-top'
-    | 'text-bottom'
-    | 'middle'
-    | 'top'
-    | 'bottom'
-    | number
-  );
+  verticalAlign?: number | string;
   WebkitFontSmoothing?: (
     | 'none'
     | 'auto'
@@ -323,7 +333,10 @@ type ScrollSnapType = 'none' | 'x' | 'y' | 'block' | 'inline' | 'both';
 type ScrollSnapAlign = 'none' | 'start' | 'end' | 'center';
 
 interface SnapStyle {
-  scrollSnapType?: [ScrollSnapType, ('mandatory' | 'proximity')?];
+  scrollSnapType?: (
+    | ScrollSnapType
+    | [ScrollSnapType, ('mandatory' | 'proximity')?]
+  );
   scrollSnapStop?: 'normal' | 'always';
   scrollPaddingTop?: number | string;
   scrollPaddingRight?: number | string;
