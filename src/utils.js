@@ -14,7 +14,7 @@ function normalizeValue(prop, value) {
     if (!UNITLESS_NUMBERS.includes(prop)) return `${value}px`;
   }
 
-  if (Array.isArray(value)) return value.slice().sort().join(' ');
+  if (Array.isArray(value)) return value.slice().join(' ');
 
   return value;
 }
