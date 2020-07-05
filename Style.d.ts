@@ -53,7 +53,45 @@
  * THE SOFTWARE.
  */
 
-export default interface Style extends ViewStyle, TextStyle {}
+type PseudoElements = (
+  | '::before'
+  | '::after'
+  | '::first-letter'
+  | '::first-line'
+  | '::-webkit-input-placeholder'
+  | '::-webkit-scrollbar'
+  | '::-ms-clear'
+  | '::-webkit-search-cancel-button'
+  | '::-webkit-search-results-button'
+  | '::-webkit-search-results-decoration'
+  | '::-webkit-search-decoration'
+  | '::-webkit-inner-spin-button'
+  | '::-webkit-outer-spin-button'
+);
+
+type PseudoClasses = (
+  | ':focus-within'
+  | ':first-child'
+  | ':last-child'
+  | ':odd-child'
+  | ':even-child'
+  | ':hover'
+  | ':focus'
+  | ':active'
+  | ':visited'
+  | ':disabled'
+);
+
+type Style = StyleProperties & {
+  // Mixed keys not possible in TypeScript
+  // https://github.com/microsoft/TypeScript/issues/17867
+  // [key: string]: Style;
+  [key in PseudoClasses | PseudoElements]?: Style;
+};
+
+export default Style;
+
+export interface StyleProperties extends ViewStyle, TextStyle {}
 
 type BorderStyle = 'solid' | 'dotted' | 'dashed';
 
@@ -118,6 +156,7 @@ interface ViewStyle extends
   pointerEvents?: 'none' | 'auto';
   columnWidth?: number | string;
   columnCount?: number;
+  content?: string;
 }
 
 type FlexAlignType = (
@@ -224,9 +263,9 @@ interface FlexStyle {
   gridRowEnd?: string;
   gridRowGap?: string;
   gridRowStart?: string;
-  grid-template-areas?: string;
-  grid-template-columns?: string;
-  grid-template-rows?: string;
+  gridTemplateAreas?: string;
+  gridTemplateColumns?: string;
+  gridTemplateRows?: string;
 }
 
 export interface TransformsStyle {

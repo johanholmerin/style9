@@ -80,6 +80,25 @@ const moreStyles = style9.create({
       }
     }),
     animationDuration: '1s'
+  },
+  mobile: {
+    // Media queries are supported as well
+    // They will be sorted mobile-first
+    // NOTE: Media queries are not supported in TypeScript due to issue #17867
+    '@media (min-width: 800px)': {
+      display: 'none'
+    }
+  },
+  pseudo: {
+    // Pseudo-classes and elements can be used
+    ':hover': {
+      // They can be nested, as can media queries
+      ':active': {
+        '::before': {
+          content: 'attr(title)'
+        }
+      }
+    }
   }
 });
 ```

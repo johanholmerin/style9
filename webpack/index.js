@@ -1,7 +1,7 @@
-const discardDuplicates = require('postcss-discard-duplicates');
 const NAME = require('../package.json').name;
 const { SourceMapSource, RawSource } = require('webpack-sources');
 const virtualModules = require('./virtualModules.js');
+const processCSS = require('./src/process-css.js');
 
 class Style9Plugin {
   constructor({ test = /\.css$/ } = {}) {
@@ -25,8 +25,7 @@ class Style9Plugin {
             from: path,
             map: { prev: map || false }
           };
-
-          const result = await discardDuplicates.process(source, postcssOpts);
+          const result = processCSS(source, postcssOpts);
 
           if (result.map) {
             compilation.assets[path] = new SourceMapSource(

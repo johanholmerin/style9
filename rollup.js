@@ -2,7 +2,7 @@ const NAME = require('./package.json').name;
 const babel = require('@babel/core');
 const babelPlugin = require('./babel.js');
 const { createFilter } = require('@rollup/pluginutils');
-const discardDuplicates = require('postcss-discard-duplicates');
+const processCSS = require('./src/process-css.js');
 
 module.exports = function style9Plugin({
   include,
@@ -42,7 +42,7 @@ module.exports = function style9Plugin({
 
       this.emitFile({
         type: 'asset',
-        source: discardDuplicates.process(css, { from: undefined }).css,
+        source: processCSS(css).css,
         fileName, name
       });
     }

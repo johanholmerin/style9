@@ -1,5 +1,33 @@
+function merge(target = {}, source) {
+  for (const key in source) {
+    if (typeof source[key] === 'object') {
+      target[key] = merge({ ...target[key] }, source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+function getValues(obj) {
+  const values = [];
+
+  for (const key in obj) {
+    const val = obj[key];
+    if (typeof val === 'object') {
+      values.push(...getValues(val));
+    } else {
+      values.push(val);
+    }
+  }
+
+  return values;
+}
+
 export default function style9(...styles) {
-  return Object.values(Object.assign({}, ...styles)).join(' ');
+  const merged = styles.reduce((acc, val) => merge(acc, val), {});
+  return getValues(merged).join(' ');
 }
 
 style9.create = () => {

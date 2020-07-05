@@ -39,9 +39,21 @@ function resolvePathValue(path) {
   throw deopt.buildCodeFrameError('Could not evaluate value');
 }
 
-function getDeclaration(prop, value) {
-  const cls = getClass(prop, value);
-  return `.${cls}{${camelToHyphen(prop)}:${normalizeValue(prop, value)}}`;
+function getDeclaration({ name, value, atRules, pseudoSelectors }) {
+  const cls = getClass({ name, value, atRules, pseudoSelectors });
+
+  return (
+    atRules.map(rule => rule + '{').join('') +
+    '.' +
+    cls +
+    pseudoSelectors.join('') +
+    '{' +
+    camelToHyphen(name) +
+    ':' +
+    normalizeValue(name, value) +
+    '}' +
+    atRules.map(() => '}').join('')
+  );
 }
 
 function normalizeTime(time) {
@@ -102,11 +114,28 @@ function extractNode(path, node) {
   return t.identifier(name);
 }
 
+
+const LEGACY_PSEUDO_ELEMENTS = [
+  ':before',
+  ':after',
+  ':first-letter',
+  ':first-line'
+];
+
+function normalizePseudoElements(string) {
+  if (LEGACY_PSEUDO_ELEMENTS.includes(string)) {
+    return ':' + string;
+  }
+
+  return string;
+}
+
 module.exports = {
   expandProperty,
   resolvePathValue,
   getClass,
   getDeclaration,
   extractNode,
-  getKeyframes
+  getKeyframes,
+  normalizePseudoElements
 };

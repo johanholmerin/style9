@@ -4,66 +4,66 @@ exports[`hoists function call 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 };
 
 const _foo = foo();
 
-_foo ? \\"cdu2tfg \\" : \\"\\";"
+_foo ? \\"c1r9f2e5 \\" : \\"\\";"
 `;
 
 exports[`mixed 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\",
-    opacity: \\"c1w3b0fg\\"
+    color: \\"c1r9f2e5\\",
+    opacity: \\"cu2kwdz\\"
   },
   red: {
-    color: \\"cs58kxv\\"
+    color: \\"cyyg6ey\\"
   }
 };
-\\"cs58kxv \\" + (foo ? \\"c1w3b0fg \\" : \\"\\");"
+\\"cyyg6ey \\" + (foo ? \\"cu2kwdz \\" : \\"\\");"
 `;
 
 exports[`moves test 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 };
 
 const _foo = foo();
 
-_foo ? \\"cdu2tfg \\" : \\"\\";"
+_foo ? \\"c1r9f2e5 \\" : \\"\\";"
 `;
 
 exports[`object 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\",
-    opacity: \\"c1w3b0fg\\"
+    color: \\"c1r9f2e5\\",
+    opacity: \\"cu2kwdz\\"
   },
   red: {
-    color: \\"cs58kxv\\"
+    color: \\"cyyg6ey\\"
   }
 };
-(bar ? \\"cs58kxv \\" : foo ? \\"cdu2tfg \\" : \\"\\") + (foo ? \\"c1w3b0fg \\" : \\"\\");"
+(bar ? \\"cyyg6ey \\" : foo ? \\"c1r9f2e5 \\" : \\"\\") + (foo ? \\"cu2kwdz \\" : \\"\\");"
 `;
 
 exports[`property access 1`] = `
 "import style9 from 'style9';
 const styles1 = {
   default: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 };
 const styles2 = {
   red: {
-    color: \\"cs58kxv\\"
+    color: \\"cyyg6ey\\"
   }
 };
 style9(styles1.default, styles2.red);"
@@ -73,14 +73,14 @@ exports[`string literals 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\",
-    opacity: \\"c1w3b0fg\\"
+    color: \\"c1r9f2e5\\",
+    opacity: \\"cu2kwdz\\"
   },
   red: {
-    color: \\"cs58kxv\\"
+    color: \\"cyyg6ey\\"
   }
 };
-\\"cs58kxv \\" + \\"c1w3b0fg \\";"
+\\"cyyg6ey \\" + \\"cu2kwdz \\";"
 `;
 
 exports[`supports destructuring assignment 1`] = `
@@ -89,7 +89,7 @@ const {
   blue
 } = {
   blue: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 };
 console.log(blue);"
@@ -99,7 +99,7 @@ exports[`supports member expression access 1`] = `
 "import style9 from 'style9';
 const blue = {
   blue: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 }.blue;
 console.log(blue);"
@@ -109,12 +109,12 @@ exports[`ternary 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\",
-    opacity: \\"c1w3b0fg\\"
+    color: \\"c1r9f2e5\\",
+    opacity: \\"cu2kwdz\\"
   },
   red: {
-    color: \\"cs58kxv\\"
+    color: \\"cyyg6ey\\"
   }
 };
-(foo ? \\"cdu2tfg \\" : \\"cs58kxv \\") + (foo ? \\"c1w3b0fg \\" : \\"\\");"
+(foo ? \\"c1r9f2e5 \\" : \\"cyyg6ey \\") + (foo ? \\"cu2kwdz \\" : \\"\\");"
 `;

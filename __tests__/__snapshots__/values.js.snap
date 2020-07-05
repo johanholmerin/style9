@@ -1,54 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`accepts an array 1`] = `".c1cuivxf{text-decoration-line:overline underline}"`;
+exports[`accepts an array 1`] = `".cdd1pm5{text-decoration-line:underline overline}"`;
 
-exports[`converts fontSize pixels 1`] = `".c1b31bl0{font-size:0.875rem}"`;
+exports[`converts fontSize pixels 1`] = `".c1eftxfu{font-size:0.875rem}"`;
 
-exports[`converts to pixels 1`] = `".c64zslz{padding-left:2px}"`;
+exports[`converts to pixels 1`] = `".csaw36d{padding-left:2px}"`;
 
-exports[`does not converts to pixels 1`] = `".c1w3b0fg{opacity:1}"`;
+exports[`does not converts to pixels 1`] = `".cu2kwdz{opacity:1}"`;
 
 exports[`does not override longhand 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    paddingTop: \\"c1qnkkus\\",
-    paddingRight: \\"c1ppz12y\\",
-    paddingBottom: \\"c1bi0y1l\\",
-    paddingLeft: \\"cn18c4x\\"
+    paddingTop: \\"c1xiyxc9\\",
+    paddingRight: \\"c1wgquni\\",
+    paddingBottom: \\"c1s7zyp4\\",
+    paddingLeft: \\"c17qt1w7\\"
   }
 };
-\\"c1qnkkus \\" + (\\"c1ppz12y \\" + (\\"c1bi0y1l \\" + \\"cn18c4x \\"));"
+\\"c1xiyxc9 \\" + (\\"c1wgquni \\" + (\\"c1s7zyp4 \\" + \\"c17qt1w7 \\"));"
 `;
 
-exports[`does not override longhand 2`] = `".c1bi0y1l{padding-bottom:1rem}.c1ppz12y{padding-right:1rem}.c1qnkkus{padding-top:1rem}.cn18c4x{padding-left:2rem}"`;
+exports[`does not override longhand 2`] = `".c1xiyxc9{padding-top:1rem}.c1wgquni{padding-right:1rem}.c1s7zyp4{padding-bottom:1rem}.c17qt1w7{padding-left:2rem}"`;
 
 exports[`expands shorthand 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    paddingTop: \\"c1qnkkus\\",
-    paddingRight: \\"c1ppz12y\\",
-    paddingBottom: \\"c1bi0y1l\\",
-    paddingLeft: \\"c1rli1r6\\"
+    paddingTop: \\"c1xiyxc9\\",
+    paddingRight: \\"c1wgquni\\",
+    paddingBottom: \\"c1s7zyp4\\",
+    paddingLeft: \\"cc3nx7y\\"
   }
 };
-\\"c1qnkkus \\" + (\\"c1ppz12y \\" + (\\"c1bi0y1l \\" + \\"c1rli1r6 \\"));"
+\\"c1xiyxc9 \\" + (\\"c1wgquni \\" + (\\"c1s7zyp4 \\" + \\"cc3nx7y \\"));"
 `;
 
-exports[`expands shorthand 2`] = `".c1bi0y1l{padding-bottom:1rem}.c1ppz12y{padding-right:1rem}.c1qnkkus{padding-top:1rem}.c1rli1r6{padding-left:1rem}"`;
+exports[`expands shorthand 2`] = `".c1xiyxc9{padding-top:1rem}.c1wgquni{padding-right:1rem}.c1s7zyp4{padding-bottom:1rem}.cc3nx7y{padding-left:1rem}"`;
 
 exports[`supports arrow function 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    color: \\"cdu2tfg\\"
+    color: \\"c1r9f2e5\\"
   }
 };
 
-const get = state => state ? \\"cdu2tfg \\" : \\"\\";"
+const get = state => state ? \\"c1r9f2e5 \\" : \\"\\";"
 `;
 
-exports[`supports arrow function 2`] = `".cdu2tfg{color:blue}"`;
+exports[`supports arrow function 2`] = `".c1r9f2e5{color:blue}"`;
 
-exports[`supports constants 1`] = `".cdu2tfg{color:blue}"`;
+exports[`supports constants 1`] = `".c1r9f2e5{color:blue}"`;

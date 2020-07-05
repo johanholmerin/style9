@@ -14,7 +14,6 @@ module.exports = function style9BabelPlugin() {
         state.file.metadata.style9 = handleBindings(bindings)
           // Remove duplicates
           .filter((e, i, a) => a.indexOf(e) === i)
-          .sort()
           .join('');
       }
     }

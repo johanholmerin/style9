@@ -25,9 +25,9 @@ exports[`supports settings animationName directly 1`] = `
 "import style9 from 'style9';
 const styles = {
   default: {
-    animationName: \\"c1649e32\\"
+    animationName: \\"csqo9ij\\"
   }
 };"
 `;
 
-exports[`supports settings animationName directly 2`] = `".c1649e32{animation-name:c1px3r7c}@keyframes c1px3r7c{0%{opacity:0}}"`;
+exports[`supports settings animationName directly 2`] = `"@keyframes c1px3r7c{0%{opacity:0}}.csqo9ij{animation-name:c1px3r7c}"`;

@@ -3,50 +3,103 @@ const {
   resolvePathValue,
   getClass,
   getDeclaration,
-  getKeyframes
+  getKeyframes,
+  normalizePseudoElements
 } = require('./utils.js');
 const testASTShape = require('./test-ast-shape.js');
 const t = require('@babel/types');
 const generateExpression = require('./generate-expression.js');
 
-function getStyles(binding) {
-  const value = resolvePathValue(binding);
-  const styles = {};
+/**
+ * Values can be arrays
+ */
+function isNestedStyles(item) {
+  return typeof item === 'object' && !Array.isArray(item);
+}
 
-  for (const name in value) {
-    styles[name] = {};
+function expandProperties(obj) {
+  const expanded = {};
 
-    for (const key in value[name]) {
+  for (const key in obj) {
+    const value = obj[key];
+
+    if (isNestedStyles(value)) {
+      expanded[key] = expandProperties(value);
+    } else {
       for (const prop of expandProperty(key)) {
         // Longhand takes precedent
-        if (prop in value[name] && prop !== key) continue;
+        if (prop in obj && prop !== key) continue;
 
-        styles[name][prop] = value[name][key];
+        expanded[prop] = value;
       }
     }
   }
 
-  return styles;
+  return expanded;
 }
 
-function getClasses(styles) {
+function getStyles(binding) {
+  return expandProperties(resolvePathValue(binding));
+}
+
+function getClassValues(styles, { atRules = [], pseudoSelectors = [] } = {}) {
   const classes = {};
 
   for (const name in styles) {
-    classes[name] = {};
+    const value = styles[name];
 
-    for (const key in styles[name]) {
-      classes[name][key] = getClass(key, styles[name][key]);
+    if (isNestedStyles(value)) {
+      if (name.startsWith('@')) {
+        classes[name] = getClassValues(value, {
+          atRules: [...atRules, name],
+          pseudoSelectors
+        });
+      } else if (name.startsWith(':')) {
+        const normalizedName = normalizePseudoElements(name);
+        classes[normalizedName] = getClassValues(value, {
+          pseudoSelectors: [...pseudoSelectors, normalizedName],
+          atRules
+        });
+      } else {
+        throw new Error(`Invalid key ${name}`);
+      }
+    } else {
+      classes[name] = getClass({ name, value, atRules, pseudoSelectors });
     }
   }
 
   return classes;
 }
 
+function getClasses(obj) {
+  const newObj = {};
+
+  for (const key in obj) {
+    newObj[key] = getClassValues(obj[key]);
+  }
+
+  return newObj;
+}
+
+function flattenClasses(classes) {
+  return Object.fromEntries(
+    Object.entries(classes)
+      .map(([key, value]) => {
+        const objValues = Object.fromEntries(
+          flattenStyles(value)
+            .map(({ value, ...rest })=> [JSON.stringify(rest), value])
+        );
+        return [key, objValues];
+      })
+  );
+}
+
 function replaceUseCalls(uses, classes) {
+  const flatClasses = flattenClasses(classes);
+
   for (const use of uses) {
     if (use.parentPath.isCallExpression() && use.parent.callee === use.node) {
-      const expr = generateExpression(use, classes);
+      const expr = generateExpression(use, flatClasses);
       use.parentPath.replaceWith(expr);
     } else if (!use.parentPath.isMemberExpression()) {
       // The return value from `style9.create` should be a function, but the
@@ -74,33 +127,59 @@ function replaceUseCalls(uses, classes) {
   }
 }
 
-function replaceDeclaration(node, classes) {
-  const styles = [];
+function astFromObject(obj) {
+  const ast = [];
 
-  for (const name in classes) {
-    const style = [];
+  for (const name in obj) {
+    const astValue = typeof obj[name] === 'object' ?
+      astFromObject(obj[name]) :
+      t.stringLiteral(obj[name]);
+    const key = t.isValidIdentifier(name, false) ?
+      t.identifier(name) :
+      t.stringLiteral(name);
 
-    for (const key in classes[name]) {
-      style.push(t.objectProperty(
-        t.identifier(key),
-        t.stringLiteral(classes[name][key])
-      ));
-    }
-
-    styles.push(t.objectProperty(
-      t.identifier(name),
-      t.objectExpression(style)
-    ));
+    ast.push(t.objectProperty(key, astValue));
   }
 
-  node.replaceWith(t.objectExpression(styles));
+  return t.objectExpression(ast);
+}
+
+function replaceDeclaration(node, classes) {
+  node.replaceWith(astFromObject(classes));
+}
+
+function flattenStyles(styles, { atRules = [], pseudoSelectors = [] } = {}) {
+  const flatStyles = [];
+
+  for (const name in styles) {
+    const value = styles[name];
+
+    if (isNestedStyles(value)) {
+      if (name.startsWith('@')) {
+        flatStyles.push(...flattenStyles(value, {
+          atRules: [...atRules, name],
+          pseudoSelectors
+        }));
+      } else if (name.startsWith(':')) {
+        const normalizedName = normalizePseudoElements(name);
+        flatStyles.push(...flattenStyles(value, {
+          pseudoSelectors: [...pseudoSelectors, normalizedName],
+          atRules
+        }));
+      } else {
+        throw new Error(`Invalid key ${name}`);
+      }
+    } else {
+      flatStyles.push({ name, value, atRules, pseudoSelectors });
+    }
+  }
+
+  return flatStyles;
 }
 
 function generateStyles(styles) {
   return Object.values(styles)
-    .flatMap(props =>
-      Object.entries(props).map(([prop, value]) => getDeclaration(prop, value))
-    );
+    .flatMap(props => flattenStyles(props).map(getDeclaration));
 }
 
 function getUses(varDec) {
