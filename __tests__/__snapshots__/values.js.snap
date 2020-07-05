@@ -38,6 +38,25 @@ const styles = {
 
 exports[`expands shorthand 2`] = `".c1xiyxc9{padding-top:1rem}.c1wgquni{padding-right:1rem}.c1s7zyp4{padding-bottom:1rem}.cc3nx7y{padding-left:1rem}"`;
 
+exports[`removes unused styles 1`] = `
+"import style9 from 'style9';
+const styles = {};"
+`;
+
+exports[`removes unused styles 2`] = `""`;
+
+exports[`supports static bracket access 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c1r9f2e5\\"
+  }
+};
+styles['default'];"
+`;
+
+exports[`supports static bracket access 2`] = `".c1r9f2e5{color:blue}"`;
+
 exports[`supports arrow function 1`] = `
 "import style9 from 'style9';
 const styles = {

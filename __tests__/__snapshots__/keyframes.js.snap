@@ -27,7 +27,8 @@ const styles = {
   default: {
     animationName: \\"csqo9ij\\"
   }
-};"
+};
+styles.default;"
 `;
 
 exports[`supports settings animationName directly 2`] = `"@keyframes c1px3r7c{0%{opacity:0}}.csqo9ij{animation-name:c1px3r7c}"`;

@@ -124,20 +124,36 @@ styles('default');
   expect(styles).toMatchSnapshot();
 });
 
-// it('removes unused styles', () => {
-//   const input = `
-// import style9 from 'style9';
-// const styles = style9.create({
-//   default: {
-//     color: 'blue'
-//   }
-// });
-//   `;
-//   const { code, styles } = compile(input);
+it('removes unused styles', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+  `;
+  const { code, styles } = compile(input);
 
-//   expect(code).toMatchSnapshot();
-//   expect(styles).toMatchSnapshot();
-// });
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});
+
+it('supports static bracket access', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+styles['default']
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});
 
 it('supports arrow function', () => {
   const input = `

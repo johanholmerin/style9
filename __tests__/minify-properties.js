@@ -9,6 +9,7 @@ const styles = style9.create({
     opacity: 1
   }
 });
+styles.default
   `;
   const { code } = compile(input);
 
@@ -23,6 +24,7 @@ const styles = style9.create({
     opacity: 1
   }
 });
+styles.default
   `;
   const { styles } = compile(input);
 
@@ -37,6 +39,7 @@ const styles = style9.create({
     opacity: 1
   }
 });
+styles.default
   `;
   const { code } = compile(input, { minifyProperties: true });
 
@@ -51,6 +54,7 @@ const styles = style9.create({
     foo: 'bar'
   }
 });
+styles.default
   `;
   const { code } = compile(input, { minifyProperties: true });
 
@@ -69,6 +73,7 @@ const styles = style9.create({
     }
   }
 });
+styles.default
   `;
   const { code } = compile(input, { minifyProperties: true });
 

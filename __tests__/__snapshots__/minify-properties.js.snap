@@ -6,7 +6,8 @@ const styles = {
   default: {
     opacity: \\"cu2kwdz\\"
   }
-};"
+};
+styles.default;"
 `;
 
 exports[`does not minify styles 1`] = `".cu2kwdz{opacity:1}"`;
@@ -17,7 +18,8 @@ const styles = {
   default: {
     \\"1wfoylc\\": \\"cxrs67x\\"
   }
-};"
+};
+styles.default;"
 `;
 
 exports[`minifies known properties 1`] = `
@@ -26,7 +28,8 @@ const styles = {
   default: {
     j9: \\"cu2kwdz\\"
   }
-};"
+};
+styles.default;"
 `;
 
 exports[`minifies nested properties 1`] = `
@@ -39,5 +42,6 @@ const styles = {
       }
     }
   }
-};"
+};
+styles.default;"
 `;

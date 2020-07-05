@@ -10,6 +10,7 @@ const {
 const testASTShape = require('./test-ast-shape.js');
 const t = require('@babel/types');
 const generateExpression = require('./generate-expression.js');
+const normalizeArguments = require('./normalize-arguments.js');
 
 /**
  * Values can be arrays
@@ -95,14 +96,50 @@ function flattenClasses(classes) {
   );
 }
 
-function replaceUseCalls(uses, classes) {
+function getStaticKey(memberExpr) {
+  const property = memberExpr.get('property');
+
+  if (
+    !(!memberExpr.computed && property.isIdentifier()) &&
+    !property.isLiteral()
+    ) {
+    throw property.buildCodeFrameError('Key has to be static');
+  }
+
+  return memberExpr.node.property.name || memberExpr.node.property.value;
+}
+
+function replaceUseCalls(varDec, classes) {
+  if (varDec.isMemberExpression()) {
+    return [getStaticKey(varDec)];
+  }
+
+  if (varDec.get('id').isObjectPattern()) {
+    return varDec.get('id.properties').map(prop => {
+      if (!prop.isObjectProperty()) {
+        throw prop.buildCodeFrameError(`Unsupported type ${prop.type}`);
+      }
+
+      return prop.node.key.name;
+    });
+  }
+
+  const uses = getUses(varDec);
+  const names = new Set();
   const flatClasses = flattenClasses(classes);
 
   for (const use of uses) {
     if (use.parentPath.isCallExpression() && use.parent.callee === use.node) {
-      const expr = generateExpression(use, flatClasses);
+      const args = normalizeArguments(use);
+      args.forEach(arg => {
+        if (typeof arg === 'string') names.add(arg);
+        else names.add(arg.value);
+      });
+      const expr = generateExpression(args, flatClasses);
       use.parentPath.replaceWith(expr);
-    } else if (!use.parentPath.isMemberExpression()) {
+    } else if (use.parentPath.isMemberExpression()) {
+      names.add(getStaticKey(use.parentPath));
+    } else {
       // The return value from `style9.create` should be a function, but the
       // compiler turns it into an object. Therefore only access to properties
       // is allowed. React Hot Loader accesses all bindings, so a temporary
@@ -126,6 +163,8 @@ function replaceUseCalls(uses, classes) {
       }
     }
   }
+
+  return Array.from(names);
 }
 
 function astFromObject(obj) {
@@ -199,28 +238,36 @@ function minifyProperties(classes) {
 }
 
 function getUses(varDec) {
-  if (varDec.isMemberExpression()) {
-    return [];
-  }
-
   if (!varDec.isVariableDeclarator()) {
     throw varDec.buildCodeFrameError('Style has to be assigned to variable');
   }
 
-  if (varDec.get('id').isIdentifier()) {
-    return varDec.scope.bindings[varDec.node.id.name].referencePaths;
+  return varDec.scope.bindings[varDec.node.id.name].referencePaths;
+}
+
+function filterObject(obj, keys) {
+  const newObj = {};
+
+  // Iterate in existing order
+  for (const key in obj) {
+    if (keys.includes(key)) {
+      newObj[key] = obj[key];
+    }
   }
 
-  return [];
+  return newObj;
 }
 
 function handleCreate(identifier, opts) {
   const callExpr = identifier.parentPath.parentPath;
   const objExpr = callExpr.get('arguments.0');
 
-  const uses = getUses(callExpr.parentPath);
-  const styles = getStyles(objExpr);
-  const classes = getClasses(styles);
+  let styles = getStyles(objExpr);
+  let classes = getClasses(styles);
+
+  const usedProperties = replaceUseCalls(callExpr.parentPath, classes);
+  styles = filterObject(styles, usedProperties);
+  classes = filterObject(classes, usedProperties);
 
   if (opts.minifyProperties) {
     const minifiedClasses = Object.fromEntries(
@@ -231,7 +278,6 @@ function handleCreate(identifier, opts) {
   } else {
     replaceDeclaration(callExpr, classes);
   }
-  replaceUseCalls(uses, classes);
 
   return generateStyles(styles);
 }

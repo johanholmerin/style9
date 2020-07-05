@@ -93,6 +93,7 @@ const styles = style9.create({
     ':first-line': { opacity: 1 }
   }
 });
+styles.default
   `;
   const { code, styles } = compile(input);
 

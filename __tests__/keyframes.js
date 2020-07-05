@@ -60,6 +60,7 @@ const styles = style9.create({
     })
   }
 });
+styles.default
   `;
   const { code, styles } = compile(input);
 

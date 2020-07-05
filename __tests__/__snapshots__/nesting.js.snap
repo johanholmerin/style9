@@ -82,7 +82,8 @@ const styles = {
       opacity: \\"c9com6n\\"
     }
   }
-};"
+};
+styles.default;"
 `;
 
 exports[`translates old pseudo element 2`] = `".cm5vf3y::before{opacity:1}.c1ud6rae::after{opacity:1}.c1xtf9ff::first-letter{opacity:1}.c9com6n::first-line{opacity:1}"`;
