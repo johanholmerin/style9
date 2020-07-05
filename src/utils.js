@@ -1,6 +1,7 @@
 const t = require('@babel/types');
 const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants.js');
 const hash = require('murmurhash-js');
+const cssProperties = require('known-css-properties').all;
 
 function expandProperty(prop) {
   return SHORTHAND_EXPANSIONS[prop] || [prop];
@@ -130,6 +131,15 @@ function normalizePseudoElements(string) {
   return string;
 }
 
+function minifyProperty(name) {
+  const hyphenName = camelToHyphen(name);
+  if (cssProperties.includes(hyphenName)) {
+    return cssProperties.indexOf(hyphenName).toString(36);
+  }
+
+  return hash(hyphenName).toString(36);
+}
+
 module.exports = {
   expandProperty,
   resolvePathValue,
@@ -137,5 +147,6 @@ module.exports = {
   getDeclaration,
   extractNode,
   getKeyframes,
-  normalizePseudoElements
+  normalizePseudoElements,
+  minifyProperty
 };

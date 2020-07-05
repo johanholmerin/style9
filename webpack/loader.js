@@ -6,13 +6,14 @@ const virtualModules = require('./virtualModules.js');
 async function style9Loader(input, inputSourceMap) {
   const {
     inlineLoader = '',
-    outputCSS = true
+    outputCSS = true,
+    ...options
   } = loaderUtils.getOptions(this) || {};
 
   this.async();
 
   const { code, map, metadata } = await babel.transformAsync(input, {
-    plugins: [babelPlugin],
+    plugins: [[babelPlugin, options]],
     inputSourceMap: inputSourceMap || true,
     sourceFileName: this.resourcePath,
     sourceMaps: true

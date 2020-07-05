@@ -3,7 +3,7 @@ const { stringifyCssRequest } = require('../src/plugin-utils.js');
 
 exports.onCreateWebpackConfig = (
   { stage, loaders, actions, getConfig },
-  { plugins, ...pluginOptions },
+  pluginOptions
 ) => {
   if (stage === 'develop-html') return;
 
@@ -20,13 +20,13 @@ exports.onCreateWebpackConfig = (
     use: [
       {
         loader: Style9Plugin.loader,
-        options: { inlineLoader, outputCSS }
+        options: { inlineLoader, outputCSS, ...pluginOptions }
       }
     ]
   });
 
   if (outputCSS) {
-    config.plugins.push(new Style9Plugin(pluginOptions));
+    config.plugins.push(new Style9Plugin());
   }
 
   actions.replaceWebpackConfig(config);

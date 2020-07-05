@@ -4,7 +4,8 @@ const {
   getClass,
   getDeclaration,
   getKeyframes,
-  normalizePseudoElements
+  normalizePseudoElements,
+  minifyProperty
 } = require('./utils.js');
 const testASTShape = require('./test-ast-shape.js');
 const t = require('@babel/types');
@@ -182,6 +183,21 @@ function generateStyles(styles) {
     .flatMap(props => flattenStyles(props).map(getDeclaration));
 }
 
+function minifyProperties(classes) {
+  const minified = {};
+
+  for (const key in classes) {
+    const minifiedName = minifyProperty(key);
+    const value = classes[key];
+
+    minified[minifiedName] = typeof value === 'object' ?
+      minifyProperties(value) :
+      value;
+  }
+
+  return minified;
+}
+
 function getUses(varDec) {
   if (varDec.isMemberExpression()) {
     return [];
@@ -198,7 +214,7 @@ function getUses(varDec) {
   return [];
 }
 
-function handleCreate(identifier) {
+function handleCreate(identifier, opts) {
   const callExpr = identifier.parentPath.parentPath;
   const objExpr = callExpr.get('arguments.0');
 
@@ -206,7 +222,15 @@ function handleCreate(identifier) {
   const styles = getStyles(objExpr);
   const classes = getClasses(styles);
 
-  replaceDeclaration(callExpr, classes);
+  if (opts.minifyProperties) {
+    const minifiedClasses = Object.fromEntries(
+      Object.entries(classes)
+        .map(([key, value]) => [key, minifyProperties(value)])
+    );
+    replaceDeclaration(callExpr, minifiedClasses);
+  } else {
+    replaceDeclaration(callExpr, classes);
+  }
   replaceUseCalls(uses, classes);
 
   return generateStyles(styles);
@@ -244,19 +268,19 @@ function isPropertyCall(node, name) {
   });
 }
 
-function handleBinding(node) {
+function handleBinding(node, opts) {
   if (node.parentPath.isCallExpression()) return [];
-  if (isPropertyCall(node, 'create')) return handleCreate(node);
+  if (isPropertyCall(node, 'create')) return handleCreate(node, opts);
   if (isPropertyCall(node, 'keyframes')) return handleKeyframes(node);
 
   throw node.buildCodeFrameError('Invalid use');
 }
 
-function handleBindings(bindings) {
+function handleBindings(bindings, opts) {
   return bindings
     // Process keyframes first
     .sort(binding => (isPropertyCall(binding, 'keyframes') ? -1 : 1))
-    .flatMap(handleBinding);
+    .flatMap(node => handleBinding(node, opts));
 }
 
 module.exports = handleBindings;

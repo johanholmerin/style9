@@ -11,7 +11,7 @@ module.exports = function style9BabelPlugin() {
         const importName = path.node.local.name;
         const bindings = path.scope.bindings[importName].referencePaths;
 
-        state.file.metadata.style9 = handleBindings(bindings)
+        state.file.metadata.style9 = handleBindings(bindings, state.opts)
           // Remove duplicates
           .filter((e, i, a) => a.indexOf(e) === i)
           .join('');

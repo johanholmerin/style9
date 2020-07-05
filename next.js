@@ -33,13 +33,17 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         use: [
           {
             loader: Style9Plugin.loader,
-            options: { inlineLoader: getInlineLoader(options), outputCSS }
+            options: {
+              inlineLoader: getInlineLoader(options),
+              outputCSS,
+              ...pluginOptions
+            }
           }
         ]
       });
 
       if (outputCSS) {
-        config.plugins.push(new Style9Plugin(pluginOptions));
+        config.plugins.push(new Style9Plugin());
       }
 
       if (typeof nextConfig.webpack === 'function') {
