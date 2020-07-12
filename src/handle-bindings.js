@@ -165,7 +165,10 @@ function replaceUseCalls(varDec, classes) {
       });
 
       if (!isHMR) {
-        throw use.buildCodeFrameError('Invalid use');
+        throw use.buildCodeFrameError(
+          'Return value from style9.create has to be called as a function or ' +
+          'accessed as an object'
+        );
       }
     }
   }
