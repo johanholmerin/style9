@@ -217,3 +217,11 @@ foo(styles);
   `;
   expect(() => compile(input)).toThrow();
 });
+
+it('throws on non-existing property', () => {
+  const input = `
+import style9 from 'style9';
+style9.foo;
+  `;
+  expect(() => compile(input)).toThrow();
+});
