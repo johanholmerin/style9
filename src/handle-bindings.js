@@ -143,6 +143,8 @@ function replaceUseCalls(varDec, classes) {
     } else if (use.parentPath.isMemberExpression()) {
       getDynamicOrStaticKeys(use.parentPath, Object.keys(classes))
         .forEach(key => names.add(key))
+    } else if (use.parentPath.isSpreadElement()) {
+      return Object.keys(classes);
     } else {
       // The return value from `style9.create` should be a function, but the
       // compiler turns it into an object. Therefore only access to properties
