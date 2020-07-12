@@ -96,22 +96,22 @@ function flattenClasses(classes) {
   );
 }
 
-function getStaticKey(memberExpr) {
+function isDynamicKey(memberExpr) {
   const property = memberExpr.get('property');
 
-  if (
-    !(!memberExpr.computed && property.isIdentifier()) &&
-    !property.isLiteral()
-    ) {
-    throw property.buildCodeFrameError('Key has to be static');
-  }
+  return memberExpr.node.computed && !property.isLiteral();
+}
 
-  return memberExpr.node.property.name || memberExpr.node.property.value;
+function getDynamicOrStaticKeys(memberExpr, allKeys) {
+  // Don't remove any key when using dynamic access
+  if (isDynamicKey(memberExpr)) return allKeys;
+
+  return [memberExpr.node.property.name || memberExpr.node.property.value];
 }
 
 function replaceUseCalls(varDec, classes) {
   if (varDec.isMemberExpression()) {
-    return [getStaticKey(varDec)];
+    return getDynamicOrStaticKeys(varDec, Object.keys(classes));
   }
 
   if (varDec.get('id').isObjectPattern()) {
@@ -138,7 +138,8 @@ function replaceUseCalls(varDec, classes) {
       const expr = generateExpression(args, flatClasses);
       use.parentPath.replaceWith(expr);
     } else if (use.parentPath.isMemberExpression()) {
-      names.add(getStaticKey(use.parentPath));
+      getDynamicOrStaticKeys(use.parentPath, Object.keys(classes))
+        .forEach(key => names.add(key))
     } else {
       // The return value from `style9.create` should be a function, but the
       // compiler turns it into an object. Therefore only access to properties

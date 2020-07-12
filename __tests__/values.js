@@ -145,9 +145,31 @@ import style9 from 'style9';
 const styles = style9.create({
   default: {
     color: 'blue'
+  },
+  red: {
+    color: 'red'
   }
 });
 styles['default']
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});
+
+it('supports dynamic bracket access', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  blue: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+});
+styles[blue]
   `;
   const { code, styles } = compile(input);
 

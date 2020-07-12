@@ -147,10 +147,51 @@ import style9 from 'style9';
 const blue = style9.create({
   blue: {
     color: 'blue'
+  },
+  red: {
+    color: 'red'
   }
 }).blue;
 console.log(blue)
   `;
-  const { code } = compile(input);
+  const { code, styles } = compile(input);
+
   expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});
+
+it('supports static bracket access', () => {
+  const input = `
+import style9 from 'style9';
+const blue = style9.create({
+  blue: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+})['blue'];
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});
+
+it('supports dynamic bracket access', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  blue: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+})[blue];
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
 });
