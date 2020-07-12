@@ -13,7 +13,11 @@ CSS-in-JS compiler based on the ideas of
 ## Install
 
 ```sh
-yarn add git+https://github.com/johanholmerin/style9#semver:^0.5.1
+# Yarn
+yarn add style9
+
+# npm
+npm install style9
 ```
 
 ## Usage
