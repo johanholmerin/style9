@@ -121,6 +121,18 @@ console.log(blue);"
 
 exports[`supports member expression access 2`] = `".c1r9f2e5{color:blue}"`;
 
+exports[`supports spread assignment 1`] = `
+"import style9 from 'style9';
+const { ...styles
+} = {
+  blue: {
+    color: \\"c1r9f2e5\\"
+  }
+};"
+`;
+
+exports[`supports spread assignment 2`] = `".c1r9f2e5{color:blue}"`;
+
 exports[`supports static bracket access 1`] = `
 "import style9 from 'style9';
 const blue = {

@@ -195,3 +195,18 @@ const styles = style9.create({
   expect(code).toMatchSnapshot();
   expect(styles).toMatchSnapshot();
 });
+
+it('supports spread assignment', () => {
+  const input = `
+import style9 from 'style9';
+const { ...styles } = style9.create({
+  blue: {
+    color: 'blue'
+  }
+});
+  `;
+  const { code, styles } = compile(input);
+
+  expect(code).toMatchSnapshot();
+  expect(styles).toMatchSnapshot();
+});

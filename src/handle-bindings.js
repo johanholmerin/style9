@@ -115,13 +115,16 @@ function replaceUseCalls(varDec, classes) {
   }
 
   if (varDec.get('id').isObjectPattern()) {
-    return varDec.get('id.properties').map(prop => {
-      if (!prop.isObjectProperty()) {
-        throw prop.buildCodeFrameError(`Unsupported type ${prop.type}`);
-      }
+    const names = [];
 
-      return prop.node.key.name;
-    });
+    for (const prop of varDec.get('id.properties')) {
+      if (prop.isRestElement()) {
+        return Object.keys(classes);
+      }
+      names.push(prop.node.key.name);
+    }
+
+    return names;
   }
 
   const uses = getUses(varDec);
