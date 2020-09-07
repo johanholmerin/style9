@@ -2,6 +2,7 @@ const babel = require('@babel/core');
 const babelPlugin = require('../babel.js');
 const loaderUtils = require('loader-utils');
 const virtualModules = require('./virtualModules.js');
+const path = require('path')
 
 async function style9Loader(input, inputSourceMap) {
   const {
@@ -16,6 +17,7 @@ async function style9Loader(input, inputSourceMap) {
     plugins: [[babelPlugin, options]],
     inputSourceMap: inputSourceMap || true,
     sourceFileName: this.resourcePath,
+    filename: path.basename(this.resourcePath),
     sourceMaps: true
   });
 
