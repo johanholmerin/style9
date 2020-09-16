@@ -44,33 +44,44 @@ function getStyles(binding) {
   return expandProperties(resolvePathValue(binding));
 }
 
-function getClassValues(styles, { atRules = [], pseudoSelectors = [] } = {}) {
-  const classes = {};
-
-  for (const name in styles) {
-    const value = styles[name];
-
-    if (isNestedStyles(value)) {
-      if (name.startsWith('@')) {
-        classes[name] = getClassValues(value, {
-          atRules: [...atRules, name],
-          pseudoSelectors
-        });
+function reduceStyles(styles, combineFunc, leafFunc, { atRules = [], pseudoSelectors = [] } = {}) {
+  return combineFunc(
+    Object.entries(styles).map(([name, value]) => {
+      if (!isNestedStyles(value)) {
+        return [name, leafFunc({ name, value, atRules, pseudoSelectors })];
+      } else if (name.startsWith('@')) {
+        return [
+          name,
+          reduceStyles(value, combineFunc, leafFunc, {
+            atRules: [...atRules, name],
+            pseudoSelectors
+          }),
+        ];
       } else if (name.startsWith(':')) {
         const normalizedName = normalizePseudoElements(name);
-        classes[normalizedName] = getClassValues(value, {
-          pseudoSelectors: [...pseudoSelectors, normalizedName],
-          atRules
-        });
-      } else {
-        throw new Error(`Invalid key ${name}`);
+        return [
+          normalizedName,
+          reduceStyles(value, combineFunc, leafFunc, {
+            pseudoSelectors: [...pseudoSelectors, normalizedName],
+            atRules
+          })
+        ];
       }
-    } else {
-      classes[name] = getClass({ name, value, atRules, pseudoSelectors });
-    }
-  }
+      throw new Error(`Invalid key ${name}`);
+    })
+  );
+}
 
-  return classes;
+function getClassValues(styles) {
+  return reduceStyles(styles, Object.fromEntries, getClass);
+}
+
+function flattenStyles(styles) {
+  return reduceStyles(
+    styles,
+    entries => entries.flatMap(([_, val]) => val),
+    x => x
+  );
 }
 
 function getClasses(obj) {
@@ -86,13 +97,13 @@ function getClasses(obj) {
 function flattenClasses(classes) {
   return Object.fromEntries(
     Object.entries(classes)
-      .map(([key, value]) => {
-        const objValues = Object.fromEntries(
+      .map(([key, value]) => [
+        key,
+        Object.fromEntries(
           flattenStyles(value)
-            .map(({ value, ...rest })=> [JSON.stringify(rest), value])
-        );
-        return [key, objValues];
-      })
+            .map(({ value, ...rest }) => [JSON.stringify(rest), value])
+        ),
+      ])
   );
 }
 
@@ -195,35 +206,6 @@ function astFromObject(obj) {
 
 function replaceDeclaration(node, classes) {
   node.replaceWith(astFromObject(classes));
-}
-
-function flattenStyles(styles, { atRules = [], pseudoSelectors = [] } = {}) {
-  const flatStyles = [];
-
-  for (const name in styles) {
-    const value = styles[name];
-
-    if (isNestedStyles(value)) {
-      if (name.startsWith('@')) {
-        flatStyles.push(...flattenStyles(value, {
-          atRules: [...atRules, name],
-          pseudoSelectors
-        }));
-      } else if (name.startsWith(':')) {
-        const normalizedName = normalizePseudoElements(name);
-        flatStyles.push(...flattenStyles(value, {
-          pseudoSelectors: [...pseudoSelectors, normalizedName],
-          atRules
-        }));
-      } else {
-        throw new Error(`Invalid key ${name}`);
-      }
-    } else {
-      flatStyles.push({ name, value, atRules, pseudoSelectors });
-    }
-  }
-
-  return flatStyles;
 }
 
 function generateStyles(styles) {
