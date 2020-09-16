@@ -1,9 +1,10 @@
 const {
-  expandProperty,
+  expandProperties,
   resolvePathValue,
   getClass,
   getDeclaration,
   getKeyframes,
+  isNestedStyles,
   normalizePseudoElements,
   minifyProperty
 } = require('./utils.js');
@@ -11,34 +12,6 @@ const testASTShape = require('./test-ast-shape.js');
 const t = require('@babel/types');
 const generateExpression = require('./generate-expression.js');
 const normalizeArguments = require('./normalize-arguments.js');
-
-/**
- * Values can be arrays
- */
-function isNestedStyles(item) {
-  return typeof item === 'object' && !Array.isArray(item);
-}
-
-function expandProperties(obj) {
-  const expanded = {};
-
-  for (const key in obj) {
-    const value = obj[key];
-
-    if (isNestedStyles(value)) {
-      expanded[key] = expandProperties(value);
-    } else {
-      for (const prop of expandProperty(key)) {
-        // Longhand takes precedent
-        if (prop in obj && prop !== key) continue;
-
-        expanded[prop] = value;
-      }
-    }
-  }
-
-  return expanded;
-}
 
 function getStyles(binding) {
   return expandProperties(resolvePathValue(binding));

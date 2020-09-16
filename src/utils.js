@@ -3,8 +3,11 @@ const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants.js');
 const hash = require('murmurhash-js');
 const cssProperties = require('known-css-properties').all;
 
-function expandProperty(prop) {
-  return SHORTHAND_EXPANSIONS[prop] || [prop];
+/**
+ * Values can be arrays
+ */
+function isNestedStyles(item) {
+  return typeof item === 'object' && !Array.isArray(item);
 }
 
 const BASE_FONT_SIZE_PX = 16;
@@ -40,21 +43,48 @@ function resolvePathValue(path) {
   throw deopt.buildCodeFrameError('Could not evaluate value');
 }
 
+function formatCssRule(prop, value) {
+  return `${camelToHyphen(prop)}:${normalizeValue(prop, value)}`;
+}
+
+function expandProperty(prop) {
+  return SHORTHAND_EXPANSIONS[prop] || [prop];
+}
+
+function expandProperties(obj) {
+  const expanded = {};
+
+  for (const key in obj) {
+    const value = obj[key];
+
+    if (isNestedStyles(value)) {
+      expanded[key] = expandProperties(value);
+    } else {
+      for (const prop of expandProperty(key)) {
+        // Longhand takes precedent
+        if (prop in obj && prop !== key) continue;
+
+        expanded[prop] = value;
+      }
+    }
+  }
+
+  return expanded;
+}
+
 function getDeclaration({ name, value, atRules, pseudoSelectors }) {
   const cls = getClass({ name, value, atRules, pseudoSelectors });
 
-  return (
-    atRules.map(rule => rule + '{').join('') +
-    '.' +
-    cls +
-    pseudoSelectors.join('') +
-    '{' +
-    camelToHyphen(name) +
-    ':' +
-    normalizeValue(name, value) +
-    '}' +
-    atRules.map(() => '}').join('')
-  );
+  return [
+    ...atRules.flatMap(rule => [rule, '{']),
+    '.',
+    cls,
+    ...pseudoSelectors,
+    '{',
+    formatCssRule(name, value),
+    '}',
+    ...atRules.map(() => '}')
+  ].join('');
 }
 
 function normalizeTime(time) {
@@ -63,28 +93,15 @@ function normalizeTime(time) {
   return time;
 }
 
-function stringifyKeyframes(rules) {
-  let str = '';
-
-  for (const time in rules) {
-    str += `${normalizeTime(time)}{`;
-
-    for (const key in rules[time]) {
-      const value = rules[time][key];
-
-      for (const prop of expandProperty(key)) {
-        // Longhand takes precedent
-        if (prop in rules[time] && prop !== key) continue;
-
-        str += `${camelToHyphen(prop)}:${normalizeValue(prop, value)};`;
-      }
-    }
-
-    // Remove last semicolon
-    str = str.slice(0, -1) + '}';
-  }
-
-  return str;
+function stringifyKeyframes(frames) {
+  return Object.entries(frames).flatMap(([time, styles]) => [
+    normalizeTime(time),
+    '{',
+    Object.entries(expandProperties(styles)).map(
+      ([prop, value]) => formatCssRule(prop, value)
+    ).join(';'),
+    '}',
+  ]).join('');
 }
 
 function getKeyframes(rules) {
@@ -141,12 +158,13 @@ function minifyProperty(name) {
 }
 
 module.exports = {
-  expandProperty,
+  expandProperties,
   resolvePathValue,
   getClass,
   getDeclaration,
   extractNode,
   getKeyframes,
+  isNestedStyles,
   normalizePseudoElements,
   minifyProperty
 };
