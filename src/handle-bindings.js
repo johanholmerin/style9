@@ -17,7 +17,8 @@ function getStyles(binding) {
   return expandProperties(resolvePathValue(binding));
 }
 
-function reduceStyles(styles, combineFunc, leafFunc, { atRules = [], pseudoSelectors = [] } = {}) {
+function reduceStyles(styles, combineFunc, leafFunc,
+		{ atRules = [], pseudoSelectors = [] } = {}) {
   return combineFunc(
     Object.entries(styles).map(([name, value]) => {
       if (!isNestedStyles(value)) {
@@ -52,7 +53,7 @@ function getClassValues(styles) {
 function flattenStyles(styles) {
   return reduceStyles(
     styles,
-    entries => entries.flatMap(([_, val]) => val),
+    entries => entries.flatMap(([, val]) => val),
     x => x
   );
 }
