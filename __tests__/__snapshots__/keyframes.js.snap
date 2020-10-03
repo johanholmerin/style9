@@ -16,10 +16,10 @@ exports[`converts to 2`] = `"@keyframes c1yehff3{100%{color:blue}}"`;
 
 exports[`supports keyframes 1`] = `
 "import style9 from 'style9';
-\\"c5c3aul\\";"
+\\"clbvhnp\\";"
 `;
 
-exports[`supports keyframes 2`] = `"@keyframes c5c3aul{0%{color:blue}100%}}"`;
+exports[`supports keyframes 2`] = `"@keyframes clbvhnp{0%{color:blue}}"`;
 
 exports[`supports settings animationName directly 1`] = `
 "import style9 from 'style9';

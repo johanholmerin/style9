@@ -67,6 +67,8 @@ function stringifyKeyframes(rules) {
   let str = '';
 
   for (const time in rules) {
+    if (!Object.keys(rules[time]).length) continue;
+
     str += `${normalizeTime(time)}{`;
 
     for (const key in rules[time]) {
