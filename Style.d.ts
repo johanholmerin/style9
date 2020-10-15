@@ -199,11 +199,6 @@ interface FlexStyle {
   alignItems?: FlexAlignType;
   alignSelf?: 'auto' | FlexAlignType;
   aspectRatio?: number;
-  borderBottomWidth?: number;
-  borderLeftWidth?: number;
-  borderRightWidth?: number;
-  borderTopWidth?: number;
-  borderWidth?: number;
   bottom?: number | string;
   display?: (
     | DisplayOutside
