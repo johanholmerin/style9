@@ -197,3 +197,27 @@ module.exports = {
 ## Vue.js
 
 There is [an example repo](https://github.com/johanholmerin/style9-vue-example) you can see to get started.
+
+## CSS Custom Properties with TypeScript
+
+When using CSS properties not included in the [type definition](Style.d.ts), such as [CSS
+Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*),
+TypeScript will error. There are two ways of dealing with this:
+
+1. Module augmentation. This will affect every use.
+```typescript
+declare module 'style9/Style' {
+  interface StyleProperties {
+    '--bg-color'?: string;
+  }
+}
+```
+
+2. Type assertion
+```typescript
+const styles = style9.create({
+  lightTheme: {
+    ["--bg-color" as any]: "#CCC"
+  }
+});
+```
