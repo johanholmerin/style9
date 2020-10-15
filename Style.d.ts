@@ -137,6 +137,10 @@ interface ViewStyle extends
   borderRightColor?: string;
   borderRightWidth?: number;
   borderStyle?: 'none' | BorderStyle;
+  borderTopStyle?: 'none' | BorderStyle;
+  borderRightStyle?: 'none' | BorderStyle;
+  borderBottomStyle?: 'none' | BorderStyle;
+  borderLeftStyle?: 'none' | BorderStyle;
   borderTopColor?: string;
   borderTopLeftRadius?: number;
   borderTopRightRadius?: number;
