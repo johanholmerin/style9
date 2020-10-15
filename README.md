@@ -61,13 +61,24 @@ const moreStyles = style9.create({
     // Integers are converted to pixels where appropriate
     marginTop: 8
   },
+  longhands: {
+    // Because of how classnames are resolved,
+    // shorthand CSS properties are not supported
+    // background: 'red' // INVALID
+    backgroundColor: 'red', // OK
+    // Some shorthand properties can be automatically expanded
+    borderColor: 'blue' // will make all sides blue
+    // Supported shorthands include borderColor, borderRadius, borderStyle,
+    // borderWidth, margin, overflow, overscrollBehavior, and padding
+    // See Style.d.ts for a complete list of supported CSS properties
+  },
   padding: {
     // Longhands take precedent over shorthands
     // Will resolve to '12px 12px 12px 18px'
     paddingLeft: 18,
+    padding: 12
     // Shorthand values will be copied to longhands which means
     // `padding: '12px 18px'` etc. is not supported
-    padding: 12
   },
   text: {
     // Font size is converted to REMs to follow users settings
