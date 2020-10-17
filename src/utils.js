@@ -9,7 +9,13 @@ function expandProperty(prop) {
 
 const BASE_FONT_SIZE_PX = 16;
 
+function isCustomProperty(name) {
+  return name.startsWith('--');
+}
+
 function normalizeValue(prop, value) {
+  if (isCustomProperty(prop)) return value;
+
   if (typeof value === 'number' ) {
     if (prop === 'fontSize') return `${value / BASE_FONT_SIZE_PX}rem`;
     if (!UNITLESS_NUMBERS.includes(prop)) return `${value}px`;
@@ -28,6 +34,7 @@ function getClass(...args) {
 }
 
 function camelToHyphen(string) {
+  if (isCustomProperty(string)) return string;
   return string.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
 }
 
