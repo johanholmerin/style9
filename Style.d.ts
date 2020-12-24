@@ -115,6 +115,48 @@ type Appearance = (
   | 'progress-bar'
 );
 
+type Cursor = (
+  // global
+  | 'inherit'
+  | 'initial'
+  | 'unset'  
+  // keyword
+  | 'alias'
+  | 'all-scroll'
+  | 'auto'
+  | 'cell'
+  | 'col-resize'
+  | 'context-menu'
+  | 'copy'
+  | 'crosshair'
+  | 'default'
+  | 'e-resize'
+  | 'grab'
+  | 'grabbing'
+  | 'help'
+  | 'move'
+  | 'n-resize'
+  | 'ne-resize'
+  | 'nesw-resize'
+  | 'no-drop'
+  | 'none'
+  | 'not-allowed'
+  | 'nw-resize'
+  | 'nwse-resize'
+  | 'pointer'
+  | 'progress'
+  | 'row-resize'
+  | 's-resize'
+  | 'se-resize'
+  | 'sw-resize'
+  | 'text'
+  | 'vertical-text'
+  | 'w-resize'
+  | 'wait'
+  | 'zoom-in'
+  | 'zoom-out'
+);
+
 interface ViewStyle extends
   FlexStyle,
   TransformsStyle,
@@ -161,6 +203,7 @@ interface ViewStyle extends
   columnWidth?: number | string;
   columnCount?: number;
   content?: string;
+  cursor?: Cursor
 }
 
 type FlexAlignType = (
@@ -406,6 +449,7 @@ interface SvgStyle {
   color?: string;
   colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
   colorRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+  cursor?: Cursor;
   dominantBaseline?: (
     | 'auto'
     | 'text-bottom'
