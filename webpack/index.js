@@ -13,8 +13,8 @@ class Style9Plugin {
 
     compiler.hooks.compilation.tap(NAME, compilation => {
       compilation.hooks.optimizeChunkAssets.tapPromise(NAME, async chunks => {
-        const paths = chunks
-          .flatMap(chunk => chunk.files)
+        const paths = Array.from(chunks)
+          .flatMap(chunk => Array.from(chunk.files))
           .filter(path => path.match(this.test));
 
         for (const path of paths) {
