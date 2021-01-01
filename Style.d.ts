@@ -119,7 +119,7 @@ type Cursor = (
   // global
   | 'inherit'
   | 'initial'
-  | 'unset'  
+  | 'unset'
   // keyword
   | 'alias'
   | 'all-scroll'
