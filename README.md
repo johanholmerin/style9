@@ -32,6 +32,10 @@ const styles = style9.create({
   },
   red: {
     color: 'red'
+  },
+  boldYellow: {
+    color: 'yellow',
+    fontWeight: 'bold'
   }
 });
 
@@ -40,13 +44,19 @@ const styles = style9.create({
 // Ternary operator and logical AND is supported
 document.body.className = styles('blue', isRed && 'red');
 
-// `styles` can also be called with an object of booleans
+// Styles are merged like `Object.assign`, with later styles taking precedent
+styles('blue', 'red') // will be red
+styles('red', 'blue') // will be blue
+styles('red', 'blue', 'boldYellow') // will be yellow and bold
+
+// `styles` can also be called with an object of booleans. Later keys take precedent
 styles({
   blue: isBlue,
   red: isRed
 });
 
 // To combine with external styles, style9 can be called with the style objects
+// Styles are merged like above
 style9(styles.blue, otherStyles.yellow);
 
 // Styles have to be statically defined, but constants are supported
