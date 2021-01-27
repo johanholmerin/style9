@@ -350,6 +350,7 @@ interface TextStyle {
   textDecorationLine?: 'none' | TextDecorationLine | TextDecorationLine[];
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
   textDecorationColor?: string;
+  textOverflow?: 'clip' | 'ellipsis' | 'initial' | 'inherit';
   textShadow?: string;
   verticalAlign?: number | string;
   WebkitFontSmoothing?: (
@@ -377,7 +378,7 @@ interface TextStyle {
   lineBreak?: 'auto' | 'loose' | 'normal' | 'strict' | 'anywhere';
   overflowWrap?: 'normal' | 'break-word' | 'anywhere';
   tabSize?: number | string;
-  textIndent?: number | string;
+  textIndent?: number | string | 'inherit';
   textJustify?: 'none' | 'auto' | 'inter-character' | 'inter-word';
   textTransform?: (
     | 'none'
