@@ -189,6 +189,7 @@ interface ViewStyle extends
   borderTopWidth?: number;
   borderWidth?: number;
   boxSizing?: 'content-box' | 'border-box';
+  boxShadow?: string;
   opacity?: number;
   outlineColor?: string;
   outlineOffset?: number | string;
