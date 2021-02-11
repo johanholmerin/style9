@@ -160,6 +160,7 @@ export default {
       // Either fileName or name is required. It will be passed to emitFile
       // fileName: unique name to for output file
       // name: name to use for output.assetFileNames pattern
+      // parserOptions: options to pass to the Babel parser
       // ...Options
     })
   ]
@@ -178,7 +179,10 @@ module.exports = {
       {
         test: /\.(tsx|ts|js|mjs|jsx)$/,
         use: Style9Plugin.loader,
-        options: { /* ...Options */ }
+        options: {
+          // parserOptions: options to pass to the Babel parser
+          // ...Options
+        }
       },
       {
         test: /\.css$/i,
@@ -199,7 +203,10 @@ module.exports = {
 const withTM = require('next-transpile-modules')(['style9']);
 const withStyle9 = require('style9/next');
 
-module.exports = withStyle9({ /* ...Options */ })(withTM());
+module.exports = withStyle9({
+  // parserOptions: options to pass to the Babel parser
+  // ...Options
+})(withTM());
 ```
 
 ## Gatsby
@@ -209,7 +216,10 @@ module.exports = {
   plugins: [
     {
       resolve: 'style9/gatsby',
-      options: { /* ...Options */ }
+      options: {
+        // parserOptions: options to pass to the Babel parser
+        // ...Options
+      }
     }
   ]
 }

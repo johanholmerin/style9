@@ -8,7 +8,10 @@ module.exports = function style9Plugin({
   include,
   exclude,
   fileName,
-  name
+  name,
+  parserOptions = {
+    plugins: ['typescript', 'jsx'],
+  }
 } = {}) {
   // Default name required to ensure extension
   if (!fileName && !name) name = 'index.css';
@@ -22,7 +25,8 @@ module.exports = function style9Plugin({
       if (!filter(id)) return;
 
       const { code, map, metadata } = await babel.transformAsync(input, {
-        plugins: [babelPlugin]
+        plugins: [babelPlugin],
+        parserOpts: parserOptions
       });
 
       styles[id] = metadata.style9 || '';

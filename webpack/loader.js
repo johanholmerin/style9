@@ -8,6 +8,9 @@ async function style9Loader(input, inputSourceMap) {
   const {
     inlineLoader = '',
     outputCSS = true,
+    parserOptions = {
+      plugins: ['typescript', 'jsx'],
+    },
     ...options
   } = loaderUtils.getOptions(this) || {};
 
@@ -18,7 +21,8 @@ async function style9Loader(input, inputSourceMap) {
     inputSourceMap: inputSourceMap || true,
     sourceFileName: this.resourcePath,
     filename: path.basename(this.resourcePath),
-    sourceMaps: true
+    sourceMaps: true,
+    parserOpts: parserOptions
   });
 
   if (metadata.style9 === undefined) {
