@@ -28,7 +28,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
     webpack(config, options) {
       const outputCSS = !options.isServer;
 
-      config.module.rules.unshift({
+      config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
         use: [
           {
