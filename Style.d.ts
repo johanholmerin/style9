@@ -169,32 +169,32 @@ interface ViewStyle extends
   backgroundColor?: string;
   backgroundClip?: 'border-box' | 'padding-box' | 'content-box';
   borderBottomColor?: string;
-  borderBottomLeftRadius?: number;
-  borderBottomRightRadius?: number;
-  borderBottomWidth?: number;
+  borderBottomLeftRadius?: number | string;
+  borderBottomRightRadius?: number | string;
+  borderBottomWidth?: number | string;
   borderColor?: string;
   borderLeftColor?: string;
-  borderLeftWidth?: number;
-  borderRadius?: number;
+  borderLeftWidth?: number | string;
+  borderRadius?: number | string;
   borderRightColor?: string;
-  borderRightWidth?: number;
+  borderRightWidth?: number | string;
   borderStyle?: 'none' | BorderStyle;
   borderTopStyle?: 'none' | BorderStyle;
   borderRightStyle?: 'none' | BorderStyle;
   borderBottomStyle?: 'none' | BorderStyle;
   borderLeftStyle?: 'none' | BorderStyle;
   borderTopColor?: string;
-  borderTopLeftRadius?: number;
-  borderTopRightRadius?: number;
-  borderTopWidth?: number;
-  borderWidth?: number;
+  borderTopLeftRadius?: number | string;
+  borderTopRightRadius?: number | string;
+  borderTopWidth?: number | string;
+  borderWidth?: number | string;
   boxSizing?: 'content-box' | 'border-box';
   boxShadow?: string;
-  opacity?: number;
+  opacity?: number | string;
   outlineColor?: string;
   outlineOffset?: number | string;
   outlineStyle?: 'none' | BorderStyle;
-  outlineWidth?: number;
+  outlineWidth?: number | string;
   clear?: 'none' | 'left' | 'right' | 'both';
   float?: 'none' | 'left' | 'right';
   appearance?: Appearance;
@@ -202,7 +202,7 @@ interface ViewStyle extends
   WebkitTouchHighlightColor?: string;
   pointerEvents?: 'none' | 'auto';
   columnWidth?: number | string;
-  columnCount?: number;
+  columnCount?: number | 'auto';
   content?: string;
   cursor?: Cursor
 }
@@ -246,7 +246,7 @@ interface FlexStyle {
   );
   alignItems?: FlexAlignType;
   alignSelf?: 'auto' | FlexAlignType;
-  aspectRatio?: number;
+  aspectRatio?: number | 'auto';
   bottom?: number | string;
   display?: (
     | DisplayOutside
@@ -328,7 +328,7 @@ type TextDecorationLine = 'underline' | 'line-through' | 'overline';
 interface TextStyle {
   color?: string;
   fontFamily?: string;
-  fontSize?: number;
+  fontSize?: number | string;
   fontStyle?: 'normal' | 'italic';
   fontVariant?: FontVariant[];
   fontWeight?: (
