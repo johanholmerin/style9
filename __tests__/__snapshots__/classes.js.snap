@@ -13,6 +13,21 @@ const _foo = foo();
 _foo ? \\"c1r9f2e5 \\" : \\"\\";"
 `;
 
+exports[`keeps multiple instances of same value 1`] = `
+"import style9 from 'style9';
+const styles = {
+  default: {
+    color: \\"c1r9f2e5\\"
+  },
+  blue: {
+    color: \\"c1r9f2e5\\"
+  }
+};
+const _false = false;
+const _true = true;
+_true ? \\"c1r9f2e5 \\" : _false ? \\"c1r9f2e5 \\" : \\"\\";"
+`;
+
 exports[`mixed 1`] = `
 "import style9 from 'style9';
 const styles = {

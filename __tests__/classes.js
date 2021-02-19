@@ -226,3 +226,20 @@ console.log({ ...styles });
   expect(code).toMatchSnapshot();
   expect(styles).toMatchSnapshot();
 });
+
+it('keeps multiple instances of same value', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  },
+  blue: {
+    color: 'blue'
+  }
+});
+styles(false && 'default', true && 'blue');
+  `;
+  const { code } = compile(input);
+  expect(code).toMatchSnapshot();
+});

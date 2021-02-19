@@ -24,16 +24,14 @@ function getConditionalArgs(args, classes) {
         newArgs.push(t.stringLiteral(cls + ' '));
       }
 
+      prevValue = cls;
       return newArgs;
     }
 
-    if (prevValue !== cls) {
-      newArgs.push({
-        test: arg.test,
-        value: t.stringLiteral(cls + ' ')
-      });
-    }
-    prevValue = cls;
+    newArgs.push({
+      test: arg.test,
+      value: t.stringLiteral(cls + ' ')
+    });
   }
 
   if (newArgs.length) {
