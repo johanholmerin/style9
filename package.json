@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "babel-jest": "^26.1.0",
+    "babel-plugin-tester": "^10.0.0",
     "eslint": "^6.8.0",
     "jest": "^25.1.0",
     "rollup": "^1.29.0",
@@ -53,7 +54,8 @@
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "__tests__/compile.js"
+      "__tests__/compile.js",
+      "__tests__/code/fixtures/"
     ],
     "transform": {
       "\\/index\\.js$": [

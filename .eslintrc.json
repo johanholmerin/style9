@@ -18,5 +18,8 @@
   "env": {
     "node": true,
     "es6": true
-  }
+  },
+  "ignorePatterns": [
+    "__tests__/code/fixtures/"
+  ]
 }
