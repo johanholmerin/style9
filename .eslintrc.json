@@ -7,7 +7,15 @@
   "rules": {
     "curly": ["error", "multi-line"],
     "linebreak-style": ["error", "unix"],
-    "max-len": ["error", 80, { "ignoreComments": true }],
+    "max-len": [
+      "error",
+      80,
+      {
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
     "new-cap": "off",
     "no-case-declarations": "error",
     "no-confusing-arrow": "error",
