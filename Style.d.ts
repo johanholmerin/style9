@@ -394,7 +394,7 @@ interface TextStyle {
 }
 
 interface TransitionStyle {
-  transitionProperty?: keyof Style;
+  transitionProperty?: keyof StyleProperties;
   transitionDuration?: string;
   transitionTimingFunction?: string;
   transitionDelay?: string;
