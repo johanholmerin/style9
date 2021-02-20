@@ -16,7 +16,7 @@ function isCustomProperty(name) {
 function normalizeValue(prop, value) {
   if (isCustomProperty(prop)) return value;
 
-  if (typeof value === 'number' ) {
+  if (typeof value === 'number') {
     if (prop === 'fontSize') return `${value / BASE_FONT_SIZE_PX}rem`;
     if (!UNITLESS_NUMBERS.includes(prop)) return `${value}px`;
   }
@@ -115,15 +115,16 @@ function extractNode(path, node) {
     path.scope.path.ensureBlock();
   }
 
-  path.getStatementParent().insertBefore(
-    t.variableDeclaration('const', [
-      t.variableDeclarator(t.identifier(name), node)
-    ])
-  );
+  path
+    .getStatementParent()
+    .insertBefore(
+      t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(name), node)
+      ])
+    );
 
   return t.identifier(name);
 }
-
 
 const LEGACY_PSEUDO_ELEMENTS = [
   ':before',

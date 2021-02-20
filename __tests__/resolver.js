@@ -4,11 +4,11 @@ const style9 = require('../index.js').default;
 it('combines different properties', () => {
   const input = {
     a: {
-      foo: 'foo',
+      foo: 'foo'
     },
     b: {
-      bar: 'bar',
-    },
+      bar: 'bar'
+    }
   };
   expect(style9(input.a, input.b)).toBe('foo bar');
 });
@@ -16,11 +16,11 @@ it('combines different properties', () => {
 it('merges from right to left', () => {
   const input = {
     a: {
-      foo: 'foo',
+      foo: 'foo'
     },
     b: {
-      foo: 'bar',
-    },
+      foo: 'bar'
+    }
   };
   expect(style9(input.a, input.b)).toBe('bar');
 });
@@ -28,8 +28,8 @@ it('merges from right to left', () => {
 it('ignores falsy values', () => {
   const input = {
     a: {
-      foo: 'foo',
-    },
+      foo: 'foo'
+    }
   };
   expect(style9(input.a, false, undefined, null)).toBe('foo');
 });
@@ -39,12 +39,12 @@ it('handles nested objects', () => {
     a: {
       foo: 'foo',
       first: {
-        foo: 'baz',
-      },
+        foo: 'baz'
+      }
     },
     b: {
-      foo: 'bar',
-    },
+      foo: 'bar'
+    }
   };
   expect(style9(input.a, input.b)).toBe('bar baz');
 });
@@ -54,15 +54,15 @@ it('merges nested objects', () => {
     a: {
       foo: 'foo',
       first: {
-        foo: 'baz',
-      },
+        foo: 'baz'
+      }
     },
     b: {
       foo: 'bar',
       first: {
-        foo: 'biz',
-      },
-    },
+        foo: 'biz'
+      }
+    }
   };
   expect(style9(input.a, input.b)).toBe('bar biz');
 });
@@ -74,13 +74,13 @@ it('handles deeply nested objects', () => {
       first: {
         foo: 'baz',
         second: {
-          foo: 'bop',
-        },
-      },
+          foo: 'bop'
+        }
+      }
     },
     b: {
-      foo: 'bar',
-    },
+      foo: 'bar'
+    }
   };
   expect(style9(input.a, input.b)).toBe('bar baz bop');
 });
@@ -92,19 +92,19 @@ it('merges deeply nested objects', () => {
       first: {
         foo: 'baz',
         second: {
-          foo: 'bop',
-        },
-      },
+          foo: 'bop'
+        }
+      }
     },
     b: {
       foo: 'bar',
       first: {
         foo: 'biz',
         second: {
-          foo: 'bip',
-        },
-      },
-    },
+          foo: 'bip'
+        }
+      }
+    }
   };
   expect(style9(input.a, input.b)).toBe('bar biz bip');
 });
@@ -116,25 +116,25 @@ it('merges several deeply nested objects', () => {
       first: {
         foo: 'baz',
         second: {
-          foo: 'bop',
-        },
-      },
+          foo: 'bop'
+        }
+      }
     },
     b: {
       foo: 'bar',
       first: {
         foo: 'biz',
         second: {
-          foo: 'bip',
-        },
-      },
+          foo: 'bip'
+        }
+      }
     },
     c: {
       foo: 'bup',
       first: {
-        foo: 'bap',
-      },
-    },
+        foo: 'bap'
+      }
+    }
   };
   expect(style9(input.a, input.b, input.c)).toBe('bup bap bip');
 });
@@ -146,19 +146,19 @@ it('does not modify objects', () => {
       first: {
         foo: 'baz',
         second: {
-          foo: 'bop',
-        },
-      },
+          foo: 'bop'
+        }
+      }
     },
     b: {
       foo: 'bar',
       first: {
         foo: 'biz',
         second: {
-          foo: 'bip',
-        },
-      },
-    },
+          foo: 'bip'
+        }
+      }
+    }
   };
   const clone = JSON.parse(JSON.stringify(input));
   style9(input.a, input.b);

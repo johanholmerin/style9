@@ -53,7 +53,7 @@
  * THE SOFTWARE.
  */
 
-type PseudoElements = (
+type PseudoElements =
   | '::before'
   | '::after'
   | '::first-letter'
@@ -66,10 +66,9 @@ type PseudoElements = (
   | '::-webkit-search-results-decoration'
   | '::-webkit-search-decoration'
   | '::-webkit-inner-spin-button'
-  | '::-webkit-outer-spin-button'
-);
+  | '::-webkit-outer-spin-button';
 
-type PseudoClasses = (
+type PseudoClasses =
   | ':focus-within'
   | ':first-child'
   | ':last-child'
@@ -79,15 +78,15 @@ type PseudoClasses = (
   | ':focus'
   | ':active'
   | ':visited'
-  | ':disabled'
-);
+  | ':disabled';
 
-type Style = StyleProperties & {
-  // Mixed keys not possible in TypeScript
-  // https://github.com/microsoft/TypeScript/issues/17867
-  // [key: string]: Style;
-  [key in PseudoClasses | PseudoElements]?: Style;
-};
+type Style = StyleProperties &
+  {
+    // Mixed keys not possible in TypeScript
+    // https://github.com/microsoft/TypeScript/issues/17867
+    // [key: string]: Style;
+    [key in PseudoClasses | PseudoElements]?: Style;
+  };
 
 export default Style;
 
@@ -95,7 +94,7 @@ export interface StyleProperties extends ViewStyle, TextStyle {}
 
 type BorderStyle = 'solid' | 'dotted' | 'dashed';
 
-type Appearance = (
+type Appearance =
   | 'none'
   | 'auto'
   | 'button'
@@ -112,12 +111,11 @@ type Appearance = (
   | 'menulist-button'
   | 'listbox'
   | 'meter'
-  | 'progress-bar'
-);
+  | 'progress-bar';
 
-type Cursor = (
-  // global
-  | 'inherit'
+type Cursor =
+  | // global
+  'inherit'
   | 'initial'
   | 'unset'
   // keyword
@@ -154,17 +152,15 @@ type Cursor = (
   | 'w-resize'
   | 'wait'
   | 'zoom-in'
-  | 'zoom-out'
-);
+  | 'zoom-out';
 
-interface ViewStyle extends
-  FlexStyle,
-  TransformsStyle,
-  TransitionStyle,
-  AnimationStyle,
-  SnapStyle,
-  SvgStyle
-{
+interface ViewStyle
+  extends FlexStyle,
+    TransformsStyle,
+    TransitionStyle,
+    AnimationStyle,
+    SnapStyle,
+    SvgStyle {
   backfaceVisibility?: 'visible' | 'hidden';
   backgroundColor?: string;
   backgroundClip?: 'border-box' | 'padding-box' | 'content-box';
@@ -204,20 +200,19 @@ interface ViewStyle extends
   columnWidth?: number | string;
   columnCount?: number | 'auto';
   content?: string;
-  cursor?: Cursor
+  cursor?: Cursor;
 }
 
-type FlexAlignType = (
+type FlexAlignType =
   | 'flex-start'
   | 'flex-end'
   | 'center'
   | 'stretch'
-  | 'baseline'
-);
+  | 'baseline';
 
 type DisplayOutside = 'block' | 'inline';
 type DisplayInside = 'flow-root' | 'table' | 'flex' | 'grid';
-type DisplayInternal = (
+type DisplayInternal =
   | 'table-row-group'
   | 'table-header-group'
   | 'table-footer-group'
@@ -225,50 +220,45 @@ type DisplayInternal = (
   | 'table-cell'
   | 'table-column-group'
   | 'table-column'
-  | 'table-caption'
-);
+  | 'table-caption';
 type DisplayBox = 'contents' | 'none';
-type DisplayLegacy = (
+type DisplayLegacy =
   | 'inline-block'
   | 'inline-table'
   | 'inline-flex'
-  | 'inline-grid'
-);
+  | 'inline-grid';
 
 interface FlexStyle {
-  alignContent?: (
+  alignContent?:
     | 'flex-start'
     | 'flex-end'
     | 'center'
     | 'stretch'
     | 'space-between'
-    | 'space-around'
-  );
+    | 'space-around';
   alignItems?: FlexAlignType;
   alignSelf?: 'auto' | FlexAlignType;
   aspectRatio?: number | 'auto';
   bottom?: number | string;
-  display?: (
+  display?:
     | DisplayOutside
     | DisplayInside
     | DisplayInternal
     | DisplayBox
-    | DisplayLegacy
-  );
+    | DisplayLegacy;
   flexBasis?: number | string;
   flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   flexGrow?: number;
   flexShrink?: number;
   flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
   height?: number | string;
-  justifyContent?: (
+  justifyContent?:
     | 'flex-start'
     | 'flex-end'
     | 'center'
     | 'space-between'
     | 'space-around'
-    | 'space-evenly'
-  );
+    | 'space-evenly';
   left?: number | string;
   margin?: number | string;
   marginBottom?: number | string;
@@ -292,13 +282,12 @@ interface FlexStyle {
   zIndex?: number;
   direction?: 'inherit' | 'ltr' | 'rtl';
   gridAutoColumns?: string;
-  gridAutoFlow?: (
+  gridAutoFlow?:
     | 'row'
     | 'column'
     | 'dense'
     | ['row', 'dense']
-    | ['column', 'dense']
-  );
+    | ['column', 'dense'];
   gridAutoRows?: string;
   gridColumnEnd?: string;
   gridColumnGap?: string;
@@ -315,13 +304,12 @@ export interface TransformsStyle {
   transform?: string;
 }
 
-type FontVariant = (
+type FontVariant =
   | 'small-caps'
   | 'oldstyle-nums'
   | 'lining-nums'
   | 'tabular-nums'
-  | 'proportional-nums'
-);
+  | 'proportional-nums';
 
 type TextDecorationLine = 'underline' | 'line-through' | 'overline';
 
@@ -331,7 +319,7 @@ interface TextStyle {
   fontSize?: number | string;
   fontStyle?: 'normal' | 'italic';
   fontVariant?: FontVariant[];
-  fontWeight?: (
+  fontWeight?:
     | 'normal'
     | 'bold'
     | '100'
@@ -342,8 +330,7 @@ interface TextStyle {
     | '600'
     | '700'
     | '800'
-    | '900'
-  );
+    | '900';
   letterSpacing?: number | string;
   lineHeight?: number | string;
   textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
@@ -354,41 +341,37 @@ interface TextStyle {
   textOverflow?: 'clip' | 'ellipsis' | 'initial' | 'inherit';
   textShadow?: string;
   verticalAlign?: number | string;
-  WebkitFontSmoothing?: (
+  WebkitFontSmoothing?:
     | 'none'
     | 'auto'
     | 'antialiased'
-    | 'subpixel-antialiased'
-  );
+    | 'subpixel-antialiased';
   MozOsxFontSmoothing?: 'auto' | 'grayscale';
-  textRendering?: (
+  textRendering?:
     | 'auto'
     | 'optimizeSpeed'
     | 'optimizeLegibility'
-    | 'geometricPrecision'
-  );
+    | 'geometricPrecision';
   visibility?: 'visible' | 'hidden' | 'collapse';
-  whiteSpace?: (
+  whiteSpace?:
     | 'normal'
     | 'pre'
     | 'nowrap'
     | 'pre-wrap'
     | 'pre-line'
-    | 'break-spaces'
-  );
+    | 'break-spaces';
   lineBreak?: 'auto' | 'loose' | 'normal' | 'strict' | 'anywhere';
   overflowWrap?: 'normal' | 'break-word' | 'anywhere';
   tabSize?: number | string;
   textIndent?: number | string | 'inherit';
   textJustify?: 'none' | 'auto' | 'inter-character' | 'inter-word';
-  textTransform?: (
+  textTransform?:
     | 'none'
     | 'capitalize'
     | 'uppercase'
     | 'lowercase'
     | 'full-width'
-    | 'full-size-kana'
-  );
+    | 'full-size-kana';
   wordBreak?: 'normal' | 'break-all' | 'keep-all' | 'break-word';
   wordSpacing?: 'normal' | number | string;
 }
@@ -416,10 +399,9 @@ type ScrollSnapType = 'none' | 'x' | 'y' | 'block' | 'inline' | 'both';
 type ScrollSnapAlign = 'none' | 'start' | 'end' | 'center';
 
 interface SnapStyle {
-  scrollSnapType?: (
+  scrollSnapType?:
     | ScrollSnapType
-    | [ScrollSnapType, ('mandatory' | 'proximity')?]
-  );
+    | [ScrollSnapType, ('mandatory' | 'proximity')?];
   scrollSnapStop?: 'normal' | 'always';
   scrollPaddingTop?: number | string;
   scrollPaddingRight?: number | string;
@@ -433,7 +415,7 @@ interface SnapStyle {
 }
 
 interface SvgStyle {
-  alignmentBaseline?: (
+  alignmentBaseline?:
     | 'auto'
     | 'baseline'
     | 'before-edge'
@@ -445,14 +427,13 @@ interface SvgStyle {
     | 'ideographic'
     | 'alphabetic'
     | 'hanging'
-    | 'mathematical'
-  );
+    | 'mathematical';
   baselineShift?: number | string;
   color?: string;
   colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
   colorRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
   cursor?: Cursor;
-  dominantBaseline?: (
+  dominantBaseline?:
     | 'auto'
     | 'text-bottom'
     | 'alphabetic'
@@ -461,18 +442,16 @@ interface SvgStyle {
     | 'central'
     | 'mathematical'
     | 'hanging'
-    | 'text-top'
-  );
+    | 'text-top';
   fill?: string;
   fillOpacity?: string;
   fillRule?: 'nonzero' | 'evenodd';
   imageRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
-  shapeRendering?: (
+  shapeRendering?:
     | 'auto'
     | 'optimizeSpeed'
     | 'crispEdges'
-    | 'geometricPrecision'
-  );
+    | 'geometricPrecision';
   stopColor?: string;
   stopOpacity?: number;
   stroke?: string;

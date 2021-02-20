@@ -5,9 +5,7 @@ const {
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 
 function getInlineLoader(options) {
-  const outputLoaders = [
-    { loader: 'css-loader' }
-  ];
+  const outputLoaders = [{ loader: 'css-loader' }];
 
   if (!options.isServer) {
     outputLoaders.unshift(

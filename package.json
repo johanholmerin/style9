@@ -42,14 +42,17 @@
     "babel-jest": "^26.1.0",
     "babel-plugin-tester": "^10.0.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
     "jest": "^25.1.0",
+    "prettier": "2.2.1",
     "rollup": "^1.29.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint '{,!(node_modules|build)/**/}*.js'"
+    "lint": "eslint '{,!(node_modules|build)/**/}*.js' --fix",
+    "format": "prettier '{,!(node_modules|build)/**/}*.{js,ts}' --write"
   },
   "jest": {
     "testEnvironment": "node",

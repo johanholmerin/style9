@@ -1,4 +1,4 @@
-const postcss = require('postcss')
+const postcss = require('postcss');
 const discardDuplicates = require('postcss-discard-duplicates');
 const selectorParser = require('postcss-selector-parser');
 const sortCSSmq = require('sort-css-media-queries');
@@ -81,13 +81,13 @@ function getDecls(root) {
 }
 
 function extractDecls(decls) {
-  const nodes = []
+  const nodes = [];
 
   decls.forEach(rule => {
     const selectors = parseSelector(rule.parent);
     const isStyle9Selector = isValidSelector(selectors);
     if (!isStyle9Selector) return;
-    const pseudoClasses = getPseudoClasses(selectors.nodes[0])
+    const pseudoClasses = getPseudoClasses(selectors.nodes[0]);
     const mediaQueries = getMediaQueries(rule.parent);
     const decl = removeWithContext(rule);
     const node = { decl, mediaQueries, pseudoClasses };
@@ -141,8 +141,5 @@ function sortPseudo(root) {
 }
 
 module.exports = function processCSS(css, options = { from: undefined }) {
-  return postcss([
-    discardDuplicates,
-    sortPseudo
-  ]).process(css, options);
-}
+  return postcss([discardDuplicates, sortPseudo]).process(css, options);
+};

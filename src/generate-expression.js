@@ -47,21 +47,23 @@ function generateExpression(args, classObj) {
     // Remove duplicates
     .filter((prop, index, array) => array.indexOf(prop) === index);
 
-  const conditionals = usedProps.map(prop => {
-    const classes = Object.fromEntries(
-      Object.entries(classObj).map(([key, val]) => [key, val[prop]])
-    );
+  const conditionals = usedProps
+    .map(prop => {
+      const classes = Object.fromEntries(
+        Object.entries(classObj).map(([key, val]) => [key, val[prop]])
+      );
 
-    const conditionalArgs = getConditionalArgs(args, classes);
-    if (!conditionalArgs.length) return;
+      const conditionalArgs = getConditionalArgs(args, classes);
+      if (!conditionalArgs.length) return;
 
-    return conditionalArgs.reduceRight((acc, prop) => {
-      return t.conditionalExpression(prop.test, prop.value, acc);
-    });
-  }).filter(Boolean);
+      return conditionalArgs.reduceRight((acc, prop) => {
+        return t.conditionalExpression(prop.test, prop.value, acc);
+      });
+    })
+    .filter(Boolean);
 
   const additions = conditionals.reduceRight((acc, expr) => {
-    return t.binaryExpression('+', expr, acc)
+    return t.binaryExpression('+', expr, acc);
   });
 
   return t.expressionStatement(additions);

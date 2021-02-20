@@ -10,7 +10,7 @@ module.exports = function style9Plugin({
   fileName,
   name,
   parserOptions = {
-    plugins: ['typescript', 'jsx'],
+    plugins: ['typescript', 'jsx']
   }
 } = {}) {
   // Default name required to ensure extension
@@ -47,8 +47,9 @@ module.exports = function style9Plugin({
       this.emitFile({
         type: 'asset',
         source: processCSS(css).css,
-        fileName, name
+        fileName,
+        name
       });
     }
   };
-}
+};

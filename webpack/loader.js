@@ -9,7 +9,7 @@ async function style9Loader(input, inputSourceMap) {
     inlineLoader = '',
     outputCSS = true,
     parserOptions = {
-      plugins: ['typescript', 'jsx'],
+      plugins: ['typescript', 'jsx']
     },
     ...options
   } = loaderUtils.getOptions(this) || {};

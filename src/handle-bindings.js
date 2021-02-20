@@ -85,14 +85,15 @@ function getClasses(obj) {
 
 function flattenClasses(classes) {
   return Object.fromEntries(
-    Object.entries(classes)
-      .map(([key, value]) => {
-        const objValues = Object.fromEntries(
-          flattenStyles(value)
-            .map(({ value, ...rest })=> [JSON.stringify(rest), value])
-        );
-        return [key, objValues];
-      })
+    Object.entries(classes).map(([key, value]) => {
+      const objValues = Object.fromEntries(
+        flattenStyles(value).map(({ value, ...rest }) => [
+          JSON.stringify(rest),
+          value
+        ])
+      );
+      return [key, objValues];
+    })
   );
 }
 
@@ -141,8 +142,10 @@ function replaceUseCalls(varDec, classes) {
       const expr = generateExpression(args, flatClasses);
       use.parentPath.replaceWith(expr);
     } else if (use.parentPath.isMemberExpression()) {
-      getDynamicOrStaticKeys(use.parentPath, Object.keys(classes))
-        .forEach(key => names.add(key))
+      getDynamicOrStaticKeys(
+        use.parentPath,
+        Object.keys(classes)
+      ).forEach(key => names.add(key));
     } else if (use.parentPath.isSpreadElement()) {
       return Object.keys(classes);
     } else {
@@ -167,7 +170,7 @@ function replaceUseCalls(varDec, classes) {
       if (!isHMR) {
         throw use.buildCodeFrameError(
           'Return value from style9.create has to be called as a function or ' +
-          'accessed as an object'
+            'accessed as an object'
         );
       }
     }
@@ -180,12 +183,13 @@ function astFromObject(obj) {
   const ast = [];
 
   for (const name in obj) {
-    const astValue = typeof obj[name] === 'object' ?
-      astFromObject(obj[name]) :
-      t.stringLiteral(obj[name]);
-    const key = t.isValidIdentifier(name, false) ?
-      t.identifier(name) :
-      t.stringLiteral(name);
+    const astValue =
+      typeof obj[name] === 'object'
+        ? astFromObject(obj[name])
+        : t.stringLiteral(obj[name]);
+    const key = t.isValidIdentifier(name, false)
+      ? t.identifier(name)
+      : t.stringLiteral(name);
 
     ast.push(t.objectProperty(key, astValue));
   }
@@ -205,16 +209,20 @@ function flattenStyles(styles, { atRules = [], pseudoSelectors = [] } = {}) {
 
     if (isNestedStyles(value)) {
       if (name.startsWith('@')) {
-        flatStyles.push(...flattenStyles(value, {
-          atRules: [...atRules, name],
-          pseudoSelectors
-        }));
+        flatStyles.push(
+          ...flattenStyles(value, {
+            atRules: [...atRules, name],
+            pseudoSelectors
+          })
+        );
       } else if (name.startsWith(':')) {
         const normalizedName = normalizePseudoElements(name);
-        flatStyles.push(...flattenStyles(value, {
-          pseudoSelectors: [...pseudoSelectors, normalizedName],
-          atRules
-        }));
+        flatStyles.push(
+          ...flattenStyles(value, {
+            pseudoSelectors: [...pseudoSelectors, normalizedName],
+            atRules
+          })
+        );
       } else {
         throw new Error(`Invalid key ${name}`);
       }
@@ -227,8 +235,9 @@ function flattenStyles(styles, { atRules = [], pseudoSelectors = [] } = {}) {
 }
 
 function generateStyles(styles) {
-  return Object.values(styles)
-    .flatMap(props => flattenStyles(props).map(getDeclaration));
+  return Object.values(styles).flatMap(props =>
+    flattenStyles(props).map(getDeclaration)
+  );
 }
 
 function minifyProperties(classes) {
@@ -238,9 +247,8 @@ function minifyProperties(classes) {
     const minifiedName = minifyProperty(key);
     const value = classes[key];
 
-    minified[minifiedName] = typeof value === 'object' ?
-      minifyProperties(value) :
-      value;
+    minified[minifiedName] =
+      typeof value === 'object' ? minifyProperties(value) : value;
   }
 
   return minified;
@@ -280,8 +288,10 @@ function handleCreate(identifier, opts) {
 
   if (opts.minifyProperties) {
     const minifiedClasses = Object.fromEntries(
-      Object.entries(classes)
-        .map(([key, value]) => [key, minifyProperties(value)])
+      Object.entries(classes).map(([key, value]) => [
+        key,
+        minifyProperties(value)
+      ])
     );
     replaceDeclaration(callExpr, minifiedClasses);
   } else {
@@ -332,10 +342,12 @@ function handleBinding(node, opts) {
 }
 
 function handleBindings(bindings, opts) {
-  return bindings
-    // Process keyframes first
-    .sort(binding => (isPropertyCall(binding, 'keyframes') ? -1 : 1))
-    .flatMap(node => handleBinding(node, opts));
+  return (
+    bindings
+      // Process keyframes first
+      .sort(binding => (isPropertyCall(binding, 'keyframes') ? -1 : 1))
+      .flatMap(node => handleBinding(node, opts))
+  );
 }
 
 module.exports = handleBindings;
