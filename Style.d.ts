@@ -394,10 +394,10 @@ interface TextStyle {
 }
 
 interface TransitionStyle {
-  transitionProperty?: keyof StyleProperties;
-  transitionDuration?: string;
-  transitionTimingFunction?: string;
-  transitionDelay?: string;
+  transitionProperty?: keyof StyleProperties | (keyof StyleProperties)[];
+  transitionDuration?: string | string[];
+  transitionTimingFunction?: string | string[];
+  transitionDelay?: string | string[];
 }
 
 interface AnimationStyle {
