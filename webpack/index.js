@@ -1,7 +1,7 @@
-const NAME = require('../package.json').name;
 const { SourceMapSource, RawSource } = require('webpack-sources');
-const virtualModules = require('./virtualModules.js');
+const NAME = require('../package.json').name;
 const processCSS = require('../src/process-css.js');
+const virtualModules = require('./virtualModules.js');
 
 class Style9Plugin {
   constructor({ test = /\.css$/ } = {}) {

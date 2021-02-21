@@ -1,5 +1,5 @@
-const Style9Plugin = require('../webpack/index.js');
 const { stringifyCssRequest } = require('../src/plugin-utils.js');
+const Style9Plugin = require('../webpack/index.js');
 
 exports.onCreateWebpackConfig = (
   { stage, loaders, actions, getConfig },

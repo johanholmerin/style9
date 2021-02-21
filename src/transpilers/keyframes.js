@@ -1,6 +1,6 @@
 const t = require('@babel/types');
-const { getKeyframes } = require('../utils/styles');
 const getStyleObjectValue = require('../helpers/get-style-object-value');
+const { getKeyframes } = require('../utils/styles');
 
 function transpileKeyframes(identifier) {
   const callExpr = identifier.parentPath.parentPath;

@@ -1,7 +1,7 @@
-const NAME = require('./package.json').name;
 const babel = require('@babel/core');
-const babelPlugin = require('./babel.js');
 const { createFilter } = require('@rollup/pluginutils');
+const babelPlugin = require('./babel.js');
+const NAME = require('./package.json').name;
 const processCSS = require('./src/process-css.js');
 
 module.exports = function style9Plugin({

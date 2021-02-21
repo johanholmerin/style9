@@ -1,8 +1,8 @@
-const babel = require('@babel/core');
-const babelPlugin = require('../babel.js');
-const loaderUtils = require('loader-utils');
-const virtualModules = require('./virtualModules.js');
 const path = require('path');
+const babel = require('@babel/core');
+const loaderUtils = require('loader-utils');
+const babelPlugin = require('../babel.js');
+const virtualModules = require('./virtualModules.js');
 
 async function style9Loader(input, inputSourceMap) {
   const {

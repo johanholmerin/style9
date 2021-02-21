@@ -1,6 +1,6 @@
-const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants');
-const hash = require('murmurhash-js');
 const cssProperties = require('known-css-properties').all;
+const hash = require('murmurhash-js');
+const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants');
 
 function expandProperty(prop) {
   return SHORTHAND_EXPANSIONS[prop] || [prop];

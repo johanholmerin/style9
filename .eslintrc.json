@@ -1,5 +1,12 @@
 {
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "plugins": ["import"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
@@ -20,7 +27,8 @@
     "no-case-declarations": "error",
     "no-var": "error",
     "prefer-const": "error",
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true }]
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "import/order": "error"
   },
   "env": {
     "node": true,

@@ -1,6 +1,6 @@
-const { mapObject, removeDuplicates } = require('../utils/helpers');
-const t = require('@babel/types');
 const assert = require('assert');
+const t = require('@babel/types');
+const { mapObject, removeDuplicates } = require('../utils/helpers');
 
 function getConditionalArgs(args, classes) {
   const newArgs = [];

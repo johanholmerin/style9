@@ -1,7 +1,7 @@
-const { mapObjectValues } = require('../utils/helpers');
 const t = require('@babel/types');
-const generateExpression = require('./generate-expression');
+const { mapObjectValues } = require('../utils/helpers');
 const flattenStyles = require('./flatten-styles');
+const generateExpression = require('./generate-expression');
 
 function objectToAST(object) {
   const properties = Object.entries(object).map(([name, value]) => {

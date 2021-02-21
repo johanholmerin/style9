@@ -1,23 +1,23 @@
+const generateClasses = require('../helpers/generate-classes');
+const generateStyles = require('../helpers/generate-styles');
+const getStyleObjectValue = require('../helpers/get-style-object-value');
+const listDynamicKeys = require('../helpers/list-dynamic-keys');
+const listFunctionCallKeys = require('../helpers/list-function-call-keys');
+const listFunctionCalls = require('../helpers/list-function-calls');
+const listReferences = require('../helpers/list-references');
+const listStaticKeys = require('../helpers/list-static-keys');
+const {
+  replaceCreateCall,
+  replaceFunctionCalls
+} = require('../helpers/mutate-ast');
+const normalizeArguments = require('../helpers/normalize-arguments');
+const { validateReferences } = require('../helpers/validate');
 const {
   mapObject,
   mapObjectValues,
   filterObjectKeys
 } = require('../utils/helpers');
 const { minifyProperty } = require('../utils/styles');
-const getStyleObjectValue = require('../helpers/get-style-object-value');
-const generateClasses = require('../helpers/generate-classes');
-const listStaticKeys = require('../helpers/list-static-keys');
-const listReferences = require('../helpers/list-references');
-const listDynamicKeys = require('../helpers/list-dynamic-keys');
-const listFunctionCalls = require('../helpers/list-function-calls');
-const normalizeArguments = require('../helpers/normalize-arguments');
-const listFunctionCallKeys = require('../helpers/list-function-call-keys');
-const generateStyles = require('../helpers/generate-styles');
-const {
-  replaceCreateCall,
-  replaceFunctionCalls
-} = require('../helpers/mutate-ast');
-const { validateReferences } = require('../helpers/validate');
 
 function normalizeFunctionCalls(callExpressions) {
   const entries = callExpressions.map(id => {
