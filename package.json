@@ -56,23 +56,6 @@
     "lint": "eslint '{,!(node_modules|build)/**/}*.js' --fix",
     "format": "prettier '{,!(node_modules|build)/**/}*.{js,ts}' --write"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "__tests__/compile.js",
-      "__tests__/code/fixtures/"
-    ],
-    "transform": {
-      "\\/index\\.js$": [
-        "babel-jest",
-        {
-          "plugins": [
-            "@babel/plugin-transform-modules-commonjs"
-          ]
-        }
-      ]
-    }
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

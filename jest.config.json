@@ -1,0 +1,30 @@
+{
+  "testEnvironment": "node",
+  "testPathIgnorePatterns": [
+    "__tests__/compile.js",
+    "__tests__/code/fixtures/"
+  ],
+  "transform": {
+    "\\/index\\.js$": [
+      "babel-jest",
+      {
+        "plugins": ["@babel/plugin-transform-modules-commonjs"]
+      }
+    ]
+  },
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    },
+    "./src/process-css.js": {
+      "branches": 81,
+      "functions": 100,
+      "lines": 100,
+      "statements": 93
+    }
+  }
+}
