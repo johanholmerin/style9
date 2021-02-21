@@ -18,7 +18,6 @@
     ],
     "new-cap": "off",
     "no-case-declarations": "error",
-    "no-confusing-arrow": "error",
     "no-var": "error",
     "prefer-const": "error",
     "no-unused-vars": ["error", { "ignoreRestSiblings": true }]
