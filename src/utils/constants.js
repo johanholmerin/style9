@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-// https://github.com/necolas/react-native-web/blob/36dacb2052efdab2a28655773dc76934157d9134/packages/react-native-web/src/modules/unitlessNumbers/index.js
+// https://github.com/necolas/react-native-web/blob/36dacb2052efdab2a28655773dc76934157d9134/packages/react-native-web/src/modules/unitlessNumbers/index
 const UNITLESS_NUMBERS = [
   'animationIterationCount',
   'borderImageOutset',
@@ -70,7 +70,7 @@ const UNITLESS_NUMBERS = [
   'scaleZ'
 ];
 
-// https://github.com/necolas/react-native-web/blob/36dacb2052efdab2a28655773dc76934157d9134/packages/react-native-web/src/exports/StyleSheet/constants.js
+// https://github.com/necolas/react-native-web/blob/36dacb2052efdab2a28655773dc76934157d9134/packages/react-native-web/src/exports/StyleSheet/constants
 const SHORTHAND_EXPANSIONS = {
   borderColor: [
     'borderTopColor',

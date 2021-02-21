@@ -1,5 +1,5 @@
 const NAME = require('./package.json').name;
-const handleBindings = require('./src/handle-bindings.js');
+const processReferences = require('./src/process-references.js');
 
 module.exports = function style9BabelPlugin() {
   return {
@@ -11,10 +11,8 @@ module.exports = function style9BabelPlugin() {
         const importName = path.node.local.name;
         const bindings = path.scope.bindings[importName].referencePaths;
 
-        state.file.metadata.style9 = handleBindings(bindings, state.opts)
-          // Remove duplicates
-          .filter((e, i, a) => a.indexOf(e) === i)
-          .join('');
+        const css = processReferences(bindings, state.opts).join('');
+        state.file.metadata.style9 = css;
       }
     }
   };

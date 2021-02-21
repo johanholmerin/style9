@@ -1,4 +1,4 @@
-function merge(target = {}, source) {
+function merge(target, source) {
   for (const key in source) {
     if (typeof source[key] === 'object') {
       target[key] = merge({ ...target[key] }, source[key]);
@@ -26,14 +26,16 @@ function getValues(obj) {
 }
 
 export default function style9(...styles) {
-  const merged = styles.reduce((acc, val) => merge(acc, val), {});
+  const merged = styles.reduce(merge, {});
   return getValues(merged).join(' ');
 }
 
+// istanbul ignore next
 style9.create = () => {
   throw new Error('style9.create calls should be compiled away');
 };
 
+// istanbul ignore next
 style9.keyframes = () => {
   throw new Error('style9.keyframes calls should be compiled away');
 };

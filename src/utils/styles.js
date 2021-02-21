@@ -1,5 +1,4 @@
-const t = require('@babel/types');
-const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants.js');
+const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants');
 const hash = require('murmurhash-js');
 const cssProperties = require('known-css-properties').all;
 
@@ -38,15 +37,6 @@ function camelToHyphen(string) {
   return string.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
 }
 
-/**
- * Resolve the value of a node path
- */
-function resolvePathValue(path) {
-  const { value, confident, deopt } = path.evaluate();
-  if (confident) return value;
-  throw deopt.buildCodeFrameError('Could not evaluate value');
-}
-
 function getDeclaration({ name, value, atRules, pseudoSelectors }) {
   const cls = getClass({ name, value, atRules, pseudoSelectors });
 
@@ -70,30 +60,20 @@ function normalizeTime(time) {
   return time;
 }
 
+function stringifyKeyframe(time, frame) {
+  if (!Object.keys(frame).length) return '';
+
+  const props = Object.entries(frame).map(([key, value]) => {
+    return `${camelToHyphen(key)}:${normalizeValue(key, value)}`;
+  });
+
+  return `${normalizeTime(time)}{${props.join(';')}}`;
+}
+
 function stringifyKeyframes(rules) {
-  let str = '';
-
-  for (const time in rules) {
-    if (!Object.keys(rules[time]).length) continue;
-
-    str += `${normalizeTime(time)}{`;
-
-    for (const key in rules[time]) {
-      const value = rules[time][key];
-
-      for (const prop of expandProperty(key)) {
-        // Longhand takes precedent
-        if (prop in rules[time] && prop !== key) continue;
-
-        str += `${camelToHyphen(prop)}:${normalizeValue(prop, value)};`;
-      }
-    }
-
-    // Remove last semicolon
-    str = str.slice(0, -1) + '}';
-  }
-
-  return str;
+  return Object.entries(rules)
+    .map(([time, frame]) => stringifyKeyframe(time, frame))
+    .join('');
 }
 
 function getKeyframes(rules) {
@@ -101,29 +81,6 @@ function getKeyframes(rules) {
   const name = getClass(rulesString);
   const declaration = `@keyframes ${name}{${rulesString}}`;
   return { name, declaration };
-}
-
-/**
- * Move node to a constant and return an identifier
- */
-function extractNode(path, node) {
-  if (t.isIdentifier(node)) return node;
-
-  const name = path.scope.generateUidBasedOnNode(node);
-
-  if (path.scope.path.type !== 'Program') {
-    path.scope.path.ensureBlock();
-  }
-
-  path
-    .getStatementParent()
-    .insertBefore(
-      t.variableDeclaration('const', [
-        t.variableDeclarator(t.identifier(name), node)
-      ])
-    );
-
-  return t.identifier(name);
 }
 
 const LEGACY_PSEUDO_ELEMENTS = [
@@ -150,13 +107,28 @@ function minifyProperty(name) {
   return hash(hyphenName).toString(36);
 }
 
+// Values can be primitives or arrays, nested styles are plain objects
+function isNestedStyles(item) {
+  return typeof item === 'object' && !Array.isArray(item);
+}
+
+function isAtRule(string) {
+  return string.startsWith('@');
+}
+
+function isPseudoSelector(string) {
+  return string.startsWith(':');
+}
+
 module.exports = {
   expandProperty,
-  resolvePathValue,
   getClass,
   getDeclaration,
-  extractNode,
   getKeyframes,
   normalizePseudoElements,
-  minifyProperty
+  minifyProperty,
+  isNestedStyles,
+  normalizeValue,
+  isAtRule,
+  isPseudoSelector
 };

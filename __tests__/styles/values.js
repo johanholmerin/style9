@@ -1,20 +1,6 @@
 /* eslint-env jest */
 const compile = require('../compile.js');
 
-it('compiles', () => {
-  const input = `
-import style9 from 'style9';
-const styles = style9.create({
-  default: {
-    color: 'blue'
-  }
-});
-styles('default');
-  `;
-  const { code } = compile(input);
-  expect(code).not.toBe(input);
-});
-
 it('converts paddingLeft to pixels', () => {
   const input = `
 import style9 from 'style9';
@@ -27,7 +13,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.csaw36d{padding-left:2px}`);
+  expect(styles).toBe(`.c16hph0g{padding-left:2px}`);
 });
 
 it('does not convert opacity to pixels', () => {
@@ -98,7 +84,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1eftxfu{font-size:0.875rem}`);
+  expect(styles).toBe(`.c1x2h0g6{font-size:0.875rem}`);
 });
 
 it('accepts an array', () => {
@@ -113,7 +99,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.cdd1pm5{text-decoration-line:underline overline}`);
+  expect(styles).toBe(`.cy2d86t{text-decoration-line:underline overline}`);
 });
 
 it('supports constants', () => {
@@ -197,7 +183,7 @@ const get = state => styles(state && 'default');
   expect(styles).toBe(`.c1r9f2e5{color:blue}`);
 });
 
-it('does not work without declaration', () => {
+it('outputs no styles without declaration', () => {
   const input = `
 import style9 from 'style9';
 style9.create({
@@ -206,28 +192,9 @@ style9.create({
   }
 });
   `;
-  expect(() => compile(input)).toThrow();
-});
+  const { styles } = compile(input);
 
-it('only supports Member- and CallExpression on styles', () => {
-  const input = `
-import style9 from 'style9';
-const styles = style9.create({
-  default: {
-    color: 'blue'
-  }
-});
-foo(styles);
-  `;
-  expect(() => compile(input)).toThrow();
-});
-
-it('throws on non-existing property', () => {
-  const input = `
-import style9 from 'style9';
-style9.foo;
-  `;
-  expect(() => compile(input)).toThrow();
+  expect(styles).toBe('');
 });
 
 it('supports spread assignment', () => {
