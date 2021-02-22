@@ -30,6 +30,7 @@
     "@babel/core": "^7.10.4",
     "@babel/types": "^7.8.3",
     "@rollup/pluginutils": "^3.0.4",
+    "csstype": "^3.0.6",
     "known-css-properties": "^0.19.0",
     "loader-utils": "1.4.0",
     "murmurhash-js": "^1.0.0",
