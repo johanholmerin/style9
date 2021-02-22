@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/johanholmerin/style9.git"
   },
+  "engines": {
+    "node": ">=12"
+  },
   "keywords": [
     "styles",
     "css",
