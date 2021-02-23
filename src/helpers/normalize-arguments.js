@@ -2,6 +2,7 @@ const t = require('@babel/types');
 
 function normalizeObjectExpression(objectExpr) {
   return objectExpr.properties.map(prop => {
+    t.assertObjectProperty(prop, { computed: false });
     t.assertIdentifier(prop.key);
 
     return {
