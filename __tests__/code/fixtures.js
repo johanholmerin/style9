@@ -5,5 +5,10 @@ const plugin = require('../../babel.js');
 pluginTester({
   plugin,
   pluginName: 'style9',
-  fixtures: path.join(__dirname, 'fixtures')
+  fixtures: path.join(__dirname, 'fixtures'),
+  babelOptions: {
+    parserOpts: {
+      plugins: ['typescript']
+    }
+  }
 });

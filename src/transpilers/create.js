@@ -18,6 +18,7 @@ const {
   filterObjectKeys
 } = require('../utils/helpers');
 const { minifyProperty } = require('../utils/styles');
+const stripTypeAssertions = require('../helpers/strip-type-assertions');
 
 function normalizeFunctionCalls(callExpressions) {
   const entries = callExpressions.map(id => {
@@ -39,6 +40,8 @@ function minifyProperties(classes) {
 function transpileCreate(identifier, options) {
   const callExpr = identifier.parentPath.parentPath;
   const objExpr = callExpr.get('arguments.0');
+
+  stripTypeAssertions(objExpr);
 
   const styleDefinitions = getStyleObjectValue(objExpr);
   const styleClasses = generateClasses(styleDefinitions);
