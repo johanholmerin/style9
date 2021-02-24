@@ -132,6 +132,42 @@ const styles = style9.create({
   expect(styles).toBe(``);
 });
 
+it('keeps styles used in styles()', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+});
+styles('default');
+  `;
+  const { styles } = compile(input);
+
+  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+});
+
+it('keeps styles used as object', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+});
+styles.default;
+  `;
+  const { styles } = compile(input);
+
+  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+});
+
 it('supports static bracket access', () => {
   const input = `
 import style9 from 'style9';

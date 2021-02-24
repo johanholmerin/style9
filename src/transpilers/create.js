@@ -56,10 +56,11 @@ function transpileCreate(identifier, options) {
   const staticKeys = listStaticKeys(callExpr, styleNames);
   const dynamicKeys = listDynamicKeys(references, styleNames);
   const funcCallKeys = listFunctionCallKeys([...normalizedFuncCalls.values()]);
-  const allKeys = [...staticKeys, ...dynamicKeys, ...funcCallKeys];
 
+  const propKeys = [...staticKeys, ...dynamicKeys];
+  const filteredStyleValues = filterObjectKeys(styleClasses, propKeys);
+  const allKeys = [...funcCallKeys, ...propKeys];
   const filteredDefinitions = filterObjectKeys(styleDefinitions, allKeys);
-  const filteredStyleValues = filterObjectKeys(styleClasses, allKeys);
 
   const minifiedStyleValues = options.minifyProperties
     ? mapObjectValues(filteredStyleValues, minifyProperties)

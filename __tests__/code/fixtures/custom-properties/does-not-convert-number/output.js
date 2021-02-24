@@ -1,7 +1,3 @@
 import style9 from 'style9';
-const styles = {
-  default: {
-    '--opacity': 'c1tldmpg'
-  }
-};
+const styles = {};
 ('c1tldmpg ');
