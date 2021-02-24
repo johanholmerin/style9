@@ -35,6 +35,9 @@
     "es6": true
   },
   "ignorePatterns": [
-    "__tests__/code/fixtures/"
+    "__tests__/code/fixtures/",
+    "node_modules",
+    "build",
+    "coverage"
   ]
 }

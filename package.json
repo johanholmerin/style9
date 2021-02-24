@@ -59,8 +59,8 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint '{,!(node_modules|build)/**/}*.js' --fix",
-    "format": "prettier '{,!(node_modules|build)/**/}*.{js,ts}' --write"
+    "lint": "eslint '**/*.js' --fix",
+    "format": "prettier '**/*.{js,ts}' --write"
   },
   "husky": {
     "hooks": {
