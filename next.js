@@ -1,6 +1,4 @@
-const {
-  getClientStyleLoader
-} = require('next/dist/build/webpack/config/blocks/css/loaders/client');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
 
@@ -8,13 +6,10 @@ function getInlineLoader(options) {
   const outputLoaders = [{ loader: 'css-loader' }];
 
   if (!options.isServer) {
-    outputLoaders.unshift(
-      // Logic adopted from https://git.io/JfD9r
-      getClientStyleLoader({
-        isDevelopment: options.dev,
-        assetPrefix: options.config.assetPrefix
-      })
-    );
+    outputLoaders.unshift({
+      loader: MiniCssExtractPlugin.loader,
+      options: { publicPath: `${options.config.assetPrefix}/_next/` }
+    });
   }
 
   return stringifyCssRequest(outputLoaders);
@@ -41,7 +36,15 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       });
 
       if (outputCSS) {
-        config.plugins.push(new Style9Plugin());
+        config.plugins.push(
+          // Logic adopted from https://git.io/JtdBy
+          new MiniCssExtractPlugin({
+            filename: 'static/css/[contenthash].css',
+            chunkFilename: 'static/css/[contenthash].css',
+            ignoreOrder: true
+          }),
+          new Style9Plugin()
+        );
       }
 
       if (typeof nextConfig.webpack === 'function') {
