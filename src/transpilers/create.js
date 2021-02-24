@@ -19,6 +19,7 @@ const {
 } = require('../utils/helpers');
 const { minifyProperty } = require('../utils/styles');
 const stripTypeAssertions = require('../helpers/strip-type-assertions');
+const flattenAtRules = require('../helpers/flatten-at-rules');
 
 function normalizeFunctionCalls(callExpressions) {
   const entries = callExpressions.map(id => {
@@ -43,7 +44,7 @@ function transpileCreate(identifier, options) {
 
   stripTypeAssertions(objExpr);
 
-  const styleDefinitions = getStyleObjectValue(objExpr);
+  const styleDefinitions = flattenAtRules(getStyleObjectValue(objExpr));
   const styleClasses = generateClasses(styleDefinitions);
   const references = listReferences(callExpr.parentPath);
 

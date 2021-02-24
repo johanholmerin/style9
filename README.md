@@ -109,9 +109,14 @@ const moreStyles = style9.create({
   mobile: {
     // Media queries are supported as well
     // They will be sorted mobile-first
-    // NOTE: Media queries are not supported in TypeScript due to issue #17867
     '@media (min-width: 800px)': {
       display: 'none'
+    },
+    // NOTE: For TypeScript < 4.3 the following syntax is required for media queries
+    '@media': {
+      '(min-width: 800px)': {
+        display: 'none'
+      }
     }
   },
   pseudo: {

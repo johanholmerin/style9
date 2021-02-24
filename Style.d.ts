@@ -10,12 +10,14 @@ type PropsAsArray<T, K extends keyof T> = T &
     [k in K]: T[K] | T[K][];
   };
 
+type AtRules = '@media' | '@supports';
+
 type Style = StyleProperties &
   {
-    // Mixed keys not possible in TypeScript
-    // https://github.com/microsoft/TypeScript/issues/17867
-    // [key: string]: Style;
     [key in SimplePseudos]?: Style;
+  } &
+  {
+    [key in AtRules]?: Record<string, Style>;
   };
 
 export default Style;
