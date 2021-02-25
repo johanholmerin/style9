@@ -1,4 +1,8 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {
+  getClientStyleLoader
+} = require('next/dist/build/webpack/config/blocks/css/loaders/client');
+const MiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
+  .default;
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
 
@@ -6,10 +10,13 @@ function getInlineLoader(options) {
   const outputLoaders = [{ loader: 'css-loader' }];
 
   if (!options.isServer) {
-    outputLoaders.unshift({
-      loader: MiniCssExtractPlugin.loader,
-      options: { publicPath: `${options.config.assetPrefix}/_next/` }
-    });
+    outputLoaders.unshift(
+      // Logic adopted from https://git.io/JfD9r
+      getClientStyleLoader({
+        isDevelopment: false,
+        assetPrefix: options.config.assetPrefix
+      })
+    );
   }
 
   return stringifyCssRequest(outputLoaders);
