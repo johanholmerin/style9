@@ -46,9 +46,14 @@ const styles = style9.create({
 });
 styles('blue');
   `;
-  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
-    `"unknown: Property blue does not exist in style object"`
-  );
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Property blue does not exist in style object
+      6 |   }
+      7 | });
+    > 8 | styles('blue');
+        |        ^^^^^^
+      9 |   "
+  `);
 });
 
 it('styles throws on unsupported operator', () => {
@@ -103,9 +108,74 @@ const styles = style9.create({
 });
 styles({ ...foo })
   `;
-  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
-    `"unknown: Expected type \\"ObjectProperty\\" with option {\\"computed\\":false}, but instead got \\"SpreadElement\\"."`
-  );
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type SpreadElement
+      6 |   }
+      7 | });
+    > 8 | styles({ ...foo })
+        |          ^^^^^^
+      9 |   "
+  `);
+});
+
+it('styles throws non-string logical right hand', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  red: {
+    color: 'red'
+  }
+});
+styles(foo && red)
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type Identifier
+      6 |   }
+      7 | });
+    > 8 | styles(foo && red)
+        |               ^^^
+      9 |   "
+  `);
+});
+
+it('styles throws non-string ternary left hand', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  red: {
+    color: 'red'
+  }
+});
+styles(foo ? red : 'red')
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type Identifier
+      6 |   }
+      7 | });
+    > 8 | styles(foo ? red : 'red')
+        |              ^^^
+      9 |   "
+  `);
+});
+
+it('styles throws non-string ternary right hand', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  red: {
+    color: 'red'
+  }
+});
+styles(foo ? 'red' : red)
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type Identifier
+      6 |   }
+      7 | });
+    > 8 | styles(foo ? 'red' : red)
+        |                      ^^^
+      9 |   "
+  `);
 });
 
 it('styles throws on identifier', () => {
@@ -138,7 +208,12 @@ const styles = style9.create({
 });
 styles({ [red]: foo })
   `;
-  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
-    `"unknown: Expected type \\"ObjectProperty\\" with option {\\"computed\\":false}, but instead got \\"ObjectProperty\\"."`
-  );
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type ObjectProperty
+      6 |   }
+      7 | });
+    > 8 | styles({ [red]: foo })
+        |          ^^^^^^^^^^
+      9 |   "
+  `);
 });

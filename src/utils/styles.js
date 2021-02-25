@@ -120,6 +120,10 @@ function isPseudoSelector(string) {
   return string.startsWith(':');
 }
 
+function isAtRuleObject(name) {
+  return name === '@media' || name === '@supports';
+}
+
 module.exports = {
   expandProperty,
   getClass,
@@ -130,5 +134,6 @@ module.exports = {
   isNestedStyles,
   normalizeValue,
   isAtRule,
-  isPseudoSelector
+  isPseudoSelector,
+  isAtRuleObject
 };

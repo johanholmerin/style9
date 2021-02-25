@@ -1,4 +1,3 @@
-const assert = require('assert');
 const t = require('@babel/types');
 const { mapObject, removeDuplicates } = require('../utils/helpers');
 
@@ -13,7 +12,6 @@ function getConditionalArgs(args, classes) {
     const name = typeof arg === 'string' ? arg : arg.value;
     const cls = classes[name];
 
-    assert(name in classes, `Property ${name} does not exist in style object`);
     if (cls === undefined) continue;
 
     if (typeof arg === 'string') {

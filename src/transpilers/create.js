@@ -11,7 +11,10 @@ const {
   replaceFunctionCalls
 } = require('../helpers/mutate-ast');
 const normalizeArguments = require('../helpers/normalize-arguments');
-const { validateReferences } = require('../helpers/validate');
+const {
+  validateReferences,
+  validateStyleObject
+} = require('../helpers/validate');
 const {
   mapObject,
   mapObjectValues,
@@ -21,9 +24,9 @@ const { minifyProperty } = require('../utils/styles');
 const stripTypeAssertions = require('../helpers/strip-type-assertions');
 const flattenAtRules = require('../helpers/flatten-at-rules');
 
-function normalizeFunctionCalls(callExpressions) {
+function normalizeFunctionCalls(callExpressions, styleNames) {
   const entries = callExpressions.map(id => {
-    return [id.parentPath, normalizeArguments(id.parentPath)];
+    return [id.parentPath, normalizeArguments(id.parentPath, styleNames)];
   });
   return new Map(entries);
 }
@@ -43,6 +46,7 @@ function transpileCreate(identifier, options) {
   const objExpr = callExpr.get('arguments.0');
 
   stripTypeAssertions(objExpr);
+  validateStyleObject(objExpr);
 
   const styleDefinitions = flattenAtRules(getStyleObjectValue(objExpr));
   const styleClasses = generateClasses(styleDefinitions);
@@ -51,9 +55,9 @@ function transpileCreate(identifier, options) {
   validateReferences(references);
 
   const funcCalls = listFunctionCalls(references);
-  const normalizedFuncCalls = normalizeFunctionCalls(funcCalls);
-
   const styleNames = Object.keys(styleDefinitions);
+  const normalizedFuncCalls = normalizeFunctionCalls(funcCalls, styleNames);
+
   const staticKeys = listStaticKeys(callExpr, styleNames);
   const dynamicKeys = listDynamicKeys(references, styleNames);
   const funcCallKeys = listFunctionCallKeys([...normalizedFuncCalls.values()]);

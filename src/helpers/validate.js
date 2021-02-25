@@ -1,5 +1,10 @@
 const assert = require('assert');
 const testASTShape = require('../utils/test-ast-shape');
+const {
+  isAtRuleObject,
+  isAtRule,
+  isPseudoSelector
+} = require('../utils/styles');
 
 function isHMR(identifier) {
   return testASTShape(identifier.parentPath, {
@@ -36,4 +41,48 @@ function validateReferences(references) {
   });
 }
 
-module.exports = { validateReferences };
+function evalKey(objProp) {
+  const keyPath = objProp.get('key');
+  if (objProp.node.computed) {
+    return keyPath.evaluate();
+  }
+
+  if (keyPath.isStringLiteral()) {
+    return { value: keyPath.node.value, confident: true };
+  }
+
+  return { value: keyPath.node.name, confident: true };
+}
+
+function validateStyleObjectInner(objExpr) {
+  objExpr.traverse({
+    ObjectProperty(path) {
+      const { value, confident } = evalKey(path);
+      if (!confident) return;
+
+      if (!path.get('value').isObjectExpression()) return;
+
+      if (isAtRuleObject(value)) {
+        // Skip direct props
+        validateStyleObject(path.get('value'));
+        path.skip();
+      } else if (!isAtRule(value) && !isPseudoSelector(value)) {
+        throw path
+          .get('key')
+          .buildCodeFrameError(
+            `Invalid key ${value}. Object keys must be at-rules or pseudo selectors`
+          );
+      }
+    }
+  });
+}
+
+// Does not validate spread elements
+function validateStyleObject(objExpr) {
+  objExpr.get('properties').forEach(prop => {
+    if (!prop.isObjectProperty()) return;
+    validateStyleObjectInner(prop.get('value'));
+  });
+}
+
+module.exports = { validateReferences, validateStyleObject };

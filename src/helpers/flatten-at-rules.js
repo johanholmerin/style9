@@ -1,9 +1,5 @@
 const { mapObject, mapObjectValues } = require('../utils/helpers');
-const { isNestedStyles } = require('../utils/styles');
-
-function isAtRuleObject(name) {
-  return name === '@media' || name === '@supports';
-}
+const { isNestedStyles, isAtRuleObject } = require('../utils/styles');
 
 function flatten(type, object) {
   return mapObject(object, ([key, value]) => {
