@@ -102,17 +102,3 @@ styles.default
       '.c9com6n::first-line{opacity:1}'
   );
 });
-
-it('throws in invalid nesting', () => {
-  const input = `
-import style9 from 'style9';
-const styles = style9.create({
-  default: {
-    foo: {
-      opacity: 1
-    }
-  }
-});
-  `;
-  expect(() => compile(input)).toThrow();
-});

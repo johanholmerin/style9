@@ -6,7 +6,10 @@ function compile(input, opts = {}) {
     code,
     ast,
     metadata: { style9: styles }
-  } = babel.transformSync(input, { plugins: [[plugin, opts]] });
+  } = babel.transformSync(input, {
+    plugins: [[plugin, opts]],
+    highlightCode: false
+  });
 
   return { code, ast, styles };
 }

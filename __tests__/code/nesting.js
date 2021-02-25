@@ -12,5 +12,7 @@ const styles = style9.create({
   }
 });
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
+    `"unknown: Invalid key foo. Object keys must be at-rules or pseudo selectors"`
+  );
 });

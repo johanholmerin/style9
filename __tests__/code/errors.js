@@ -11,7 +11,14 @@ const styles = style9.create({
 });
 foo(styles);
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: SyntaxError: Return value from style9.create has to be called as a function or accessed as an object
+      6 |   }
+      7 | });
+    > 8 | foo(styles);
+        |     ^^^^^^
+      9 |   "
+  `);
 });
 
 it('throws on non-existing property import', () => {
@@ -19,7 +26,14 @@ it('throws on non-existing property import', () => {
 import style9 from 'style9';
 style9.foo;
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported use. Supported uses are: style9(), style9.create(), and style9.keyframes()
+      1 |
+      2 | import style9 from 'style9';
+    > 3 | style9.foo;
+        | ^^^^^^
+      4 |   "
+  `);
 });
 
 it('styles throws on non-existing style key', () => {
@@ -32,7 +46,9 @@ const styles = style9.create({
 });
 styles('blue');
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
+    `"unknown: Property blue does not exist in style object"`
+  );
 });
 
 it('styles throws on unsupported operator', () => {
@@ -45,7 +61,14 @@ const styles = style9.create({
 });
 styles(foo & 'blue');
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type BinaryExpression
+      6 |   }
+      7 | });
+    > 8 | styles(foo & 'blue');
+        |        ^^^^^^^^^^^^
+      9 |   "
+  `);
 });
 
 it('styles throws on failure to evaluate values', () => {
@@ -58,7 +81,16 @@ const styles = style9.create({
 });
 styles('blue');
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Could not evaluate value
+      3 | const styles = style9.create({
+      4 |   default: {
+    > 5 |     color: BLUE
+        |            ^^^^
+      6 |   }
+      7 | });
+      8 | styles('blue');"
+  `);
 });
 
 it('styles throws on spread', () => {
@@ -71,7 +103,9 @@ const styles = style9.create({
 });
 styles({ ...foo })
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
+    `"unknown: Expected type \\"ObjectProperty\\" with option {\\"computed\\":false}, but instead got \\"SpreadElement\\"."`
+  );
 });
 
 it('styles throws on identifier', () => {
@@ -84,7 +118,14 @@ const styles = style9.create({
 });
 styles(foo)
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type Identifier
+      6 |   }
+      7 | });
+    > 8 | styles(foo)
+        |        ^^^
+      9 |   "
+  `);
 });
 
 it('styles throws on dynamic key', () => {
@@ -97,5 +138,7 @@ const styles = style9.create({
 });
 styles({ [red]: foo })
   `;
-  expect(() => compile(input)).toThrow();
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(
+    `"unknown: Expected type \\"ObjectProperty\\" with option {\\"computed\\":false}, but instead got \\"ObjectProperty\\"."`
+  );
 });
