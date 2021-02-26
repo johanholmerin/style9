@@ -1,0 +1,31 @@
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12.x
+
+    - name: Install packages
+      run: yarn
+
+    - name: Check linting
+      run: yarn lint
+
+    - name: Check formatting
+      run: yarn format
+
+    - name: Tests
+      run: yarn test
