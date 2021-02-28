@@ -236,24 +236,20 @@ There is [an example repo](https://github.com/johanholmerin/style9-vue-example) 
 
 ## CSS Custom Properties with TypeScript
 
-When using CSS properties not included in the [type definition](Style.d.ts), such as [CSS
-Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*),
-TypeScript will error. There are two ways of dealing with this:
+By augmenting `CustomProperties`, you can get type safety and autocompletion both when defining custom properties and when using them.
 
-1. Module augmentation. This will affect every use.
 ```typescript
 declare module 'style9/Style' {
-  interface StyleProperties {
+  interface CustomProperties {
     '--bg-color'?: string;
+    '--font-size'?: 18 | 24;
   }
 }
-```
 
-2. Type assertion
-```typescript
-const styles = style9.create({
-  lightTheme: {
-    ["--bg-color" as any]: "#CCC"
+style9.create({
+  styles: {
+    '--bg-color': 'blue',
+    backgroundColor: 'var(--bg-color)'
   }
 });
 ```

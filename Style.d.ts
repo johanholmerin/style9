@@ -54,7 +54,19 @@ type ArrayStandardLonghandProperties = PropsAsArray<
   | 'transitionDelay'
 >;
 
+export interface CustomProperties {}
+
 export interface StyleProperties
+  extends StylePropertiesType,
+    CustomProperties {}
+
+type StylePropertiesType = {
+  [k in keyof StylePropertiesInternal]?:
+    | `var(${keyof CustomProperties})`
+    | StylePropertiesInternal[k];
+};
+
+interface StylePropertiesInternal
   extends ArrayStandardLonghandProperties,
     VendorShorthandProperties<string | number>,
     ExpandedShorthands,
@@ -66,8 +78,8 @@ type ScrollSnapAlign = 'none' | 'start' | 'end' | 'center';
 interface ExtendedStyleProperties {
   transitionProperty?:
     | StandardLonghandProperties['transitionProperty']
-    | keyof StyleProperties
-    | (keyof StyleProperties)[];
+    | keyof StylePropertiesInternal
+    | (keyof StylePropertiesInternal)[];
   gridAutoFlow?:
     | StandardLonghandProperties['gridAutoFlow']
     | ['row', 'dense']
