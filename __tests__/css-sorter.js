@@ -72,11 +72,42 @@ const CASES = [
     name: 'ignore @supports',
     input: '@supports (display: block){.b{opacity:1}}' + '.a{opacity:1}',
     expected: '@supports (display: block){.b{opacity:1}}' + '.a{opacity:1}'
+  },
+  {
+    name: 'splits multiple properties',
+    input: '.a{color:red;opacity:1}',
+    expected: '.a{color:red}' + '.a{opacity:1}'
+  },
+  {
+    name: 'preseveres same pseudo order',
+    input: '.a:hover{opacity:1}' + '.b:hover{opacity:0}',
+    expected: '.a:hover{opacity:1}' + '.b:hover{opacity:0}'
+  }
+];
+
+const IGNORE = [
+  {
+    name: 'selector list',
+    input: '.foo, .bar{color:red}'
+  },
+  {
+    name: 'non-class selectors',
+    input: '[disabled]{color:red}'
+  },
+  {
+    name: 'multiple selectors',
+    input: '.foo.bar{color:red}'
   }
 ];
 
 for (const { name, input, expected } of CASES) {
   it(name, () => {
     expect(processCSS(input).css).toEqual(expected);
+  });
+}
+
+for (const { name, input } of IGNORE) {
+  it(name, () => {
+    expect(processCSS(input).css).toEqual(input);
   });
 }
