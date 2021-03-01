@@ -1,4 +1,5 @@
 {
+  "parser": "babel-ts",
   "singleQuote": true,
   "trailingComma": "none",
   "arrowParens": "avoid"

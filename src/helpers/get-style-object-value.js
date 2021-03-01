@@ -1,5 +1,5 @@
 const { expandProperty } = require('inline-style-expand-shorthand');
-const { evaluateNodePath } = require('../utils/ast');
+const evaluateNodePath = require('../helpers/eval-node-path');
 const { mapObjectValues } = require('../utils/helpers');
 const { isNestedStyles, normalizeValue } = require('../utils/styles');
 
