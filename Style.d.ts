@@ -94,13 +94,18 @@ interface ExtendedStyleProperties {
 
 type ExpandedShorthands = Pick<
   StandardShorthandProperties<string | number>,
-  | 'borderColor'
-  | 'borderRadius'
-  | 'borderStyle'
+  | 'border'
+  | 'borderTop'
+  | 'borderRight'
+  | 'borderBottom'
+  | 'borderLeft'
   | 'borderWidth'
-  | 'margin'
-  | 'overflow'
+  | 'borderStyle'
+  | 'borderColor'
   | 'padding'
+  | 'margin'
+  | 'outline'
+  | 'flex'
   // Incorrectly classified as longhand in csstype
   // | 'overscrollBehavior'
 >;

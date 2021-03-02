@@ -78,8 +78,6 @@ const moreStyles = style9.create({
     backgroundColor: 'red', // OK
     // Some shorthand properties can be automatically expanded
     borderColor: 'blue' // will make all sides blue
-    // Supported shorthands include borderColor, borderRadius, borderStyle,
-    // borderWidth, margin, overflow, overscrollBehavior, and padding
     // See Style.d.ts for a complete list of supported CSS properties
   },
   padding: {

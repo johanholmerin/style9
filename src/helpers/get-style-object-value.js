@@ -1,10 +1,7 @@
+const { expandProperty } = require('inline-style-expand-shorthand');
 const { evaluateNodePath } = require('../utils/ast');
 const { mapObjectValues } = require('../utils/helpers');
-const {
-  expandProperty,
-  isNestedStyles,
-  normalizeValue
-} = require('../utils/styles');
+const { isNestedStyles, normalizeValue } = require('../utils/styles');
 
 function mapObject(object, cb) {
   const expanded = {};
@@ -19,13 +16,15 @@ function mapObject(object, cb) {
 
 function expandStyleProperties(styles) {
   return mapObject(styles, ([key, value]) => {
+    const current = { [key]: value };
+
     if (isNestedStyles(value)) {
-      return expandProperties({ [key]: value });
+      return expandProperties(current);
     }
 
-    const expandedProps = expandProperty(key)
-      .filter(prop => !(prop in styles && prop !== key))
-      .map(prop => [prop, normalizeValue(prop, value)]);
+    const expandedProps = Object.entries(expandProperty(key, value) || current)
+      .filter(([prop]) => !(prop in styles && prop !== key))
+      .map(([prop, propValue]) => [prop, normalizeValue(prop, propValue)]);
 
     return Object.fromEntries(expandedProps);
   });

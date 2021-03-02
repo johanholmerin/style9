@@ -1,10 +1,6 @@
 const cssProperties = require('known-css-properties').all;
 const hash = require('murmurhash-js');
-const { UNITLESS_NUMBERS, SHORTHAND_EXPANSIONS } = require('./constants');
-
-function expandProperty(prop) {
-  return SHORTHAND_EXPANSIONS[prop] || [prop];
-}
+const { UNITLESS_NUMBERS } = require('./constants');
 
 const BASE_FONT_SIZE_PX = 16;
 
@@ -125,7 +121,6 @@ function isAtRuleObject(name) {
 }
 
 module.exports = {
-  expandProperty,
   getClass,
   getDeclaration,
   getKeyframes,
