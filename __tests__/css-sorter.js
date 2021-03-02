@@ -82,6 +82,21 @@ const CASES = [
     name: 'preseveres same pseudo order',
     input: '.a:hover{opacity:1}' + '.b:hover{opacity:0}',
     expected: '.a:hover{opacity:1}' + '.b:hover{opacity:0}'
+  },
+  {
+    name: 'sorts longhands after shorthands',
+    input:
+      '.a{padding-top:2px}' +
+      '.b{padding:1px}' +
+      '.c{border-top-width:2px}' +
+      '.d{border-top:1px}' +
+      '.e{border:2px solid red}',
+    expected:
+      '.b{padding:1px}' +
+      '.e{border:2px solid red}' +
+      '.a{padding-top:2px}' +
+      '.d{border-top:1px}' +
+      '.c{border-top-width:2px}'
   }
 ];
 
