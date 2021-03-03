@@ -54,6 +54,58 @@ type ArrayStandardLonghandProperties = PropsAsArray<
   | 'transitionDelay'
 >;
 
+interface SvgProperties {
+  alignmentBaseline?:
+    | 'auto'
+    | 'baseline'
+    | 'before-edge'
+    | 'text-before-edge'
+    | 'middle'
+    | 'central'
+    | 'after-edge'
+    | 'text-after-edge'
+    | 'ideographic'
+    | 'alphabetic'
+    | 'hanging'
+    | 'mathematical';
+  baselineShift?: number | string;
+  color?: string;
+  colorInterpolation?: 'auto' | 'sRGB' | 'linearRGB';
+  colorRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+  dominantBaseline?:
+    | 'auto'
+    | 'text-bottom'
+    | 'alphabetic'
+    | 'ideographic'
+    | 'middle'
+    | 'central'
+    | 'mathematical'
+    | 'hanging'
+    | 'text-top';
+  fill?: string;
+  fillOpacity?: string;
+  fillRule?: 'nonzero' | 'evenodd';
+  imageRendering?: 'auto' | 'optimizeSpeed' | 'optimizeQuality';
+  shapeRendering?:
+    | 'auto'
+    | 'optimizeSpeed'
+    | 'crispEdges'
+    | 'geometricPrecision';
+  stopColor?: string;
+  stopOpacity?: number;
+  stroke?: string;
+  strokeDasharray?: number | string | (number | string)[];
+  strokeDashoffset?: number | string;
+  strokeLinecap?: 'butt' | 'round' | 'square';
+  strokeLinejoin?: 'miter' | 'round' | 'bevel';
+  strokeMiterlimit?: number;
+  strokeOpacity?: number | string;
+  strokeWidth?: number | string;
+  textAnchor?: 'start' | 'middle' | 'end';
+  vectorEffect?: 'none' | 'non-scaling-stroke';
+  writingMode?: 'lr-tb' | 'rl-tb' | 'tb-rl' | 'lr' | 'rl' | 'tb';
+}
+
 export interface CustomProperties {}
 
 export interface StyleProperties
@@ -70,7 +122,8 @@ interface StylePropertiesInternal
   extends ArrayStandardLonghandProperties,
     VendorShorthandProperties<string | number>,
     ExpandedShorthands,
-    ExtendedStyleProperties {}
+    ExtendedStyleProperties,
+    Omit<SvgProperties, keyof ArrayStandardLonghandProperties> {}
 
 type ScrollSnapType = 'x' | 'y' | 'block' | 'inline' | 'both';
 type ScrollSnapAlign = 'none' | 'start' | 'end' | 'center';
