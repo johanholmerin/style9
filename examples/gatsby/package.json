@@ -1,0 +1,17 @@
+{
+  "name": "style9-gatsby-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^3.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "style9": "^0.8.1"
+  }
+}
