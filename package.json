@@ -59,6 +59,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:examples": "./scripts/test-examples.sh",
     "lint": "eslint '**/*.js' --fix",
     "format": "prettier '**/*.{js,ts}' --write"
   },
