@@ -110,7 +110,7 @@ export interface CustomProperties {}
 
 export interface StyleProperties
   extends StylePropertiesType,
-    CustomProperties {}
+    Partial<CustomProperties> {}
 
 type StylePropertiesType = {
   [k in keyof StylePropertiesInternal]?:
