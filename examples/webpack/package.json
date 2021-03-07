@@ -6,7 +6,7 @@
     "build": "webpack --mode=production"
   },
   "dependencies": {
-    "style9": "^0.8.1"
+    "style9": "link:../.."
   },
   "devDependencies": {
     "css-loader": "^5.1.1",

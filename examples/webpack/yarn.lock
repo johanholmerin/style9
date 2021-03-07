@@ -2839,25 +2839,9 @@ strip-final-newline@^2.0.0:
   resolved "https://registry.yarnpkg.com/strip-final-newline/-/strip-final-newline-2.0.0.tgz#89b852fb2fcbe936f6f4b3187afb0a12c1ab58ad"
   integrity sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
 
-style9@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/style9/-/style9-0.8.1.tgz#59a1dd583e30fe8eac55b8159b930ffa89ef7020"
-  integrity sha512-z3mnDvAElL4ZHK4YyLZa/h/BUKK3N+w31rOB5O1tzvF7n1rQ0QwPfe97bz/BvrqF+EpMePP+gym4si6y/oFN3g==
-  dependencies:
-    "@babel/core" "^7.10.4"
-    "@babel/types" "^7.8.3"
-    "@rollup/pluginutils" "^3.0.4"
-    csstype "^3.0.6"
-    inline-style-expand-shorthand "^1.2.0"
-    known-css-properties "^0.19.0"
-    loader-utils "1.4.0"
-    murmurhash-js "^1.0.0"
-    postcss "^7.0.32"
-    postcss-discard-duplicates "^4.0.2"
-    postcss-selector-parser "^6.0.2"
-    sort-css-media-queries "^1.5.0"
-    webpack-sources "^2.2.0"
-    webpack-virtual-modules "^0.4.1"
+"style9@link:../..":
+  version "0.0.0"
+  uid ""
 
 supports-color@^5.3.0:
   version "5.5.0"
