@@ -1,6 +1,7 @@
 const cssProperties = require('known-css-properties').all;
 const hash = require('murmurhash-js');
-const { UNITLESS_NUMBERS } = require('./constants');
+
+const { UNITLESS_NUMBERS, COMMA_SEPARATED_LIST_PROPERTIES } = require('./constants');
 
 const BASE_FONT_SIZE_PX = 16;
 
@@ -16,7 +17,7 @@ function normalizeValue(prop, value) {
     if (!UNITLESS_NUMBERS.includes(prop)) return `${value}px`;
   }
 
-  if (Array.isArray(value) && prop == 'transitionProperty') {
+  if (Array.isArray(value) && COMMA_SEPARATED_LIST_PROPERTIES.includes(prop)) {
     return value.map(camelToHyphen).join(',');
   }
 
