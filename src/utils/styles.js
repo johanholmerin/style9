@@ -1,7 +1,10 @@
 const cssProperties = require('known-css-properties').all;
 const hash = require('murmurhash-js');
 
-const { UNITLESS_NUMBERS, COMMA_SEPARATED_LIST_PROPERTIES } = require('./constants');
+const {
+  UNITLESS_NUMBERS,
+  COMMA_SEPARATED_LIST_PROPERTIES
+} = require('./constants');
 
 const BASE_FONT_SIZE_PX = 16;
 
@@ -9,21 +12,34 @@ function isCustomProperty(name) {
   return name.startsWith('--');
 }
 
-function normalizeValue(prop, value) {
-  if (isCustomProperty(prop)) return value;
-
+function mapValue(prop, value) {
   if (typeof value === 'number') {
     if (prop === 'fontSize') return `${value / BASE_FONT_SIZE_PX}rem`;
     if (!UNITLESS_NUMBERS.includes(prop)) return `${value}px`;
   }
 
-  if (Array.isArray(value) && COMMA_SEPARATED_LIST_PROPERTIES.includes(prop)) {
-    return value.map(camelToHyphen).join(',');
+  if (prop === 'transitionProperty') {
+    return camelToHyphen(value);
   }
 
-  if (Array.isArray(value)) return value.slice().join(' ');
-
   return value;
+}
+
+function joinValues(prop, list) {
+  const separator = COMMA_SEPARATED_LIST_PROPERTIES.includes(prop) ? ',' : ' ';
+
+  return list.join(separator);
+}
+
+function normalizeValue(prop, value) {
+  if (isCustomProperty(prop)) return value;
+
+  if (Array.isArray(value)) {
+    const mappedValues = value.map(val => mapValue(prop, val));
+    return joinValues(prop, mappedValues);
+  }
+
+  return mapValue(prop, value);
 }
 
 // Class can't start with number
