@@ -146,4 +146,16 @@ const PROPERTY_PRIORITY = {
   'text-decoration-color': 2
 };
 
-module.exports = { UNITLESS_NUMBERS, PROPERTY_PRIORITY };
+// Defined in Style.d.ts
+const COMMA_SEPARATED_LIST_PROPERTIES = [
+  'transitionProperty',
+  'transitionDuration',
+  'transitionTimingFunction',
+  'transitionDelay'
+];
+
+module.exports = {
+  UNITLESS_NUMBERS,
+  PROPERTY_PRIORITY,
+  COMMA_SEPARATED_LIST_PROPERTIES
+};
