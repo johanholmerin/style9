@@ -16,8 +16,8 @@
     "linebreak-style": ["error", "unix"],
     "max-len": [
       "error",
-      80,
       {
+        "code": 80,
         "ignoreComments": true,
         "ignoreStrings": true,
         "ignoreTemplateLiterals": true
