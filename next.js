@@ -28,6 +28,14 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
     webpack(config, options) {
       const outputCSS = !options.isServer;
 
+      // The style9 compiler must run on source code, which means it must be
+      // configured as the last loader in webpack so that it runs before any
+      // other transformation.
+
+      if (typeof nextConfig.webpack === 'function') {
+        config = nextConfig.webpack(config, options);
+      }
+
       config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
         use: [
@@ -52,10 +60,6 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
           }),
           new Style9Plugin()
         );
-      }
-
-      if (typeof nextConfig.webpack === 'function') {
-        return nextConfig.webpack(config, options);
       }
 
       return config;

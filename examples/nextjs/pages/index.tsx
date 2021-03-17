@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import style9 from 'style9';
+import { layout } from '../shared/styles';
 
 const styles = style9.create({
   container: {
     minHeight: '100vh',
     paddingLeft: '.5rem',
     paddingRight: '.5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   title: {
     margin: 0,
@@ -21,7 +18,7 @@ const styles = style9.create({
 
 export default function Home() {
   return (
-    <div className={styles('container')}>
+    <div className={style9(styles.container, layout.center)}>
       <Head>
         <title>Create Next App</title>
       </Head>
@@ -34,3 +31,5 @@ export default function Home() {
     </div>
   )
 }
+
+export const shared = { ...styles };
