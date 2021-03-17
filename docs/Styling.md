@@ -147,7 +147,7 @@ document.body.className = styles('blue');
 
 ## FontSize in REM
 
-[For accessibility][accessible-typography], `font-size` should be declared in `REMs`, to allow users to change their base text size. Style9 handles this automatically when defining `font-size` as a number.
+[For accessibility][accessible-typography], `font-size` should be declared in `REMs`, to allow users to change their base text size. style9 handles this automatically when defining `font-size` as a number.
 
 ```javascript
 import style9 from 'style9';
@@ -183,11 +183,11 @@ export const { ...all } = style9.create({
 
 ## Autoprefixing
 
-Style9 has no built-in autoprefixing, instead leaving that up to the user. Do it like you normally would, with your bundler of choice, for example with [Webpack][webpack-autoprefixing].
+style9 has no built-in autoprefixing, instead leaving that up to the user. Do it like you normally would, with your bundler of choice, for example with [Webpack][webpack-autoprefixing].
 
 ## Theming
 
-Theming is most easily done with CSS Custom Properties. Declaration can be done either in separately or with Style9. They can then be applied globally or for a specific part of your site. TypeScript users, see [CSS Custom Properties with TypeScript](TypeScript.md#css-custom-properties).
+Theming is most easily done with CSS Custom Properties. Declaration can be done either in separately or with style9. They can then be applied globally or for a specific part of your site. TypeScript users, see [CSS Custom Properties with TypeScript](TypeScript.md#css-custom-properties).
 
 ```javascript
 style9.create({

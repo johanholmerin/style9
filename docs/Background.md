@@ -1,6 +1,6 @@
 # Background
 
-Style9 was created to be an open-source implementation of the CSS-in-JS library used to develop the new version of Facebook, [stylex][stylex]. For that reason, the design principles are heavily influenced by stylex.
+style9 was created to be an open-source implementation of the CSS-in-JS library used to develop the new version of Facebook, [stylex][stylex]. For that reason, the design principles are heavily influenced by stylex.
 
 ## Principles
 
@@ -18,7 +18,7 @@ Full type safety, courtesy of TypeScript. Values, properties and variables can b
 
 ### Low-level, framework agnostic, small API
 
-Style9 deals with defining styles and generating class names, nothing else. This makes the API small and makes Style9 easy to learn. It also makes it framework agnostic. It also makes it possible to build solutions on top, see [Ecosystem](Ecosystem.md).
+style9 deals with defining styles and generating class names, nothing else. This makes the API small and makes style9 easy to learn. It also makes it framework agnostic. It also makes it possible to build solutions on top, see [Ecosystem](Ecosystem.md).
 
 ## Tradeoffs
 

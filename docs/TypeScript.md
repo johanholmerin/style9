@@ -1,6 +1,6 @@
 # TypeScript
 
-Style9 has first-class TypeScript support, powered by [csstype](https://github.com/frenic/csstype).
+style9 has first-class TypeScript support, powered by [csstype](https://github.com/frenic/csstype).
 
 ## CSS Custom Properties
 
