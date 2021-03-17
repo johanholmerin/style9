@@ -19,6 +19,7 @@ declare namespace style9 {
       )[]
     ) => string);
   export function keyframes(rules: StylePropertiesObject): string;
+  export function flush(): string;
 }
 
 export default style9;

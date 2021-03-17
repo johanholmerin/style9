@@ -22,9 +22,29 @@ function isPropertyCall(node, name) {
   });
 }
 
+function isFlushCall(node) {
+  return testASTShape(node, {
+    parent: {
+      type: 'MemberExpression',
+      parent: {
+        type: 'CallExpression',
+        callee: {
+          property: { name: 'flush' }
+        },
+        arguments: {
+          length: 0
+        }
+      }
+    }
+  });
+}
+
 function processReference(node, options) {
   // style9() calls are left as-is
   if (node.parentPath.isCallExpression()) return [];
+
+  // style9.flush() calls are left as-is
+  if (isFlushCall(node)) return [];
 
   if (isPropertyCall(node, 'create')) return transpileCreate(node, options);
   if (isPropertyCall(node, 'keyframes')) return transpileKeyframes(node);

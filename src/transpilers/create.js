@@ -71,10 +71,12 @@ function transpileCreate(identifier, options) {
     ? mapObjectValues(filteredStyleValues, minifyProperties)
     : filteredStyleValues;
 
-  replaceCreateCall(callExpr, minifiedStyleValues);
+  const styles = generateStyles(filteredDefinitions);
+
+  replaceCreateCall(callExpr, minifiedStyleValues, styles);
   replaceFunctionCalls(normalizedFuncCalls, styleClasses);
 
-  return generateStyles(filteredDefinitions);
+  return styles;
 }
 
 module.exports = { transpileCreate };

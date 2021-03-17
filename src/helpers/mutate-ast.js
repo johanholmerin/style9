@@ -17,8 +17,13 @@ function objectToAST(object) {
   return t.objectExpression(properties);
 }
 
-function replaceCreateCall(callExpr, minifiedDefinitions) {
-  callExpr.replaceWith(objectToAST(minifiedDefinitions));
+function replaceCreateCall(callExpr, minifiedDefinitions, styles) {
+  callExpr.replaceWith(
+    t.callExpression(
+      t.memberExpression(t.identifier('style9'), t.identifier('register')),
+      [objectToAST(minifiedDefinitions), t.stringLiteral(styles.join(''))]
+    )
+  );
 }
 
 function flattenClasses(classes) {

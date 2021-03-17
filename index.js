@@ -39,3 +39,14 @@ style9.create = () => {
 style9.keyframes = () => {
   throw new Error('style9.keyframes calls should be compiled away');
 };
+
+const styleRegister = [];
+
+style9.register = (definitions, styles) => {
+  styleRegister.push(styles);
+  return definitions;
+};
+
+style9.flush = () => {
+  return styleRegister.join(' ');
+};
