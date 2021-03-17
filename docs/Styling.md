@@ -43,6 +43,8 @@ document.body.className = styles({
 
 ## Composition
 
+To compose styles from multiple declarations, `style9` can be called as a function with the properties of the generated style object. This is not subject to the same restrictions as using the `styles` function, and can be fully dynamic.
+
 ```javascript
 import style9 from 'style9';
 
@@ -64,6 +66,8 @@ document.body.className = style9(someStyles.blue, someOtherStyles[dynamicKey]);
 
 ## Pseudo selectors
 
+Both pseudo-classes and pseudo-elements are supported and can be nested.
+
 ```javascript
 import style9 from 'style9';
 
@@ -84,7 +88,9 @@ document.body.className = styles('blue');
 
 ## Media queries
 
-Media queries will be sorted mobile-first
+Media queries are supported, and will be sorted mobile-first in the generated CSS. They can be nested and can contain pseudo selectors.
+
+**Note:** TypeScript users, see [Media queries with TypeScript](TypeScript.md#media-queries)
 
 ```javascript
 import style9 from 'style9';
@@ -102,6 +108,8 @@ document.body.className = styles('blue');
 ```
 
 ## Keyframes
+
+CSS animations are created by calling `style9.keyframes` with the desired keyframe definitions, which returns a string that can be used as `animationName`.
 
 ```javascript
 import style9 from 'style9';
