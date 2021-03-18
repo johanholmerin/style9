@@ -41,7 +41,7 @@ const styles = style9.create({
 export const getClass(color: keyof typeof styles) => style9(styles[color]);
 ```
 
-The other is using a value that's only available at the runtime, a common example being setting a user-defined image as a background. These are not available while compiling, and are therefor not supported. However, these values are one-off and limited in use, and does not suffer from being set inline. Or, if reuse is required, they can be set as CSS Custom Properties:
+The other is using a value that's only available at the runtime, a common example being setting a user-defined image as a background. These are not available while compiling, and are therefore not supported. However, these values are one-off and limited in use, and does not suffer from being set inline. Or, if reuse is required, they can be set as CSS Custom Properties:
 
 ```typescript
 import style9 from 'style9';

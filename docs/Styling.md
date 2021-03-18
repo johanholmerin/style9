@@ -60,8 +60,7 @@ const someOtherStyles = style9.create({
   }
 });
 
-document.body.className = style9(someStyles.blue, someOtherStyles.tilt);
-document.body.className = style9(someStyles.blue, someOtherStyles[dynamicKey]);
+document.body.className = style9(someStyles.blue, someOtherStyles['ti' + 'lt']);
 ```
 
 ## Pseudo selectors
@@ -118,6 +117,7 @@ const styles = style9.create({
   blue: {
     animationName: style9.keyframes({
       from: { color: 'blue' },
+      '50%': { color: 'yellow' },
       to: { color: 'red' }
     })
   }
@@ -130,19 +130,34 @@ document.body.className = styles('blue');
 
 To be able to confidently apply class names [shorthand CSS properties][mdn shorthands], like `background`, are not supported. Instead longhand properties, like `background-color` and `background-image` should be used. For some simple shorthands, [inline-style-expand-shorthand][inline-style-expand-shorthand] is used to automatically expand them into their longhand equivalents.
 
+#### Unsupported use
+
 ```javascript
 import style9 from 'style9';
 
 const styles = style9.create({
-  rounded: {
+  shorthand: {
+    borderRadius: '50%',
+  }
+});
+```
+
+#### Supported uses
+
+```javascript
+import style9 from 'style9';
+
+const styles = style9.create({
+  longhands: {
     borderTopLeftRadius: '50%',
     borderTopRightRadius: '50%',
     borderBottomLeftRadius: '50%',
     borderBottomRightRadius: '50%',
+  },
+  automaticallyExpanded: {
+    padding: '12px'
   }
 });
-
-document.body.className = styles('blue');
 ```
 
 ## FontSize in REM
