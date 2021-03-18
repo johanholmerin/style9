@@ -40,7 +40,7 @@ async function style9Loader(input, inputSourceMap) {
 
     virtualModules.writeModule(cssPath, metadata.style9);
 
-    const postfix = `import '${inlineLoader + cssPath}';`;
+    const postfix = `\nimport '${inlineLoader + cssPath}';`;
     this.callback(null, code + postfix, map);
   }
 }
