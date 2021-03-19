@@ -1,3 +1,4 @@
+// Minimum TypeScript Version: 4.1
 import type {
   StandardShorthandProperties,
   StandardLonghandProperties,
@@ -5,12 +6,7 @@ import type {
   SimplePseudos
 } from 'csstype';
 
-type PropsAsArray<T, K extends keyof T> = T &
-  {
-    [k in K]: T[K] | T[K][];
-  };
-
-type AtRules = '@media' | '@supports';
+export type AtRules = '@media' | '@supports';
 
 type Style = StyleProperties &
   {
@@ -45,14 +41,27 @@ type FilteredStandardLonghandProperties = Omit<
   | keyof ExtendedStyleProperties
 >;
 
-type ArrayStandardLonghandProperties = PropsAsArray<
-  FilteredStandardLonghandProperties,
-  | 'fontVariant'
-  | 'textDecorationLine'
-  | 'transitionDuration'
-  | 'transitionTimingFunction'
-  | 'transitionDelay'
->;
+interface ArrayProperties {
+  fontVariant?:
+    | FilteredStandardLonghandProperties['fontVariant']
+    | Array<FilteredStandardLonghandProperties['fontVariant']>;
+  textDecorationLine?:
+    | FilteredStandardLonghandProperties['textDecorationLine']
+    | Array<FilteredStandardLonghandProperties['textDecorationLine']>;
+  transitionDuration?:
+    | FilteredStandardLonghandProperties['transitionDuration']
+    | Array<FilteredStandardLonghandProperties['transitionDuration']>;
+  transitionTimingFunction?:
+    | FilteredStandardLonghandProperties['transitionTimingFunction']
+    | Array<FilteredStandardLonghandProperties['transitionTimingFunction']>;
+  transitionDelay?:
+    | FilteredStandardLonghandProperties['transitionDelay']
+    | Array<FilteredStandardLonghandProperties['transitionDelay']>;
+}
+
+interface ArrayStandardLonghandProperties
+  extends Omit<FilteredStandardLonghandProperties, keyof ArrayProperties>,
+    ArrayProperties {}
 
 interface SvgProperties {
   alignmentBaseline?:
@@ -94,7 +103,7 @@ interface SvgProperties {
   stopColor?: string;
   stopOpacity?: number;
   stroke?: string;
-  strokeDasharray?: number | string | (number | string)[];
+  strokeDasharray?: number | string | Array<number | string>;
   strokeDashoffset?: number | string;
   strokeLinecap?: 'butt' | 'round' | 'square';
   strokeLinejoin?: 'miter' | 'round' | 'bevel';
@@ -132,7 +141,7 @@ interface ExtendedStyleProperties {
   transitionProperty?:
     | StandardLonghandProperties['transitionProperty']
     | keyof StylePropertiesInternal
-    | (keyof StylePropertiesInternal)[];
+    | Array<keyof StylePropertiesInternal>;
   gridAutoFlow?:
     | StandardLonghandProperties['gridAutoFlow']
     | ['row', 'dense']

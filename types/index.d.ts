@@ -1,3 +1,4 @@
+// Minimum TypeScript Version: 4.1
 import Style, { StyleProperties } from './Style';
 
 interface StylePropertiesObject {
@@ -6,19 +7,20 @@ interface StylePropertiesObject {
 
 declare function style9(...names: Style[]): string;
 declare namespace style9 {
-  export function create<T>(
+  function create<T>(
     styles: { [key in keyof T]: Style }
   ): { [key in keyof T]: Style } &
     ((
-      ...names: (
+      ...names: Array<
         | keyof T
         | boolean
         | undefined
         | null
         | { [key in keyof T]?: boolean | undefined | null }
-      )[]
+      >
     ) => string);
-  export function keyframes(rules: StylePropertiesObject): string;
+  function keyframes(rules: StylePropertiesObject): string;
 }
 
 export default style9;
+export { CustomProperties } from './Style';

@@ -7,7 +7,7 @@ style9 has first-class TypeScript support, powered by [csstype](https://github.c
 Custom properties can be added to the type definition by augmenting the `CustomProperties` interface. This makes them available as properties and as values.
 
 ```typescript
-declare module 'style9/Style' {
+declare module 'style9' {
   interface CustomProperties {
     '--bg-color'?: string;
   }
