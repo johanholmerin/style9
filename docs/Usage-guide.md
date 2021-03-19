@@ -1,4 +1,4 @@
-# Styling
+# Usage guide
 
 ## Basic
 

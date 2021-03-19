@@ -4,7 +4,7 @@ CSS-in-JS compiler inspired by Facebook's [stylex][stylex], with near-zero runti
 
 ## Basic usage
 
-*For a complete walkthrough of the API, see [Styling](docs/Styling.md).*
+*For a complete walkthrough of the API, see [Usage guide](docs/Usage-guide.md).*
 
 ```javascript
 import style9 from 'style9';
@@ -73,11 +73,11 @@ module.exports = {
 ## Documentation
 
 1. [Background](docs/Background.md)
-1. [How it works](docs/How-it-works.md)
-1. [Styling](docs/Styling.md)
+1. [Usage guide](docs/Usage-guide.md)
 1. [Bundler plugins](docs/Bundler-plugins.md)
 1. [TypeScript](docs/TypeScript.md)
 1. [Ecosystem](docs/Ecosystem.md)
+1. [How it works](docs/How-it-works.md)
 1. [FAQ](docs/FAQ.md)
 1. [Example apps](examples)
 
