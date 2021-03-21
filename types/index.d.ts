@@ -1,5 +1,5 @@
 // Minimum TypeScript Version: 4.1
-import Style, { StyleProperties } from './Style';
+import { Style, StyleProperties } from './Style';
 
 interface StylePropertiesObject {
   [key: string]: StyleProperties;
@@ -23,4 +23,4 @@ declare namespace style9 {
 }
 
 export default style9;
-export { CustomProperties } from './Style';
+export * from './Style';

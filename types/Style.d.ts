@@ -8,7 +8,7 @@ import type {
 
 export type AtRules = '@media' | '@supports';
 
-type Style = StyleProperties &
+export type Style = StyleProperties &
   {
     [key in SimplePseudos]?: Style;
   } &
@@ -16,7 +16,7 @@ type Style = StyleProperties &
     [key in AtRules]?: Record<string, Style>;
   };
 
-export default Style;
+export {};
 
 type FilteredStandardLonghandProperties = Omit<
   StandardLonghandProperties<string | number>,
