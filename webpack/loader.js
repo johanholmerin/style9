@@ -16,32 +16,36 @@ async function style9Loader(input, inputSourceMap) {
 
   this.async();
 
-  const { code, map, metadata } = await babel.transformAsync(input, {
-    plugins: [[babelPlugin, options]],
-    inputSourceMap: inputSourceMap || true,
-    sourceFileName: this.resourcePath,
-    filename: path.basename(this.resourcePath),
-    sourceMaps: true,
-    parserOpts: parserOptions
-  });
+  try {
+    const { code, map, metadata } = await babel.transformAsync(input, {
+      plugins: [[babelPlugin, options]],
+      inputSourceMap: inputSourceMap || true,
+      sourceFileName: this.resourcePath,
+      filename: path.basename(this.resourcePath),
+      sourceMaps: true,
+      parserOpts: parserOptions
+    });
 
-  if (metadata.style9 === undefined) {
-    this.callback(null, input, inputSourceMap);
-  } else if (!outputCSS) {
-    this.callback(null, code, map);
-  } else {
-    const cssPath = loaderUtils.interpolateName(
-      this,
-      '[path][name].[hash:base64:7].css',
-      {
-        content: metadata.style9
-      }
-    );
+    if (metadata.style9 === undefined) {
+      this.callback(null, input, inputSourceMap);
+    } else if (!outputCSS) {
+      this.callback(null, code, map);
+    } else {
+      const cssPath = loaderUtils.interpolateName(
+        this,
+        '[path][name].[hash:base64:7].css',
+        {
+          content: metadata.style9
+        }
+      );
 
-    virtualModules.writeModule(cssPath, metadata.style9);
+      virtualModules.writeModule(cssPath, metadata.style9);
 
-    const postfix = `\nimport '${inlineLoader + cssPath}';`;
-    this.callback(null, code + postfix, map);
+      const postfix = `\nimport '${inlineLoader + cssPath}';`;
+      this.callback(null, code + postfix, map);
+    }
+  } catch (error) {
+    this.callback(error);
   }
 }
 
