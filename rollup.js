@@ -11,7 +11,8 @@ module.exports = function style9Plugin({
   name,
   parserOptions = {
     plugins: ['typescript', 'jsx']
-  }
+  },
+  ...options
 } = {}) {
   // Default name required to ensure extension
   if (!fileName && !name) name = 'index.css';
@@ -21,16 +22,18 @@ module.exports = function style9Plugin({
 
   return {
     name: NAME,
-    async transform(input, id) {
-      if (!filter(id)) return;
+    async transform(input, filename) {
+      if (!filter(filename)) return;
 
       const { code, map, metadata } = await babel.transformAsync(input, {
-        plugins: [babelPlugin],
+        plugins: [[babelPlugin, options]],
+        filename,
+        sourceMaps: true,
         parserOpts: parserOptions,
         babelrc: false
       });
 
-      styles[id] = metadata.style9 || '';
+      styles[filename] = metadata.style9 || '';
 
       return { code, map };
     },
