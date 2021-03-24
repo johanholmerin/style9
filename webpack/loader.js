@@ -23,7 +23,8 @@ async function style9Loader(input, inputSourceMap) {
       sourceFileName: this.resourcePath,
       filename: path.basename(this.resourcePath),
       sourceMaps: true,
-      parserOpts: parserOptions
+      parserOpts: parserOptions,
+      babelrc: false
     });
 
     if (metadata.style9 === undefined) {

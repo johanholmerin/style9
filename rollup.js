@@ -26,7 +26,8 @@ module.exports = function style9Plugin({
 
       const { code, map, metadata } = await babel.transformAsync(input, {
         plugins: [babelPlugin],
-        parserOpts: parserOptions
+        parserOpts: parserOptions,
+        babelrc: false
       });
 
       styles[id] = metadata.style9 || '';
