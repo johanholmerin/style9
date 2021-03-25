@@ -16,6 +16,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         styles: {
+          name: 'styles',
           type: 'css/mini-extract',
           // For webpack@4 remove type and uncomment the line below
           // test: /\.css$/,
