@@ -51,6 +51,20 @@ const Style9Plugin = require('style9/webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  // Collect all styles in a single file - required
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          type: 'css/mini-extract',
+          // For webpack@4 remove type and uncomment the line below
+          // test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        }
+      }
+    }
+  },
   module: {
     rules: [
       {

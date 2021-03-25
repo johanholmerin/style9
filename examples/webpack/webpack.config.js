@@ -8,6 +8,17 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'build'),
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
   module: {
     rules: [
       {

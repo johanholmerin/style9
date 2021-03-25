@@ -51,6 +51,12 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       });
 
       if (outputCSS) {
+        config.optimization.splitChunks.cacheGroups.styles = {
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        };
+
         config.plugins.push(
           // Logic adopted from https://git.io/JtdBy
           new MiniCssExtractPlugin({
