@@ -6,8 +6,17 @@ const MiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-e
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
 
+const cssLoader = (() => {
+  try {
+    // v10+
+    return require.resolve('next/dist/compiled/css-loader');
+  } catch (_) {
+    return 'css-loader';
+  }
+})();
+
 function getInlineLoader(options) {
-  const outputLoaders = [{ loader: 'css-loader' }];
+  const outputLoaders = [{ loader: cssLoader }];
 
   if (!options.isServer) {
     outputLoaders.unshift(
