@@ -20,6 +20,8 @@ const PSEUDO_ORDER = [
   ':disabled'
 ];
 
+const EXCLUDE_RULE_TYPE = ['atrule'];
+
 function getPriority(prop) {
   return PROPERTY_PRIORITY[prop] || DEFAULT_PRIORITY;
 }
@@ -91,6 +93,9 @@ function extractDecls(decls) {
   const nodes = [];
 
   decls.forEach(rule => {
+    if (EXCLUDE_RULE_TYPE.includes(rule.parent.type)) {
+      return;
+    }
     const selectors = parseSelector(rule.parent);
     const isStyle9Selector = isValidSelector(selectors);
     if (!isStyle9Selector) return;
