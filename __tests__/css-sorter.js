@@ -97,7 +97,12 @@ const CASES = [
       '.a{padding-top:2px}' +
       '.d{border-top:1px}' +
       '.c{border-top-width:2px}'
-  }
+  },
+  {
+    name: 'ignore atrule',
+    input: '@-ms-viewport {width:device-width}' + '.a{opacity:1}',
+    expected: '@-ms-viewport {width:device-width}' + '.a{opacity:1}'
+  },
 ];
 
 const IGNORE = [
