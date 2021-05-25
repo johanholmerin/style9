@@ -25,7 +25,7 @@ style9.create({
 
 ## Media queries
 
-For TypeScript < 4.3 the following syntax is required for media queries and @supports
+For TypeScript < 4.4 the following syntax is required for media queries and @supports
 
 ```javascript
 style9.create({

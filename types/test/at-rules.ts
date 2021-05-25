@@ -1,4 +1,4 @@
-// Minimum TypeScript Version: 4.3
+// Minimum TypeScript Version: 4.4
 import style9 from '../..';
 
 style9.create({
