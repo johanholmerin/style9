@@ -102,7 +102,7 @@ const CASES = [
     name: 'ignore atrule',
     input: '@-ms-viewport {width:device-width}' + '.a{opacity:1}',
     expected: '@-ms-viewport {width:device-width}' + '.a{opacity:1}'
-  },
+  }
 ];
 
 const IGNORE = [
