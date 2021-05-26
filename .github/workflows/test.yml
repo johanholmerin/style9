@@ -22,10 +22,10 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Check linting
-      run: yarn lint
+      run: yarn lint:check
 
     - name: Check formatting
-      run: yarn format
+      run: yarn format:check
 
     - name: Test types
       run: yarn test:types
