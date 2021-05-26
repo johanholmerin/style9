@@ -12,7 +12,10 @@ module.exports = function style9BabelPlugin() {
         const bindings = path.scope.bindings[importName].referencePaths;
 
         const css = processReferences(bindings, state.opts).join('');
-        state.file.metadata.style9 = css;
+        if (!state.file.metadata.style9) {
+          state.file.metadata.style9 = '';
+        }
+        state.file.metadata.style9 += css;
       }
     }
   };
