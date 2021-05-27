@@ -72,6 +72,8 @@ export default {
 
 ## Next.js
 
+**Note:** not compatible with Next.js 10.2.1 or higher
+
 ```javascript
 const withTM = require('next-transpile-modules')(['style9']);
 const withStyle9 = require('style9/next');
