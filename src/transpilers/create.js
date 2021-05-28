@@ -49,7 +49,10 @@ function transpileCreate(identifier, options) {
   validateStyleObject(objExpr);
 
   const styleDefinitions = flattenAtRules(getStyleObjectValue(objExpr));
-  const styleClasses = generateClasses(styleDefinitions);
+  const styleClasses = generateClasses(
+    styleDefinitions,
+    options.incrementalClassnames
+  );
   const references = listReferences(callExpr.parentPath);
 
   validateReferences(references);
@@ -74,7 +77,7 @@ function transpileCreate(identifier, options) {
   replaceCreateCall(callExpr, minifiedStyleValues);
   replaceFunctionCalls(normalizedFuncCalls, styleClasses);
 
-  return generateStyles(filteredDefinitions);
+  return generateStyles(filteredDefinitions, options.incrementalClassnames);
 }
 
 module.exports = { transpileCreate };

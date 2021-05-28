@@ -1,5 +1,6 @@
 const cssProperties = require('known-css-properties').all;
 const hash = require('murmurhash-js');
+const { getIncrementalClass } = require('./incremental-classnames');
 
 const {
   UNITLESS_NUMBERS,
@@ -45,8 +46,14 @@ function normalizeValue(prop, value) {
 // Class can't start with number
 const CLASS_PREFIX = 'c';
 
-function getClass(...args) {
-  return CLASS_PREFIX + hash(JSON.stringify(args)).toString(36);
+function getHashClass(...args) {
+  return hash(JSON.stringify(args)).toString(36);
+}
+
+function getClass(args, incremental) {
+  const cls = getHashClass(args);
+  if (!incremental) return CLASS_PREFIX + cls;
+  return getIncrementalClass(cls);
 }
 
 function camelToHyphen(string) {
@@ -54,8 +61,11 @@ function camelToHyphen(string) {
   return string.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`);
 }
 
-function getDeclaration({ name, value, atRules, pseudoSelectors }) {
-  const cls = getClass({ name, value, atRules, pseudoSelectors });
+function getDeclaration(
+  { name, value, atRules, pseudoSelectors },
+  incremental
+) {
+  const cls = getClass({ name, value, atRules, pseudoSelectors }, incremental);
 
   return (
     atRules.map(rule => rule + '{').join('') +

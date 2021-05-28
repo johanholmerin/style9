@@ -6,10 +6,14 @@ const {
   isPseudoSelector
 } = require('../utils/styles');
 
-function getClassValues(styles, { atRules = [], pseudoSelectors = [] } = {}) {
+function getClassValues(
+  styles,
+  incremental,
+  { atRules = [], pseudoSelectors = [] } = {}
+) {
   return mapObject(styles, ([name, value]) => {
     if (isAtRule(name)) {
-      const newValue = getClassValues(value, {
+      const newValue = getClassValues(value, incremental, {
         atRules: [...atRules, name],
         pseudoSelectors
       });
@@ -18,20 +22,23 @@ function getClassValues(styles, { atRules = [], pseudoSelectors = [] } = {}) {
 
     if (isPseudoSelector(name)) {
       const normalizedName = normalizePseudoElements(name);
-      const newValue = getClassValues(value, {
+      const newValue = getClassValues(value, incremental, {
         pseudoSelectors: [...pseudoSelectors, normalizedName],
         atRules
       });
       return [normalizedName, newValue];
     }
 
-    const newValue = getClass({ name, value, atRules, pseudoSelectors });
+    const newValue = getClass(
+      { name, value, atRules, pseudoSelectors },
+      incremental
+    );
     return [name, newValue];
   });
 }
 
-function generateClasses(obj) {
-  return mapObjectValues(obj, value => getClassValues(value));
+function generateClasses(obj, incremental = false) {
+  return mapObjectValues(obj, value => getClassValues(value, incremental));
 }
 
 module.exports = generateClasses;

@@ -4,6 +4,7 @@ import { ParserOptions } from '@babel/core';
 
 interface BabelOptions {
   minifyProperties?: boolean;
+  incrementalClassnames?: boolean;
 }
 
 interface CommonOptions extends BabelOptions {
