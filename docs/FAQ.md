@@ -56,7 +56,7 @@ const styles = style9.create({
 
 ### `Unsupported type`
 
-You're using an operator or value type that isn't supported. See [Usage guide](Usage guide.md) for supported uses.
+You're using an operator or value type that isn't supported. See [Usage guide](Usage-guide.md) for supported uses.
 
 ## Have another question?
 
