@@ -3,7 +3,8 @@ import style9 from '../..';
 
 const styles = style9.create({
   blue: { color: 'blue' },
-  red: { color: 'red' }
+  red: { color: 'red' },
+  green: { color: 'green' }
 });
 
 // $ExpectType string
@@ -19,6 +20,13 @@ styles({
   blue: true
 });
 // $ExpectType string
+styles(false, undefined, null);
+// $ExpectType string
+styles({ blue: undefined, red: null, green: false });
+styles({ blue: undefined, red: null, green: true });
+// $ExpectType string
 style9(styles.blue);
 // $ExpectType string
-styles(true, false, undefined, null);
+style9(false, undefined, null);
+// $ExpectError
+style9(true);
