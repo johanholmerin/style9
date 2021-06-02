@@ -5,18 +5,16 @@ interface StylePropertiesObject {
   [key: string]: StyleProperties;
 }
 
-declare function style9(...names: Style[]): string;
+type Falsy = false | null | undefined;
+
+declare function style9(...names: Array<Style | Falsy>): string;
 declare namespace style9 {
   function create<T>(
     styles: { [key in keyof T]: Style }
   ): { [key in keyof T]: Style } &
     ((
       ...names: Array<
-        | keyof T
-        | boolean
-        | undefined
-        | null
-        | { [key in keyof T]?: boolean | undefined | null }
+        keyof T | Falsy | { [key in keyof T]?: boolean | undefined | null }
       >
     ) => string);
   function keyframes(rules: StylePropertiesObject): string;
