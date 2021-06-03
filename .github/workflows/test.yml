@@ -35,3 +35,12 @@ jobs:
 
     - name: Test examples
       run: yarn test:examples
+
+    - name: Mutation tests
+      run: yarn test:mutation
+
+    - name: Upload Stryker report
+      uses: actions/upload-artifact@v2
+      with:
+        name: stryker-report
+        path: reports/mutation/html/index.html

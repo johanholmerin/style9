@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@stryker-mutator/core": "^5.0.1",
+    "@stryker-mutator/jest-runner": "^5.0.1",
     "babel-jest": "^26.1.0",
     "babel-plugin-tester": "^10.0.0",
     "dtslint": "^4.0.7",
@@ -64,6 +66,7 @@
   "scripts": {
     "test": "jest",
     "test:types": "dtslint types",
+    "test:mutation": "stryker run",
     "test:examples": "./scripts/test-examples.sh",
     "lint": "eslint '**/*.js' --fix",
     "lint:check": "eslint '**/*.js'",
