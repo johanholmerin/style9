@@ -56,6 +56,7 @@ it('does not override longhand', () => {
 import style9 from 'style9';
 const styles = style9.create({
   default: {
+    paddingTop: '.5rem',
     padding: '1rem',
     paddingLeft: '2rem'
   }
@@ -65,7 +66,7 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.c1xiyxc9{padding-top:1rem}' +
+    '.c3h9r6w{padding-top:.5rem}' +
       '.c1wgquni{padding-right:1rem}' +
       '.c1s7zyp4{padding-bottom:1rem}' +
       '.c17qt1w7{padding-left:2rem}'
