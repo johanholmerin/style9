@@ -247,6 +247,22 @@ const { ...styles } = style9.create({
   expect(styles).toBe(`.c1r9f2e5{color:blue}`);
 });
 
+it('removes unused destructured keys', () => {
+  const input = `
+import style9 from 'style9';
+const { blue } = style9.create({
+  blue: {
+    color: 'blue'
+  },
+  red: {
+    color: 'red'
+  }
+});
+  `;
+  const { styles } = compile(input);
+  expect(styles).toBe('.c1r9f2e5{color:blue}');
+});
+
 it('supports spread use', () => {
   const input = `
 import style9 from 'style9';
