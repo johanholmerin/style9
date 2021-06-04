@@ -37,10 +37,7 @@ function extractNode(path, node) {
 
   const name = path.scope.generateUidBasedOnNode(node);
 
-  if (
-    path.scope.path.type !== 'Program' &&
-    !Array.isArray(path.scope.path.get('body'))
-  ) {
+  if (!Array.isArray(path.scope.path.get('body'))) {
     path.scope.path.ensureBlock();
   }
 
