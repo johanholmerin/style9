@@ -21,6 +21,19 @@ foo(styles);
   `);
 });
 
+it('supports React Hot Loader call', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+reactHotLoader.register(styles);
+  `;
+  expect(() => compile(input)).not.toThrow();
+});
+
 it('throws on non-existing property import', () => {
   const input = `
 import style9 from 'style9';
