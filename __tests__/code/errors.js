@@ -217,3 +217,23 @@ styles({ [red]: foo })
       9 |   "
   `);
 });
+
+it('throws on unsupported logical expression', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  red: {
+    color: 'red'
+  }
+});
+styles(foo || red)
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported type LogicalExpression
+      6 |   }
+      7 | });
+    > 8 | styles(foo || red)
+        |        ^^^^^^^^^^
+      9 |   "
+  `);
+});
