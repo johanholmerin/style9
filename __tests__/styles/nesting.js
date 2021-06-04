@@ -25,6 +25,9 @@ const styles = style9.create({
   default: {
     '@media (max-width: 1000px)': {
       opacity: 1
+    },
+    '@supports (color: blue)': {
+      opacity: 'blue'
     }
   }
 });
@@ -32,7 +35,10 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('@media (max-width: 1000px){.ci6xust{opacity:1}}');
+  expect(styles).toBe(
+    '@media (max-width: 1000px){.ci6xust{opacity:1}}' +
+      '@supports (color: blue){.crgwwka{opacity:blue}}'
+  );
 });
 
 it('supports deep nesting', () => {
