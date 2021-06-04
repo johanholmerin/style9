@@ -34,9 +34,7 @@ function getConditionalArgs(args, classes) {
     prevValue = cls;
   }
 
-  if (newArgs.length) {
-    newArgs.push(t.stringLiteral(''));
-  }
+  newArgs.push(t.stringLiteral(''));
 
   return newArgs;
 }
@@ -61,10 +59,6 @@ function generateExpression(args, classObject) {
         t.conditionalExpression(prop.test, prop.value, acc)
       )
     );
-
-  if (!conditionals.length) {
-    return t.stringLiteral('');
-  }
 
   const binaryExpression = conditionals.reduceRight((acc, expr) =>
     t.binaryExpression('+', expr, acc)
