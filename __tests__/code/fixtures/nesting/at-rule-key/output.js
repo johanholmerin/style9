@@ -1,10 +1,10 @@
 import style9 from 'style9';
 const styles = {
   default: {
-    '@media (max-width: 1000px)': {
-      opacity: 'ci6xust',
+    '@supports (opacity: 1)': {
+      opacity: 'c1ingqb1',
       '@media (max-width: 1000px)': {
-        opacity: 'c4bioch'
+        opacity: 'cm5qoc3'
       }
     }
   }
