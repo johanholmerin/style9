@@ -47,9 +47,11 @@ import style9 from 'style9';
 const styles = style9.create({
   default: {
     '@media (max-width: 1000px)': {
-      ':hover': {
-        '::before': {
-          opacity: 1
+      '@media (max-width: 200px)': {
+        ':hover': {
+          '::before': {
+            opacity: 1
+          }
         }
       }
     }
@@ -60,7 +62,7 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '@media (max-width: 1000px){.c1or01hk:hover::before{opacity:1}}'
+    '@media (max-width: 1000px){@media (max-width: 200px){.cedqupw:hover::before{opacity:1}}}'
   );
 });
 
