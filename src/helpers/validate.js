@@ -54,8 +54,8 @@ function evalKey(objProp) {
   return { value: keyPath.node.name, confident: true };
 }
 
-function validateStyleObjectInner(objExpr) {
-  objExpr.traverse({
+function validateStyleObjectInner(objProp) {
+  objProp.get('value').traverse({
     ObjectProperty(path) {
       const { value, confident } = evalKey(path);
       if (!confident) return;
@@ -79,10 +79,7 @@ function validateStyleObjectInner(objExpr) {
 
 // Does not validate spread elements
 function validateStyleObject(objExpr) {
-  objExpr.get('properties').forEach(prop => {
-    if (!prop.isObjectProperty()) return;
-    validateStyleObjectInner(prop.get('value'));
-  });
+  objExpr.get('properties').forEach(validateStyleObjectInner);
 }
 
 module.exports = { validateReferences, validateStyleObject };
