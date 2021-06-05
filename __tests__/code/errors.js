@@ -49,6 +49,51 @@ style9.foo;
   `);
 });
 
+it('create throws when called without arguments', () => {
+  const input = `
+import style9 from 'style9';
+style9.create();
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported use. Supported uses are: style9(), style9.create(), and style9.keyframes()
+      1 |
+      2 | import style9 from 'style9';
+    > 3 | style9.create();
+        | ^^^^^^
+      4 |   "
+  `);
+});
+
+it('create throws when called multiple arguments', () => {
+  const input = `
+import style9 from 'style9';
+style9.create({}, {});
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported use. Supported uses are: style9(), style9.create(), and style9.keyframes()
+      1 |
+      2 | import style9 from 'style9';
+    > 3 | style9.create({}, {});
+        | ^^^^^^
+      4 |   "
+  `);
+});
+
+it('create throws non-object argument', () => {
+  const input = `
+import style9 from 'style9';
+style9.create(1);
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: Unsupported use. Supported uses are: style9(), style9.create(), and style9.keyframes()
+      1 |
+      2 | import style9 from 'style9';
+    > 3 | style9.create(1);
+        | ^^^^^^
+      4 |   "
+  `);
+});
+
 it('styles throws on non-existing style key', () => {
   const input = `
 import style9 from 'style9';

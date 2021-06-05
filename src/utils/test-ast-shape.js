@@ -6,7 +6,7 @@ function getAst(ast, path) {
 
 function getValue(ast, path) {
   if (Array.isArray(ast)) return ast[path];
-  return ast.node[path];
+  return ast && ast.node[path];
 }
 
 function testASTShape(ast, shape) {
