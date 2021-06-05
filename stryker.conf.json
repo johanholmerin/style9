@@ -12,5 +12,5 @@
     "projectType": "custom",
     "configFile": "./jest.config.json"
   },
-  "ignorePatterns": ["./src/plugin-utils.js"]
+  "ignorePatterns": ["src/plugin-utils.js"]
 }
