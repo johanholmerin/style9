@@ -1,6 +1,6 @@
 const cssProperties = require('known-css-properties').all;
 const hash = require('murmurhash-js');
-const { getIncrementalClass } = require('./incremental-classnames');
+const { getIncrementalClass } = require('./incremental-classnames')();
 
 const {
   UNITLESS_NUMBERS,

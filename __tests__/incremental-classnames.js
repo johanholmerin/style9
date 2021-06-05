@@ -1,7 +1,8 @@
 /* eslint-env jest */
-const { getIncrementalClass } = require('../src/utils/incremental-classnames');
+const createGenerator = require('../src/utils/incremental-classnames');
 
 it('generates incremental classnames', () => {
+  const { getIncrementalClass } = createGenerator();
   const input = new Array(200).fill().map((_, index) => String(index));
   const output = (
     'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,' +
@@ -14,4 +15,16 @@ it('generates incremental classnames', () => {
     'Fd,Gd,Hd,Id,Jd,Kd,Ld,Md,Nd,Od,Pd,Qd,Rd,Sd,Td'
   ).split(',');
   expect(input.map(getIncrementalClass)).toEqual(output);
+});
+
+it('generates unique classnames', () => {
+  const { getIncrementalClass } = createGenerator();
+  const input = new Array(10000).fill().map((_, index) => String(index));
+  const output = input.map(getIncrementalClass);
+  const duplicates = output.filter((cls, i) => output.indexOf(cls) !== i);
+  expect(duplicates).toEqual([]);
+  expect(output.join('')).toEqual(expect.not.stringContaining('undefined'));
+  const startsWithNumber = output.filter(cls => /^[0-9]/.test(cls));
+  expect(startsWithNumber).toEqual([]);
+  expect(output[output.length - 1]).toEqual('Nhd');
 });
