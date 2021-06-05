@@ -296,3 +296,13 @@ console.log(blue)
 
   expect(styles).toBe(`.c1r9f2e5{color:blue}`);
 });
+
+it('does not output CSS when style9() is called', () => {
+  const input = `
+import style9 from 'style9';
+style9();
+  `;
+  const { styles } = compile(input);
+
+  expect(styles).toBe('');
+});
