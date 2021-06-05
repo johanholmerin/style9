@@ -69,7 +69,7 @@ function removeWithContext(rule) {
 function getMediaQueries(rule) {
   const mediaQueries = [];
 
-  while (rule && rule.type !== 'root') {
+  while (rule) {
     if (rule.type === 'atrule' && rule.name === 'media') {
       mediaQueries.push(rule.params);
     }

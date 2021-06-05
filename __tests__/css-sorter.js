@@ -84,6 +84,11 @@ const CASES = [
     expected: '.a:hover{opacity:1}' + '.b:hover{opacity:0}'
   },
   {
+    name: 'ignores pseudo element when sorting',
+    input: '.a::before:hover{opacity:1}' + '.b:focus{opacity:0}',
+    expected: '.a::before:hover{opacity:1}' + '.b:focus{opacity:0}'
+  },
+  {
     name: 'sorts longhands after shorthands',
     input:
       '.a{padding-top:2px}' +
@@ -117,15 +122,15 @@ const CASES = [
 const IGNORE = [
   {
     name: 'selector list',
-    input: '.foo, .bar{color:red}'
+    input: '.foo, .bar{color:red}    .bar, .foo{color:blue}'
   },
   {
     name: 'non-class selectors',
-    input: '[disabled]{color:red}'
+    input: '[disabled]{color:red}   .foo[disabled]{color:red}'
   },
   {
     name: 'multiple selectors',
-    input: '.foo.bar{color:red}'
+    input: '.foo.bar{color:red}    .foo.bar.baz{color:red}'
   }
 ];
 
