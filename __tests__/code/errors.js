@@ -34,6 +34,46 @@ reactHotLoader.register(styles);
   expect(() => compile(input)).not.toThrow();
 });
 
+it('throws on invalid React Hot Loader call', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+foo.register(styles);
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: SyntaxError: Return value from style9.create has to be called as a function or accessed as an object
+      6 |   }
+      7 | });
+    > 8 | foo.register(styles);
+        |              ^^^^^^
+      9 |   "
+  `);
+});
+
+it('throws on invalid React Hot Loader call2', () => {
+  const input = `
+import style9 from 'style9';
+const styles = style9.create({
+  default: {
+    color: 'blue'
+  }
+});
+reactHotLoader.foo(styles);
+  `;
+  expect(() => compile(input)).toThrowErrorMatchingInlineSnapshot(`
+    "unknown: SyntaxError: Return value from style9.create has to be called as a function or accessed as an object
+      6 |   }
+      7 | });
+    > 8 | reactHotLoader.foo(styles);
+        |                    ^^^^^^
+      9 |   "
+  `);
+});
+
 it('throws on non-existing property import', () => {
   const input = `
 import style9 from 'style9';
