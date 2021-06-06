@@ -6,7 +6,7 @@ const generateExpression = require('./generate-expression');
 function objectToAST(object) {
   const properties = Object.entries(object).map(([name, value]) => {
     const isObject = typeof value === 'object';
-    const isIdentifier = t.isValidIdentifier(name, false);
+    const isIdentifier = t.isValidIdentifier(name);
 
     const astValue = isObject ? objectToAST(value) : t.stringLiteral(value);
     const key = isIdentifier ? t.identifier(name) : t.stringLiteral(name);
