@@ -19,9 +19,11 @@ const CASES = [
       '.g:hover{opacity:1}' +
       '.d:last-child{opacity:1}' +
       '.a:link{opacity:1}' +
+      '.z:unknown{opacity:1}' +
       '.e:odd-child{opacity:1}' +
       '.j:visited{opacity:1}',
     expected:
+      '.z:unknown{opacity:1}' +
       '.a:link{opacity:1}' +
       '.b:focus-within{opacity:1}' +
       '.c:first-child{opacity:1}' +
