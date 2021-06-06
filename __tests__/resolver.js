@@ -164,3 +164,15 @@ it('does not modify objects', () => {
   style9(input.a, input.b);
   expect(input).toEqual(clone);
 });
+
+it('create should throw', () => {
+  expect(() => style9.create({})).toThrow(
+    new Error('style9.create calls should be compiled away')
+  );
+});
+
+it('keyframes should throw', () => {
+  expect(() => style9.keyframes({})).toThrow(
+    new Error('style9.keyframes calls should be compiled away')
+  );
+});

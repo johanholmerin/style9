@@ -30,12 +30,10 @@ export default function style9(...styles) {
   return getValues(merged).join(' ');
 }
 
-// istanbul ignore next
 style9.create = () => {
   throw new Error('style9.create calls should be compiled away');
 };
 
-// istanbul ignore next
 style9.keyframes = () => {
   throw new Error('style9.keyframes calls should be compiled away');
 };
