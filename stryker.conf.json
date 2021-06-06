@@ -6,11 +6,17 @@
     "clear-text",
     "progress"
   ],
+  "mutate": [
+    "src/**/*.js",
+    "!src/plugin-utils.js",
+    "!src/utils/constants.js",
+    "index.js",
+    "babel.js"
+  ],
   "testRunner": "jest",
   "coverageAnalysis": "perTest",
   "jest": {
     "projectType": "custom",
     "configFile": "./jest.config.json"
-  },
-  "ignorePatterns": ["src/plugin-utils.js"]
+  }
 }
