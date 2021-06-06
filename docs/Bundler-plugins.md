@@ -119,5 +119,5 @@ const output = babel.transformFile('./file.js', {
     incrementalClassnames?: boolean;
   }]]
 });
-const css = processCSS(output.metadata.style9 || '').css;
+const { css } = processCSS(output.metadata.style9 || '', options?: PostCSSOptions);
 ```

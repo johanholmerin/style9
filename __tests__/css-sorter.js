@@ -145,3 +145,8 @@ for (const { name, input } of IGNORE) {
     expect(processCSS(input).css).toEqual(input);
   });
 }
+
+it('supports setting from parameter', () => {
+  const from = 'testfile.css';
+  expect(processCSS('', { from }).result.opts.from).toEqual(from);
+});

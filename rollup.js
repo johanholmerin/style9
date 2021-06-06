@@ -50,7 +50,7 @@ module.exports = function style9Plugin({
 
       this.emitFile({
         type: 'asset',
-        source: processCSS(css).css,
+        source: processCSS(css, { from: undefined }).css,
         fileName,
         name
       });

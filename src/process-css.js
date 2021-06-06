@@ -158,6 +158,6 @@ function sortPseudo(root) {
   });
 }
 
-module.exports = function processCSS(css, options = { from: undefined }) {
+module.exports = function processCSS(css, options) {
   return postcss([discardDuplicates, sortPseudo]).process(css, options);
 };
