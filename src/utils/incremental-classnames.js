@@ -10,15 +10,13 @@ function createGenerator() {
   }
 
   function generateClassname(index) {
-    let i = parseInt(index / CHRS.length);
     const logCharsRadix = parseInt(Math.log(REST_CHRS.length));
-    const n = parseInt(
-      Math.log(i * (REST_CHRS.length - 1) + 1) / logCharsRadix
-    );
+    let i = parseInt(index / CHRS.length);
+    const n = parseInt(Math.log(i * REST_CHRS.length) / logCharsRadix);
 
     let cssNameChars = CHRS[index % CHRS.length];
 
-    for (let k = 1; k <= n; ++k) {
+    for (let k = 1; k <= n; k++) {
       cssNameChars += REST_CHRS[i % REST_CHRS.length];
       i = parseInt(i / REST_CHRS.length);
     }
