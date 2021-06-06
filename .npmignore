@@ -3,3 +3,5 @@ examples
 scripts
 .github
 coverage
+.stryker-tmp
+reports
