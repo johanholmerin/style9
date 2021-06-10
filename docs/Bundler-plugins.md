@@ -75,8 +75,6 @@ export default {
 
 ## Next.js
 
-**Note:** not compatible with Next.js 10.2.1 or higher
-
 ```javascript
 const withTM = require('next-transpile-modules')(['style9']);
 const withStyle9 = require('style9/next');
@@ -86,6 +84,12 @@ module.exports = withStyle9({
   minifyProperties?: boolean;
   incrementalClassnames?: boolean;
 })(withTM());
+```
+
+**Note:** For compatiblity with Next.js 10.2.1 or higher, and until [Next#25560](https://github.com/vercel/next.js/issues/25560) is resolved, you can install `mini-css-extract-plugin` as a `devDependency`, and add the following script to your `package.json`'s `scripts`:
+
+```json
+"postinstall": "cp -r node_modules/mini-css-extract-plugin/dist/hmr node_modules/next/dist/compiled/mini-css-extract-plugin/"
 ```
 
 ## Gatsby
