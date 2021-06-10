@@ -1,8 +1,15 @@
 const {
   getClientStyleLoader
 } = require('next/dist/build/webpack/config/blocks/css/loaders/client');
-const MiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
-  .default;
+const gte = require('semver/functions/gte');
+const nextVersion = require('next/package.json').version;
+
+const useOwnCssPlugin = gte(nextVersion, '10.2.1');
+
+const MiniCssExtractPlugin = useOwnCssPlugin
+  ? require('mini-css-extract-plugin')
+  : require('next/dist/build/webpack/plugins/mini-css-extract-plugin').default;
+
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
 
@@ -19,13 +26,17 @@ function getInlineLoader(options) {
   const outputLoaders = [{ loader: cssLoader }];
 
   if (!options.isServer) {
-    outputLoaders.unshift(
-      // Logic adopted from https://git.io/JfD9r
-      getClientStyleLoader({
-        isDevelopment: false,
-        assetPrefix: options.config.assetPrefix
-      })
-    );
+    // Logic adopted from https://git.io/JfD9r
+    const loader = getClientStyleLoader({
+      isDevelopment: false,
+      assetPrefix: options.config.assetPrefix
+    });
+
+    if (useOwnCssPlugin) {
+      loader.loader = MiniCssExtractPlugin.loader;
+    }
+
+    outputLoaders.unshift(loader);
   }
 
   return stringifyCssRequest(outputLoaders);
