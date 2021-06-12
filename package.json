@@ -41,7 +41,6 @@
     "postcss": "^7.0.32",
     "postcss-discard-duplicates": "^4.0.2",
     "postcss-selector-parser": "^6.0.2",
-    "semver": "^7.3.5",
     "sort-css-media-queries": "^1.5.0",
     "webpack-sources": "^2.2.0",
     "webpack-virtual-modules": "^0.4.1"

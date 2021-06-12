@@ -1,15 +1,6 @@
 const {
   getClientStyleLoader
 } = require('next/dist/build/webpack/config/blocks/css/loaders/client');
-const gte = require('semver/functions/gte');
-const nextVersion = require('next/package.json').version;
-
-const useOwnCssPlugin = gte(nextVersion, '10.2.1');
-
-const MiniCssExtractPlugin = useOwnCssPlugin
-  ? require('mini-css-extract-plugin')
-  : require('next/dist/build/webpack/plugins/mini-css-extract-plugin').default;
-
 const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
 
@@ -22,21 +13,23 @@ const cssLoader = (() => {
   }
 })();
 
-function getInlineLoader(options) {
+function getInlineLoader(options, MiniCssExtractPlugin) {
   const outputLoaders = [{ loader: cssLoader }];
 
   if (!options.isServer) {
-    // Logic adopted from https://git.io/JfD9r
-    const loader = getClientStyleLoader({
-      isDevelopment: false,
-      assetPrefix: options.config.assetPrefix
+    outputLoaders.unshift({
+      // Logic adopted from https://git.io/JfD9r
+      ...getClientStyleLoader({
+        // In development model Next.js uses style-loader, which inserts each
+        // CSS file as its own style tag, which means the CSS won't be sorted
+        // and causes issues with determinism when using media queries and
+        // pseudo selectors. Setting isDevelopment means MiniCssExtractPlugin is
+        // used instead.
+        isDevelopment: false,
+        assetPrefix: options.config.assetPrefix
+      }),
+      loader: MiniCssExtractPlugin.loader
     });
-
-    if (useOwnCssPlugin) {
-      loader.loader = MiniCssExtractPlugin.loader;
-    }
-
-    outputLoaders.unshift(loader);
   }
 
   return stringifyCssRequest(outputLoaders);
@@ -56,13 +49,22 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         config = nextConfig.webpack(config, options);
       }
 
+      // Use own MiniCssExtractPlugin to ensure HMR works
+      // v9 has issues when using own plugin in production
+      // v10.2.1 has issues when using built-in plugin in development since it
+      // doesn't bundle HMR files
+      const MiniCssExtractPlugin = options.dev
+        ? require('mini-css-extract-plugin')
+        : require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
+            .default;
+
       config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
         use: [
           {
             loader: Style9Plugin.loader,
             options: {
-              inlineLoader: getInlineLoader(options),
+              inlineLoader: getInlineLoader(options, MiniCssExtractPlugin),
               outputCSS,
               ...pluginOptions
             }
@@ -78,11 +80,17 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
           enforce: true
         };
 
+        // HMR reloads the CSS file when the content changes but does not use
+        // the new file name, which means it can't contain a hash.
+        const filename = options.dev
+          ? 'static/css/[name].css'
+          : 'static/css/[contenthash].css';
+
         config.plugins.push(
           // Logic adopted from https://git.io/JtdBy
           new MiniCssExtractPlugin({
-            filename: 'static/css/[contenthash].css',
-            chunkFilename: 'static/css/[contenthash].css',
+            filename,
+            chunkFilename: filename,
             ignoreOrder: true
           }),
           new Style9Plugin()
