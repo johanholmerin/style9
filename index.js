@@ -1,16 +1,19 @@
 const style9 = (...styles) => {
-  const obj = {};
-  const flatten = (style, prefix) => {
+  const merged = {};
+
+  const flatten = prefix => style => {
     for (const key in style) {
       if (typeof style[key] === 'object') {
-        flatten(style[key], `${prefix}.${key}`);
+        flatten(prefix + '.' + key)(style[key]);
       } else {
-        obj[prefix + key] = style[key];
+        merged[prefix + key] = style[key];
       }
     }
   };
-  for (const style of styles) flatten(style);
-  return Object.values(obj).join(' ');
+
+  styles.map(flatten());
+
+  return Object.values(merged).join(' ');
 };
 
 export default style9;
