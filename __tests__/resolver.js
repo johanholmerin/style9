@@ -165,6 +165,10 @@ it('does not modify objects', () => {
   expect(input).toEqual(clone);
 });
 
+it('returns empty string when called without arguments', () => {
+  expect(style9()).toBe('');
+});
+
 it('create should throw', () => {
   expect(() => style9.create({})).toThrow(
     new Error('style9.create calls should be compiled away')
