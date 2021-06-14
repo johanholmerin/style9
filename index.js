@@ -1,34 +1,32 @@
-function merge(target, source) {
-  for (const key in source) {
-    if (typeof source[key] === 'object') {
+const isObject = val => typeof val === 'object';
+
+const merge = (target, source) => {
+  Object.keys(source).map(key => {
+    if (isObject(source[key])) {
       target[key] = merge({ ...target[key] }, source[key]);
     } else {
       target[key] = source[key];
     }
-  }
+  });
 
   return target;
-}
+};
 
-function getValues(obj) {
-  const values = [];
-
-  for (const key in obj) {
-    const val = obj[key];
-    if (typeof val === 'object') {
-      values.push(...getValues(val));
+const getValues = obj => {
+  return Object.keys(obj).flatMap(key => {
+    if (isObject(obj[key])) {
+      return getValues(obj[key]);
     } else {
-      values.push(val);
+      return obj[key];
     }
-  }
+  });
+};
 
-  return values;
-}
+const style9 = (...styles) => {
+  return getValues(styles.reduce(merge, {})).join(' ');
+};
 
-export default function style9(...styles) {
-  const merged = styles.reduce(merge, {});
-  return getValues(merged).join(' ');
-}
+export default style9;
 
 style9.create = () => {
   throw new Error('style9.create calls should be compiled away');
