@@ -13,7 +13,7 @@ const cssLoader = (() => {
   }
 })();
 
-function getInlineLoader(options, MiniCssExtractPlugin) {
+function getInlineLoader(options, MiniCssExtractPlugin, ...loaders) {
   const outputLoaders = [{ loader: cssLoader }];
 
   if (!options.isServer) {
@@ -32,10 +32,14 @@ function getInlineLoader(options, MiniCssExtractPlugin) {
     });
   }
 
+  if (loaders.length > 0) {
+    outputLoaders.push(...loaders);
+  }
+
   return stringifyCssRequest(outputLoaders);
 }
 
-module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
+module.exports = (pluginOptions = {}, ...loaders) => (nextConfig = {}) => {
   return {
     ...nextConfig,
     webpack(config, options) {
@@ -64,7 +68,11 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
           {
             loader: Style9Plugin.loader,
             options: {
-              inlineLoader: getInlineLoader(options, MiniCssExtractPlugin),
+              inlineLoader: getInlineLoader(
+                options,
+                MiniCssExtractPlugin,
+                ...loaders
+              ),
               outputCSS,
               ...pluginOptions
             }
