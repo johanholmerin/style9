@@ -49,6 +49,12 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         config = nextConfig.webpack(config, options);
       }
 
+      // For some reason, Next 11.0.1 has `config.optimization.splitChunks`
+      // set to `false` when webpack 5 is enabled.
+      config.optimization.splitChunks = config.optimization.splitChunks || {
+        cacheGroups: {}
+      };
+
       // Use own MiniCssExtractPlugin to ensure HMR works
       // v9 has issues when using own plugin in production
       // v10.2.1 has issues when using built-in plugin in development since it
