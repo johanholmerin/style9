@@ -79,14 +79,11 @@ export default {
 const withTM = require('next-transpile-modules')(['style9']);
 const withStyle9 = require('style9/next');
 
-module.exports = {
-  ...withStyle9({
-    parserOptions?: BabelParserOpts;
-    minifyProperties?: boolean;
-    incrementalClassnames?: boolean;
-  })(withTM()),
-  webpack5: false,
-};
+module.exports = withStyle9({
+  parserOptions?: BabelParserOpts;
+  minifyProperties?: boolean;
+  incrementalClassnames?: boolean;
+})(withTM());
 ```
 
 ## Gatsby
