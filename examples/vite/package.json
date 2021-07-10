@@ -1,0 +1,17 @@
+{
+  "name": "style9-vite-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite preview"
+  },
+  "dependencies": {
+    "style9": "link:../.."
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3",
+    "vite": "^2.4.0"
+  }
+}

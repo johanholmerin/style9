@@ -22,6 +22,9 @@ module.exports = function style9Plugin({
 
   return {
     name: NAME,
+    _getStyles() {
+      return styles;
+    },
     async transform(input, filename) {
       if (!filter(filename)) return;
 
