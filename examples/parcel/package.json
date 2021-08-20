@@ -1,0 +1,17 @@
+{
+  "name": "style9-parcel-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "parcel serve ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "devDependencies": {
+    "@parcel/optimizer-cssnano": "^2.0.0",
+    "parcel": "^2.0.0",
+    "parcel-transformer-style9": "link:../../parcel"
+  },
+  "dependencies": {
+    "style9": "link:../.."
+  }
+}

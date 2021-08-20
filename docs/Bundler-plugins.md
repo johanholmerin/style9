@@ -119,3 +119,9 @@ const output = babel.transformFile('./file.js', {
 });
 const { css } = processCSS(output.metadata.style9 || '', options?: PostCSSOptions);
 ```
+
+## Parcel
+
+**Experimental**
+
+See [Parcel plugin documentation](../parcel/README.md)
