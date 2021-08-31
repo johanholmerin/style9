@@ -1,5 +1,4 @@
-// Minimum TypeScript Version: 4.1
-import style9 from '../..';
+import style9 from 'style9';
 
 // $ExpectType string
 style9.keyframes({

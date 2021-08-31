@@ -1,17 +1,24 @@
 // Minimum TypeScript Version: 4.1
-import { Style, StyleProperties } from './Style';
+import { Style, StyleProperties, AtRules, Falsy } from './Style';
+
+type AtRulesKey = `${AtRules}${string}`;
+
+interface AtRulesProperties {
+  [key: AtRulesKey]: StyleWithAtRules;
+}
 
 interface StylePropertiesObject {
   [key: string]: StyleProperties;
 }
 
-type Falsy = false | null | undefined;
+type StyleWithAtRules = Style<AtRulesProperties>;
 
-declare function style9(...names: Array<Style | Falsy>): string;
+// Should be kept in sync with ./4.3/index.d.ts
+declare function style9(...names: Array<StyleWithAtRules | Falsy>): string;
 declare namespace style9 {
   function create<T>(
-    styles: { [key in keyof T]: Style }
-  ): { [key in keyof T]: Style } &
+    styles: { [key in keyof T]: StyleWithAtRules }
+  ): { [key in keyof T]: StyleWithAtRules } &
     ((
       ...names: Array<
         keyof T | Falsy | { [key in keyof T]?: boolean | undefined | null }

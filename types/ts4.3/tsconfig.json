@@ -6,7 +6,7 @@
     "strict": true,
     "moduleResolution": "node",
     "paths": {
-      "style9": ["../"]
+      "style9": ["../../"]
     }
   }
 }

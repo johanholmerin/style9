@@ -1,5 +1,4 @@
-// Minimum TypeScript Version: 4.1
-import style9 from '../..';
+import style9 from 'style9';
 
 style9.create({
   declaration: {
@@ -12,7 +11,7 @@ style9.create({
   }
 });
 
-declare module '../..' {
+declare module 'style9' {
   interface CustomProperties {
     '--bg-color'?: string;
   }

@@ -12,6 +12,13 @@
     "node": ">=12"
   },
   "types": "./types/index.d.ts",
+  "typesVersions": {
+    "<4.4": {
+      "*": [
+        "./types/ts4.3/index.d.ts"
+      ]
+    }
+  },
   "keywords": [
     "styles",
     "css",
@@ -61,7 +68,7 @@
     "next": "link:examples/nextjs/node_modules/next",
     "prettier": "2.2.1",
     "rollup": "^1.29.0",
-    "typescript": "^4.2.3",
+    "typescript": "^4.4.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },

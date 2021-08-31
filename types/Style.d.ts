@@ -1,4 +1,3 @@
-// Minimum TypeScript Version: 4.1
 import type {
   StandardShorthandProperties,
   StandardLonghandProperties,
@@ -8,13 +7,16 @@ import type {
 
 export type AtRules = '@media' | '@supports';
 
-export type Style = StyleProperties &
+export type Falsy = false | null | undefined;
+
+export type Style<Extra = {}> = StyleProperties &
   {
-    [key in SimplePseudos]?: Style;
+    [key in SimplePseudos]?: Style<Extra>;
   } &
   {
-    [key in AtRules]?: Record<string, Style>;
-  };
+    [key in AtRules]?: Record<string, Style<Extra>>;
+  } &
+  Extra;
 
 export {};
 
