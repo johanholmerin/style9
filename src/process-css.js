@@ -70,7 +70,11 @@ function getMediaQueries(rule) {
   const mediaQueries = [];
 
   while (rule) {
-    if (rule.type === 'atrule' && rule.name === 'media') {
+    if (
+      // Stryker disable next-line ConditionalExpression: extra test safety
+      rule.type === 'atrule' &&
+      rule.name === 'media'
+    ) {
       mediaQueries.push(rule.params);
     }
     rule = rule.parent;
@@ -115,6 +119,7 @@ function sortNodes(nodes) {
       return a.pseudoClasses.length - b.pseudoClasses.length;
     }
 
+    // Stryker disable next-line EqualityOperator: out-of-bounds array access
     for (let index = 0; index < a.pseudoClasses.length; index++) {
       const clsA = a.pseudoClasses[index];
       const clsB = b.pseudoClasses[index];
@@ -129,8 +134,10 @@ function sortNodes(nodes) {
 
     if (a.mediaQueries.length) {
       return sortCSSmq(
+        // Stryker disable StringLiteral: strict, but not needed for sortCSSmq
         a.mediaQueries.join(' and '),
         b.mediaQueries.join(' and ')
+        // Stryker restore all
       );
     }
 

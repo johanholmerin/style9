@@ -1,6 +1,7 @@
 const { isDynamicKey, getStaticKey } = require('../utils/ast');
 
 function listDynamicKeys(references, allKeys) {
+  // Stryker disable next-line ArrayDeclaration: only actual keys are checked
   const dynamicKeys = [];
 
   for (const ref of references) {

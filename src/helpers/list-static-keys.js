@@ -15,6 +15,7 @@ function listStaticKeys(callExpr, allKeys) {
     return properties.map(prop => prop.node.key.name);
   }
 
+  // Stryker disable next-line ArrayDeclaration: only actual keys are checked
   return [];
 }
 
