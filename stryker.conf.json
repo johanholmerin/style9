@@ -4,6 +4,7 @@
   "reporters": [
     "html",
     "clear-text",
+    "json",
     "progress"
   ],
   "mutate": [
