@@ -137,7 +137,7 @@ import style9 from 'style9';
 
 const styles = style9.create({
   shorthand: {
-    borderRadius: '50%',
+    background: 'blue center url("image.jpg")'
   }
 });
 ```
@@ -149,10 +149,10 @@ import style9 from 'style9';
 
 const styles = style9.create({
   longhands: {
-    borderTopLeftRadius: '50%',
-    borderTopRightRadius: '50%',
-    borderBottomLeftRadius: '50%',
-    borderBottomRightRadius: '50%',
+    backgroundColor: 'blue',
+    backgroundImage: 'url("image.jpg")',
+    backgroundPositionX: 'center',
+    backgroundPositionY: 'center'
   },
   automaticallyExpanded: {
     padding: '12px'

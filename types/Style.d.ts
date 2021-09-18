@@ -159,6 +159,7 @@ interface ExtendedStyleProperties {
 type ExpandedShorthands = Pick<
   StandardShorthandProperties<string | number>,
   | 'border'
+  | 'borderRadius'
   | 'borderTop'
   | 'borderRight'
   | 'borderBottom'
