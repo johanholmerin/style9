@@ -1,6 +1,6 @@
 {
   "name": "style9",
-  "version": "0.10.13",
+  "version": "0.10.14",
   "description": "CSS-in-JS compiler",
   "author": "Johan Holmerin <johan@holmer.in>",
   "license": "MIT",
