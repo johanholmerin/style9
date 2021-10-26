@@ -5,3 +5,5 @@ scripts
 coverage
 .stryker-tmp
 reports
+.DS_Store
+*.log*
