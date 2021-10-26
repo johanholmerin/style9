@@ -6,10 +6,15 @@ const Style9Plugin = require('./webpack/index.js');
 
 const cssLoader = (() => {
   try {
-    // v10+
+    // v10 & v11
     return require.resolve('next/dist/compiled/css-loader');
   } catch (_) {
-    return 'css-loader';
+    try {
+      // v12+
+      return require.resolve('next/dist/build/webpack/loaders/css-loader/src');
+    } catch (_) {
+      return 'css-loader';
+    }
   }
 })();
 
