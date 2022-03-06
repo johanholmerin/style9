@@ -45,10 +45,10 @@
     "loader-utils": "1.4.0",
     "mini-css-extract-plugin": "^1.6.0",
     "murmurhash-js": "^1.0.0",
-    "postcss": "^7.0.32",
-    "postcss-discard-duplicates": "^4.0.2",
+    "postcss": "^8.4.7",
+    "postcss-discard-duplicates": "^5.1.0",
     "postcss-selector-parser": "^6.0.2",
-    "sort-css-media-queries": "^1.5.0",
+    "sort-css-media-queries": "^2.0.4",
     "webpack-sources": "^2.2.0",
     "webpack-virtual-modules": "^0.4.1"
   },
