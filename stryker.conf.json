@@ -16,7 +16,6 @@
   ],
   "testRunner": "jest",
   "coverageAnalysis": "perTest",
-  "thresholds": { "high": 100, "low": 100, "break": 100 },
   "jest": {
     "projectType": "custom",
     "configFile": "./jest.config.json"
