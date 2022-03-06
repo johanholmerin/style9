@@ -11,7 +11,7 @@ interface StylePropertiesObject {
   [key: string]: StyleProperties;
 }
 
-type StyleWithAtRules = Style<AtRulesProperties>;
+export type StyleWithAtRules = Style<AtRulesProperties>;
 
 // Should be kept in sync with ./4.3/index.d.ts
 declare function style9(...names: Array<StyleWithAtRules | Falsy>): string;
