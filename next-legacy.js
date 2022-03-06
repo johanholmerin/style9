@@ -1,48 +1,25 @@
 const {
   getClientStyleLoader
 } = require('next/dist/build/webpack/config/blocks/css/loaders/client');
-const { browserslist } = require('next/dist/compiled/browserslist');
-const { lazyPostCSS } = require('next/dist/build/webpack/config/blocks/css');
-
+const { stringifyCssRequest } = require('./src/plugin-utils.js');
 const Style9Plugin = require('./webpack/index.js');
-
-// Adopted from https://github.com/vercel/next.js/blob/1f1632979c78b3edfe59fd85d8cce62efcdee688/packages/next/build/webpack-config.ts#L60-L72
-function getSupportedBrowsers(dir, isDevelopment) {
-  let browsers;
-  try {
-    browsers = browserslist.loadConfig({
-      path: dir,
-      env: isDevelopment ? 'development' : 'production'
-    });
-  } catch (_) {
-    /** */
-  }
-  return browsers;
-}
 
 const cssLoader = (() => {
   try {
-    // v12+
-    return require.resolve('next/dist/build/webpack/loaders/css-loader/src');
+    // v10 & v11
+    return require.resolve('next/dist/compiled/css-loader');
   } catch (_) {
-    return 'css-loader';
+    try {
+      // v12+
+      return require.resolve('next/dist/build/webpack/loaders/css-loader/src');
+    } catch (_) {
+      return 'css-loader';
+    }
   }
 })();
 
-function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
-  const outputLoaders = [
-    {
-      loader: cssLoader,
-      options: {
-        // A simplify version of https://github.com/vercel/next.js/blob/88a5f263f11cb55907f0d89a4cd53647ee8e96ac/packages/next/build/webpack/config/blocks/css/index.ts#L142-L147
-        postcss: () =>
-          lazyPostCSS(
-            options.dir,
-            getSupportedBrowsers(options.dir, options.dev)
-          )
-      }
-    }
-  ];
+function getInlineLoader(options, MiniCssExtractPlugin) {
+  const outputLoaders = [{ loader: cssLoader }];
 
   if (!options.isServer) {
     outputLoaders.unshift({
@@ -60,7 +37,7 @@ function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
     });
   }
 
-  return outputLoaders;
+  return stringifyCssRequest(outputLoaders);
 }
 
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
@@ -98,33 +75,12 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
           {
             loader: Style9Plugin.loader,
             options: {
-              // Here we configure a custom virtual css file name, for later matches
-              virtualFileName: '[path][name].[hash:base64:7].style9.css',
-              // We will not pass a inline loader, instead we will add a specfic rule for /\.style9.css$/
-              inlineLoader: '',
+              inlineLoader: getInlineLoader(options, MiniCssExtractPlugin),
               outputCSS,
               ...pluginOptions
             }
           }
         ]
-      });
-
-      // Based on https://github.com/vercel/next.js/blob/88a5f263f11cb55907f0d89a4cd53647ee8e96ac/packages/next/build/webpack/config/helpers.ts#L12-L18
-      const cssRules = config.module.rules.find(
-        rule =>
-          Array.isArray(rule.oneOf) &&
-          rule.oneOf.some(
-            ({ test }) =>
-              typeof test === 'object' &&
-              typeof test.test === 'function' &&
-              test.test('filename.css')
-          )
-      ).oneOf;
-
-      // Here we matches virtual css file emitted by Style9Plugin
-      cssRules.unshift({
-        test: /\.style9.css$/,
-        use: getStyle9VirtualCssLoader(options, MiniCssExtractPlugin)
       });
 
       if (outputCSS) {
