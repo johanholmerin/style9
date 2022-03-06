@@ -7,6 +7,7 @@ const virtualModules = require('./virtualModules.js');
 async function style9Loader(input, inputSourceMap) {
   const {
     inlineLoader = '',
+    virtualFileName = '[path][name].[hash:base64:7].css',
     outputCSS = true,
     parserOptions = {
       plugins: ['typescript', 'jsx']
@@ -43,13 +44,9 @@ async function style9Loader(input, inputSourceMap) {
       // - https://github.com/sveltejs/svelte-loader/pull/151
       this.cacheable(false);
 
-      const cssPath = loaderUtils.interpolateName(
-        this,
-        '[path][name].[hash:base64:7].css',
-        {
-          content: metadata.style9
-        }
-      );
+      const cssPath = loaderUtils.interpolateName(this, virtualFileName, {
+        content: metadata.style9
+      });
 
       virtualModules.writeModule(cssPath, metadata.style9);
 
