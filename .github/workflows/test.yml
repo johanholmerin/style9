@@ -39,13 +39,6 @@ jobs:
     - name: Mutation tests
       run: yarn test:mutation
 
-    - name: Stryker Annotation Report
-      uses: johanholmerin/mutation-report-action@0.2.0
-      if: ${{ always() }}
-      with:
-        repo-token: '${{ secrets.GITHUB_TOKEN }}'
-        report-json: './reports/mutation/mutation.json'
-
     - name: Upload Stryker report
       if: ${{ always() }}
       uses: actions/upload-artifact@v2
