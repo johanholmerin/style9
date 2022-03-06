@@ -75,11 +75,12 @@ export default {
 
 ## Next.js
 
-_Note: Next.js v12.0.5 and higher is not supported, see [#55](https://github.com/johanholmerin/style9/issues/55) for more details_
-
 ```javascript
 const withTM = require('next-transpile-modules')(['style9']);
+// If you are using the latest version Next.js:
 const withStyle9 = require('style9/next');
+// If you are using Next.js below 12.0.5:
+const withStyle9 = require('style9/next-legacy');
 
 module.exports = withStyle9({
   parserOptions?: BabelParserOpts;
