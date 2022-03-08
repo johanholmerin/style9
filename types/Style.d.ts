@@ -171,6 +171,8 @@ type ExpandedShorthands = Pick<
   | 'margin'
   | 'outline'
   | 'flex'
+  | 'textDecoration'
+  | 'overflow'
   // Incorrectly classified as longhand in csstype
   // | 'overscrollBehavior'
 >;
