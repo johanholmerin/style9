@@ -128,28 +128,42 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       });
 
       if (outputCSS) {
-        config.optimization.splitChunks.cacheGroups.styles = {
-          name: 'styles',
-          test: /\.css$/,
+        config.optimization.splitChunks.cacheGroups.style9 = {
+          name: 'style9',
+          // We apply cacheGroups to style9 virtual css only
+          test: /\.style9.css$/,
           chunks: 'all',
           enforce: true
         };
 
-        // HMR reloads the CSS file when the content changes but does not use
-        // the new file name, which means it can't contain a hash.
-        const filename = options.dev
-          ? 'static/css/[name].css'
-          : 'static/css/[contenthash].css';
+        // Style9 need to emit the css file on both server and client, both during the
+        // development and production.
+        // However, Next.js only add MiniCssExtractPlugin on client + production.
+        //
+        // To simplify the logic at our side, we will add MiniCssExtractPlugin based on
+        // the "instanceof" check (We will only add our required MiniCssExtractPlugin if
+        // Next.js hasn't added it yet).
+        // This also prevent multiple MiniCssExtractPlugin being added (which will cause
+        // RealContentHashPlugin to panic)
+        if (
+          !config.plugins.some(plugin => plugin instanceof MiniCssExtractPlugin)
+        ) {
+          // HMR reloads the CSS file when the content changes but does not use
+          // the new file name, which means it can't contain a hash.
+          const filename = options.dev
+            ? 'static/css/[name].css'
+            : 'static/css/[contenthash].css';
 
-        config.plugins.push(
           // Logic adopted from https://git.io/JtdBy
-          new MiniCssExtractPlugin({
-            filename,
-            chunkFilename: filename,
-            ignoreOrder: true
-          }),
-          new Style9Plugin()
-        );
+          config.plugins.push(
+            new MiniCssExtractPlugin({
+              filename,
+              chunkFilename: filename
+            })
+          );
+        }
+
+        config.plugins.push(new Style9Plugin());
       }
 
       return config;
