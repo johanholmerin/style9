@@ -1,4 +1,5 @@
 const cssProperties = require('known-css-properties').all;
+const fastJsonStableStringify = require('fast-json-stable-stringify');
 const hash = require('murmurhash-js');
 const { getIncrementalClass } = require('./incremental-classnames')();
 
@@ -43,16 +44,29 @@ function normalizeValue(prop, value) {
   return mapValue(prop, value);
 }
 
-// Class can't start with number
-const CLASS_PREFIX = 'c';
+// given a code (0 <= code <= 51), return a character in a-zA-Z
+const getAlphabeticChar = code =>
+  String.fromCharCode(code + (code > 25 ? 39 /* 65 - 26 */ : 97));
 
 function getHashClass(...args) {
-  return hash(JSON.stringify(args)).toString(36);
+  const code = hash(fastJsonStableStringify(args));
+
+  let className = '';
+  let x = 0;
+
+  for (x = Math.abs(code); x > 52; x = (x / 52) | 0) {
+    className = getAlphabeticChar(x % 52) + className;
+  }
+
+  className = getAlphabeticChar(x % 52) + className;
+
+  // replace ad with a_d
+  return className.replace(/(a)(d)/gi, '$1_$2');
 }
 
 function getClass(args, incremental) {
   const cls = getHashClass(args);
-  if (!incremental) return CLASS_PREFIX + cls;
+  if (!incremental) return cls;
   return getIncrementalClass(cls);
 }
 
@@ -131,7 +145,7 @@ function minifyProperty(name) {
     return cssProperties.indexOf(hyphenName).toString(36);
   }
 
-  return hash(hyphenName).toString(36);
+  return getHashClass(hyphenName);
 }
 
 // Values can be primitives or arrays, nested styles are plain objects

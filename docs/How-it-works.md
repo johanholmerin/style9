@@ -31,11 +31,11 @@ document.body.className = styles('blue', isRed && 'red');
 
 ```javascript
 /* JavaScript */
-document.body.className = isRed ? 'cyyg6ey ' : 'c1r9f2e5 ';
+document.body.className = isRed ? 'RCRUH ' : 'hxxstI ';
 
 /* CSS */
-.c1r9f2e5 { color: blue }
-.cyyg6ey { color: red }
+.hxxstI { color: blue }
+.RCRUH { color: red }
 ```
 
 ## Merging composed styles
@@ -70,20 +70,20 @@ import style9 from 'style9';
 
 const styles = {
   blue: {
-    color: 'c1r9f2e5',
+    color: 'hxxstI',
   }
 };
 
 const otherStyles = {
   red: {
-    color: 'cyyg6ey'
+    color: 'RCRUH'
   }
 };
 document.body.className = style9(styles.blue, otherStyles.red);
 
 /* CSS */
-.c1r9f2e5 { color: blue }
-.cyyg6ey { color: red }
+.hxxstI { color: blue }
+.RCRUH { color: red }
 ```
 
 ### CSS post-processing

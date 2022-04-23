@@ -2,16 +2,16 @@ import style9 from 'style9';
 const styles = {
   default: {
     '::before': {
-      opacity: 'cm5vf3y'
+      opacity: 'dLppjJ'
     },
     '::after': {
-      opacity: 'c1ud6rae'
+      opacity: 'kMNmYO'
     },
     '::first-letter': {
-      opacity: 'c1xtf9ff'
+      opacity: 'ezsObI'
     },
     '::first-line': {
-      opacity: 'c9com6n'
+      opacity: 'iaGYxt'
     }
   }
 };

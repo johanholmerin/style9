@@ -15,7 +15,7 @@ style9.keyframes({
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('@keyframes c14ueipo{0%{color:blue}100%{color:red}}');
+  expect(styles).toBe('@keyframes gzOBtW{0%{color:blue}100%{color:red}}');
 });
 
 it('removes empty frame', () => {
@@ -31,7 +31,7 @@ style9.keyframes({
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('@keyframes clbvhnp{0%{color:blue}}');
+  expect(styles).toBe('@keyframes duuCUn{0%{color:blue}}');
 });
 
 it('converts from', () => {
@@ -45,7 +45,7 @@ style9.keyframes({
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('@keyframes clbvhnp{0%{color:blue}}');
+  expect(styles).toBe('@keyframes duuCUn{0%{color:blue}}');
 });
 
 it('converts to', () => {
@@ -59,7 +59,7 @@ style9.keyframes({
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('@keyframes c1yehff3{100%{color:blue}}');
+  expect(styles).toBe('@keyframes lkltCV{100%{color:blue}}');
 });
 
 it('expands shorthand', () => {
@@ -74,7 +74,7 @@ style9.keyframes({
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '@keyframes cltlz9e{0%{' +
+    '@keyframes dyyvIk{0%{' +
       'padding-top:1rem;' +
       'padding-right:1rem;' +
       'padding-bottom:1rem;' +
@@ -96,7 +96,7 @@ style9.keyframes({
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '@keyframes culjx28{0%{' +
+    '@keyframes eTcyEi{0%{' +
       'padding-top:1rem;' +
       'padding-right:1rem;' +
       'padding-bottom:1rem;' +

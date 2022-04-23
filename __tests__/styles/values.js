@@ -13,7 +13,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c16hph0g{padding-left:2px}`);
+  expect(styles).toBe(`.hhTkCv{padding-left:2px}`);
 });
 
 it('does not convert opacity to pixels', () => {
@@ -28,7 +28,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.cu2kwdz{opacity:1}`);
+  expect(styles).toBe(`.gOeSjL{opacity:1}`);
 });
 
 it('expands shorthand', () => {
@@ -44,10 +44,10 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.c1xiyxc9{padding-top:1rem}' +
-      '.c1wgquni{padding-right:1rem}' +
-      '.c1s7zyp4{padding-bottom:1rem}' +
-      '.cc3nx7y{padding-left:1rem}'
+    '.jWWtke{padding-top:1rem}' +
+      '.ftIldC{padding-right:1rem}' +
+      '.bnHxUw{padding-bottom:1rem}' +
+      '.iDuqPI{padding-left:1rem}'
   );
 });
 
@@ -66,10 +66,10 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.c3h9r6w{padding-top:.5rem}' +
-      '.c1wgquni{padding-right:1rem}' +
-      '.c1s7zyp4{padding-bottom:1rem}' +
-      '.c17qt1w7{padding-left:2rem}'
+    '.lcGuBB{padding-top:.5rem}' +
+      '.ftIldC{padding-right:1rem}' +
+      '.bnHxUw{padding-bottom:1rem}' +
+      '.iigETV{padding-left:2rem}'
   );
 });
 
@@ -85,7 +85,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1x2h0g6{font-size:0.875rem}`);
+  expect(styles).toBe(`.kKRHCo{font-size:0.875rem}`);
 });
 
 it('accepts an array', () => {
@@ -100,7 +100,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.cy2d86t{text-decoration-line:underline overline}`);
+  expect(styles).toBe(`.jMUvdQ{text-decoration-line:underline overline}`);
 });
 
 it('supports constants', () => {
@@ -116,7 +116,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('removes unused styles', () => {
@@ -148,7 +148,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('keeps styles used as object', () => {
@@ -166,7 +166,7 @@ styles.default;
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('supports static bracket access', () => {
@@ -184,7 +184,7 @@ styles['default']
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('supports dynamic bracket access', () => {
@@ -202,7 +202,7 @@ styles[blue]
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}.cyyg6ey{color:red}`);
+  expect(styles).toBe(`.hxxstI{color:blue}.RCRUH{color:red}`);
 });
 
 it('supports arrow function', () => {
@@ -217,7 +217,7 @@ const get = state => styles(state && 'default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('outputs no styles without declaration', () => {
@@ -245,7 +245,7 @@ const { ...styles } = style9.create({
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('removes unused destructured keys', () => {
@@ -261,7 +261,7 @@ const { blue } = style9.create({
 });
   `;
   const { styles } = compile(input);
-  expect(styles).toBe('.c1r9f2e5{color:blue}');
+  expect(styles).toBe('.hxxstI{color:blue}');
 });
 
 it('supports spread use', () => {
@@ -276,7 +276,7 @@ console.log({ ...styles });
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('supports member expression access', () => {
@@ -294,7 +294,7 @@ console.log(blue)
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}`);
+  expect(styles).toBe(`.hxxstI{color:blue}`);
 });
 
 it('does not output CSS when style9() is called', () => {
