@@ -25,11 +25,11 @@ For the above input, the compiler will generate the following output:
 
 ```javascript
 /* JavaScript */
-document.body.className = isRed ? 'cyyg6ey ' : 'c1r9f2e5 ';
+document.body.className = isRed ? 'cRCRUH ' : 'hxxstI ';
 
 /* CSS */
-.c1r9f2e5 { color: blue }
-.cyyg6ey { color: red }
+.hxxstI { color: blue }
+.cRCRUH { color: red }
 ```
 
 ## Installation

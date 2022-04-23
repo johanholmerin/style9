@@ -15,7 +15,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('.cm5vf3y::before{opacity:1}');
+  expect(styles).toBe('.dLppjJ::before{opacity:1}');
 });
 
 it('supports at rules', () => {
@@ -36,8 +36,8 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '@media (max-width: 1000px){.ci6xust{opacity:1}}' +
-      '@supports (color: blue){.crgwwka{opacity:blue}}'
+    '@media (max-width: 1000px){.Bbwnu{opacity:1}}' +
+      '@supports (color: blue){.ilahpL{opacity:blue}}'
   );
 });
 
@@ -62,7 +62,7 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '@media (max-width: 1000px){@media (max-width: 200px){.cedqupw:hover::before{opacity:1}}}'
+    '@media (max-width: 1000px){@media (max-width: 200px){.ClOOj:hover::before{opacity:1}}}'
   );
 });
 
@@ -85,7 +85,7 @@ styles('default', 'hidden');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('.cm5vf3y::before{opacity:1}.cqagcww::before{opacity:0}');
+  expect(styles).toBe('.dLppjJ::before{opacity:1}.diXuqL::before{opacity:0}');
 });
 
 it('translates old pseudo element', () => {
@@ -104,9 +104,9 @@ styles.default
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.cm5vf3y::before{opacity:1}' +
-      '.c1ud6rae::after{opacity:1}' +
-      '.c1xtf9ff::first-letter{opacity:1}' +
-      '.c9com6n::first-line{opacity:1}'
+    '.dLppjJ::before{opacity:1}' +
+      '.kMNmYO::after{opacity:1}' +
+      '.ezsObI::first-letter{opacity:1}' +
+      '.iaGYxt::first-line{opacity:1}'
   );
 });

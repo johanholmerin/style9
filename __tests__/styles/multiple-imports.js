@@ -20,5 +20,5 @@ styles1('second');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe(`.c1r9f2e5{color:blue}.cyyg6ey{color:red}`);
+  expect(styles).toBe(`.hxxstI{color:blue}.RCRUH{color:red}`);
 });

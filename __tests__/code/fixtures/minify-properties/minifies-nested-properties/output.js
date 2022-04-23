@@ -1,9 +1,9 @@
 import style9 from 'style9';
 const styles = {
   default: {
-    tp4qmw: {
-      '1jy3mw3': {
-        j9: 'cog47hh'
+    cagpug: {
+      gYHkBN: {
+        j9: 'kvroMm'
       }
     }
   }

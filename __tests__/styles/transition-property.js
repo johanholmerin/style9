@@ -13,7 +13,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('.c7mpi08{transition-property:background-color}');
+  expect(styles).toBe('.diErbW{transition-property:background-color}');
 });
 
 it('converts transitionProperty list to kebab-case', () => {
@@ -29,6 +29,6 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.c1d809k5{transition-property:background-color,border-color,box-shadow}'
+    '.gKERdg{transition-property:background-color,border-color,box-shadow}'
   );
 });

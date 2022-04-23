@@ -20,12 +20,12 @@ styles('default');
   const { styles } = compile(input);
 
   expect(styles).toBe(
-    '.cv51mu6{transition-property:opacity,transform}' +
-      '.cnds6hw{transition-duration:200ms,300ms,400ms}' +
-      '.cqiea9d{transition-delay:100ms,200ms,300ms}' +
-      '.cqkqqd0{transition-timing-function:ease-in,ease-out,ease-in-out}' +
-      '.cjcw4qf{stroke-dasharray:10 100 200}' +
-      '.cnka3rw{scroll-snap-type:none mandatory}' +
-      '.c1tczq9u{scroll-snap-align:start end}'
+    '.ivPgPH{transition-property:opacity,transform}' +
+      '.cfCwqg{transition-duration:200ms,300ms,400ms}' +
+      '.dEsdmn{transition-delay:100ms,200ms,300ms}' +
+      '.genghA{transition-timing-function:ease-in,ease-out,ease-in-out}' +
+      '.kViNob{stroke-dasharray:10 100 200}' +
+      '.cwFPDc{scroll-snap-type:none mandatory}' +
+      '.hboCrl{scroll-snap-align:start end}'
   );
 });

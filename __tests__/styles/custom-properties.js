@@ -13,7 +13,7 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('.c1tldmpg{--opacity:1}');
+  expect(styles).toBe('.jVMKrZ{--opacity:1}');
 });
 
 it('does not change capitalization', () => {
@@ -28,5 +28,5 @@ styles('default');
   `;
   const { styles } = compile(input);
 
-  expect(styles).toBe('.c1wvjxbo{--backgroundColor:red}');
+  expect(styles).toBe('.hJKoGo{--backgroundColor:red}');
 });

@@ -1,7 +1,7 @@
 import style9 from 'style9';
 const styles = {
   default: {
-    j9: 'cu2kwdz'
+    j9: 'gOeSjL'
   }
 };
 styles.default;
