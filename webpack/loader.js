@@ -48,6 +48,13 @@ async function style9Loader(input, inputSourceMap) {
         content: metadata.style9
       });
 
+      if (path.sep === '\\') {
+        // virtual-modules & loader-utils don't work well together on windows
+        virtualModules.writeModule(
+          cssPath.replace(/\//g, '\\'),
+          metadata.style9
+        );
+      }
       virtualModules.writeModule(cssPath, metadata.style9);
 
       const postfix = `\nimport '${inlineLoader + cssPath}';`;
