@@ -1,6 +1,8 @@
 const {
   getClientStyleLoader
 } = require('next/dist/build/webpack/config/blocks/css/loaders/client');
+const NextMiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
+  .default;
 const { browserslist } = require('next/dist/compiled/browserslist');
 const { lazyPostCSS } = require('next/dist/build/webpack/config/blocks/css');
 
@@ -28,6 +30,25 @@ const cssLoader = (() => {
     return 'css-loader';
   }
 })();
+
+const getNextMiniCssExtractPlugin = isDev => {
+  // Use own MiniCssExtractPlugin to ensure HMR works
+  // v9 has issues when using own plugin in production
+  // v10.2.1 has issues when using built-in plugin in development since it
+  // doesn't bundle HMR files
+  // v12.1.7 finaly fixes the issue by adding the missing hmr/hotModuleReplacement.js file
+  if (isDev) {
+    try {
+      // Check if hotModuleReplacement exists
+      require('next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement');
+      return NextMiniCssExtractPlugin;
+    } catch (_) {
+      return require('mini-css-extract-plugin');
+    }
+  }
+  // Always use Next.js built-in MiniCssExtractPlugin in production
+  return NextMiniCssExtractPlugin;
+};
 
 function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
   const outputLoaders = [
@@ -83,14 +104,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         cacheGroups: {}
       };
 
-      // Use own MiniCssExtractPlugin to ensure HMR works
-      // v9 has issues when using own plugin in production
-      // v10.2.1 has issues when using built-in plugin in development since it
-      // doesn't bundle HMR files
-      const MiniCssExtractPlugin = options.dev
-        ? require('mini-css-extract-plugin')
-        : require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
-            .default;
+      const MiniCssExtractPlugin = getNextMiniCssExtractPlugin(options.dev);
 
       config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
