@@ -1,5 +1,5 @@
 /* eslint-env jest */
-const style9 = require('../index.js').default;
+const style9 = require('../src/index.js').default;
 
 it('combines different properties', () => {
   const input = {
