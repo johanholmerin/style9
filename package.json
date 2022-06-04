@@ -4,16 +4,41 @@
   "description": "CSS-in-JS compiler",
   "author": "Johan Holmerin <johan@holmer.in>",
   "license": "MIT",
+  "files": [
+    "**"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/johanholmerin/style9.git"
   },
   "exports": {
-    "types": "./types/index.d.ts",
-    "module": "./dist/index.m.js",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.js"
+    ".": {
+      "types": "./types/index.d.ts",
+      "module": "./dist/index.m.js",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./next": "./next.js",
+    "./next-legacy": "./next-legacy.js",
+    "./gatsby/package.json": "./gatsby/package.json",
+    "./gatsby/gatsby-node": "./gatsby/gatsby-node.js",
+    "./babel": "./babel.js",
+    "./rollup": {
+      "types": "./rollup.d.ts",
+      "require": "./rollup.js",
+      "default": "./rollup.js"
+    },
+    "./webpack": {
+      "types": "./webpack/index.d.ts",
+      "require": "./webpack/index.js",
+      "default": "./webpack/index.js"
+    },
+    "./webpack/loader": {
+      "types": "./webpack/loader.d.ts",
+      "require": "./webpack/loader.js",
+      "default": "./webpack/loader.js"
+    }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
