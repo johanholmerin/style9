@@ -7,3 +7,4 @@ coverage
 reports
 .DS_Store
 *.log*
+rollup.config.js
