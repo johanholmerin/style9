@@ -4,6 +4,7 @@
   "description": "CSS-in-JS compiler",
   "author": "Johan Holmerin <johan@holmer.in>",
   "license": "MIT",
+  "main": "./index.mjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/johanholmerin/style9.git"

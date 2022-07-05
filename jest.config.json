@@ -5,7 +5,7 @@
     "__tests__/code/fixtures/"
   ],
   "transform": {
-    "\\/index\\.js$": [
+    "\\/index\\.m?js$": [
       "babel-jest",
       {
         "plugins": ["@babel/plugin-transform-modules-commonjs"]
