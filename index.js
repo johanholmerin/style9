@@ -25,7 +25,7 @@ function getValues(obj) {
   return values;
 }
 
-export default function style9(...styles) {
+function style9(...styles) {
   const merged = styles.reduce(merge, {});
   return getValues(merged).join(' ');
 }
@@ -37,3 +37,5 @@ style9.create = () => {
 style9.keyframes = () => {
   throw new Error('style9.keyframes calls should be compiled away');
 };
+
+module.exports = style9;
