@@ -108,6 +108,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
 
       config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: Style9Plugin.loader,
