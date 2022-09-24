@@ -2,6 +2,7 @@ const path = require('path');
 const babel = require('@babel/core');
 const loaderUtils = require('loader-utils');
 const babelPlugin = require('../babel.js');
+const NAME = require('../package.json').name; // style9
 const virtualModules = require('./virtualModules.js');
 
 async function style9Loader(input, inputSourceMap) {
@@ -16,6 +17,12 @@ async function style9Loader(input, inputSourceMap) {
   } = loaderUtils.getOptions(this) || {};
 
   this.async();
+
+  // bail out early if the input doesn't contain "style9"
+  if (!input.includes(NAME)) {
+    this.callback(null, input, inputSourceMap);
+    return;
+  }
 
   try {
     const { code, map, metadata } = await babel.transformAsync(input, {
