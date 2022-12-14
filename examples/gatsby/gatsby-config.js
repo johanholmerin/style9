@@ -1,7 +1,7 @@
 module.exports = {
   plugins: [
     {
-      resolve: 'style9/gatsby',
+      resolve: 'style9/gatsby'
     }
   ]
-}
+};
