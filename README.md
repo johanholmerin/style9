@@ -44,7 +44,7 @@ npm install style9
 
 ## Compiler setup - required
 
-The following is the minimally required Webpack setup for extracting styles to a CSS file. For Webpack options and Rollup, Next.js, Gatsby, and Babel plugins, see [Bundler plugins](docs/Bundler-plugins.md).
+The following is the minimally required Webpack setup for extracting styles to a CSS file. For Webpack options and Rollup, Next.js, Gatsby,Vite, and Babel plugins, see [Bundler plugins](docs/Bundler-plugins.md).
 
 ```javascript
 const Style9Plugin = require('style9/webpack');

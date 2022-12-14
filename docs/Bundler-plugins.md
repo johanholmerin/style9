@@ -106,6 +106,19 @@ module.exports = {
 }
 ```
 
+## Vite
+
+```javascript
+import { defineConfig } from 'vite';
+import style9 from 'style9/vite';
+export default defineConfig({
+  plugins: [
+    // ...other plugins.
+    style9()
+  ]
+});
+```
+
 ## Babel
 
 When using the babel plugin you'll have to pass the generated CSS to the post-processor yourself. If compiling multiple files this should be done to the concatenated output of all babel transforms.
