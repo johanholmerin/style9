@@ -10,7 +10,7 @@
     "url": "https://github.com/johanholmerin/style9.git"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "types": "./types/index.d.ts",
   "typesVersions": {

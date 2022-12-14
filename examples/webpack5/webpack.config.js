@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build')
   },
   optimization: {
     splitChunks: {
@@ -15,20 +15,20 @@ module.exports = {
           name: 'styles',
           type: 'css/mini-extract',
           chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
+          enforce: true
+        }
+      }
+    }
   },
   module: {
     rules: [
       {
         test: /\.(tsx|ts|js|mjs|jsx)$/,
-        use: Style9Plugin.loader,
+        use: Style9Plugin.loader
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
