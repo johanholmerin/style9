@@ -1,4 +1,3 @@
-const path = require('path');
 const babel = require('@babel/core');
 const { createFilter } = require('@rollup/pluginutils');
 const processCSS = require('./src/process-css');
@@ -71,14 +70,10 @@ module.exports = function style9Plugin(opts = {}) {
             );
             ws.send({ type: 'full-reload' });
           }
-          const output = `import '${VIRTUAL_MODULE_NAME}';\n ${code}`;
-          return {
-            code: output,
-            map
-          };
         }
+        const output = `import '${VIRTUAL_MODULE_NAME}';\n ${code}`;
         return {
-          code,
+          code: output,
           map
         };
       }
@@ -86,21 +81,14 @@ module.exports = function style9Plugin(opts = {}) {
     },
     generateBundle(_, bundles) {
       let css = '';
-      let id = '';
+      cssModules.forEach(v => (css += v));
       for (const bundle in bundles) {
         const module = bundles[bundle];
-        if (module.type === 'asset') continue;
-        const { facadeModuleId } = module;
-        if (!id) id = facadeModuleId;
-        if (cssModules.has(facadeModuleId)) {
-          css += cssModules.get(facadeModuleId);
+        if (module.name === `_${VIRTUAL_MODULE_NAME}.css`) {
+          module.source = processCSS(css, { from: undefined }).css;
         }
+        break;
       }
-      this.emitFile({
-        name: `${path.parse(id).name}.css`,
-        type: 'asset',
-        source: processCSS(css, { from: undefined }).css
-      });
     }
   };
 };
