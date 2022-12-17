@@ -3,6 +3,9 @@ const {
 } = require('next/dist/build/webpack/config/blocks/css/loaders/client');
 const NextMiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
   .default;
+
+const { findPagesDir } = require('next/dist/lib/find-pages-dir');
+
 const { browserslist } = require('next/dist/compiled/browserslist');
 const { lazyPostCSS } = require('next/dist/build/webpack/config/blocks/css');
 
@@ -50,7 +53,7 @@ const getNextMiniCssExtractPlugin = isDev => {
   return NextMiniCssExtractPlugin;
 };
 
-function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
+function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin, hasAppDir) {
   const outputLoaders = [
     {
       loader: cssLoader,
@@ -69,6 +72,7 @@ function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
     outputLoaders.unshift({
       // Logic adopted from https://git.io/JfD9r
       ...getClientStyleLoader({
+        hasAppDir,
         // In development model Next.js uses style-loader, which inserts each
         // CSS file as its own style tag, which means the CSS won't be sorted
         // and causes issues with determinism when using media queries and
@@ -87,15 +91,28 @@ function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
   return {
     ...nextConfig,
-    webpack(config, options) {
-      const outputCSS = !options.isServer;
+    webpack(config, ctx) {
+      const findPagesDirResult = findPagesDir(ctx.dir);
+      // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/index.ts#L336
+      // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/webpack-config.ts#L626
+      // https://github.com/vercel/next.js/pull/43916
+      const hasAppDir =
+        // on Next.js 12, findPagesDirResult is a string. on Next.js 13, findPagesDirResult is an object
+        !!nextConfig.experimental.appDir &&
+        !!(findPagesDirResult && findPagesDirResult.appDir);
+
+      const outputCSS = hasAppDir
+        ? // When there is appDir, always output css, even on server (React Server Component is also server)
+          true
+        : // There is no appDir, do not output css on server build
+          !ctx.isServer;
 
       // The style9 compiler must run on source code, which means it must be
       // configured as the last loader in webpack so that it runs before any
       // other transformation.
 
       if (typeof nextConfig.webpack === 'function') {
-        config = nextConfig.webpack(config, options);
+        config = nextConfig.webpack(config, ctx);
       }
 
       // For some reason, Next 11.0.1 has `config.optimization.splitChunks`
@@ -104,7 +121,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         cacheGroups: {}
       };
 
-      const MiniCssExtractPlugin = getNextMiniCssExtractPlugin(options.dev);
+      const MiniCssExtractPlugin = getNextMiniCssExtractPlugin(ctx.dev);
 
       config.module.rules.push({
         test: /\.(tsx|ts|js|mjs|jsx)$/,
@@ -139,7 +156,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       // Here we matches virtual css file emitted by Style9Plugin
       cssRules.unshift({
         test: /\.style9.css$/,
-        use: getStyle9VirtualCssLoader(options, MiniCssExtractPlugin)
+        use: getStyle9VirtualCssLoader(ctx, MiniCssExtractPlugin, hasAppDir)
       });
 
       if (outputCSS) {
@@ -165,7 +182,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
         ) {
           // HMR reloads the CSS file when the content changes but does not use
           // the new file name, which means it can't contain a hash.
-          const filename = options.dev
+          const filename = ctx.dev
             ? 'static/css/[name].css'
             : 'static/css/[contenthash].css';
 
