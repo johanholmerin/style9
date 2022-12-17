@@ -98,7 +98,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       // https://github.com/vercel/next.js/pull/43916
       const hasAppDir =
         // on Next.js 12, findPagesDirResult is a string. on Next.js 13, findPagesDirResult is an object
-        !!nextConfig.experimental.appDir &&
+        !!(nextConfig.experimental && nextConfig.experimental.appDir) &&
         !!(findPagesDirResult && findPagesDirResult.appDir);
 
       const outputCSS = hasAppDir
