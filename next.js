@@ -92,7 +92,11 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
   return {
     ...nextConfig,
     webpack(config, ctx) {
-      const findPagesDirResult = findPagesDir(ctx.dir);
+      const findPagesDirResult = findPagesDir(
+        ctx.dir,
+        nextConfig.experimental && nextConfig.experimental.appDir
+      );
+
       // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/index.ts#L336
       // https://github.com/vercel/next.js/blob/1fb4cad2a8329811b5ccde47217b4a6ae739124e/packages/next/build/webpack-config.ts#L626
       // https://github.com/vercel/next.js/pull/43916
