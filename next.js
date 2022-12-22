@@ -1,6 +1,3 @@
-const {
-  getClientStyleLoader
-} = require('next/dist/build/webpack/config/blocks/css/loaders/client');
 const NextMiniCssExtractPlugin = require('next/dist/build/webpack/plugins/mini-css-extract-plugin')
   .default;
 
@@ -52,40 +49,42 @@ const getNextMiniCssExtractPlugin = isDev => {
   // Always use Next.js built-in MiniCssExtractPlugin in production
   return NextMiniCssExtractPlugin;
 };
+// Adopt from Next.js' getGlobalCssLoader
+// https://github.com/vercel/next.js/blob/0572e218afe130656be53f7367bf18c4ea389f7d/packages/next/build/webpack/config/blocks/css/loaders/global.ts#L7
 
-function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin, hasAppDir) {
-  const outputLoaders = [
-    {
-      loader: cssLoader,
-      options: {
-        // A simplify version of https://github.com/vercel/next.js/blob/88a5f263f11cb55907f0d89a4cd53647ee8e96ac/packages/next/build/webpack/config/blocks/css/index.ts#L142-L147
-        postcss: () =>
-          lazyPostCSS(
-            options.dir,
-            getSupportedBrowsers(options.dir, options.dev)
-          )
-      }
-    }
-  ];
+function getStyle9VirtualCssLoader(options, MiniCssExtractPlugin) {
+  const loaders = [];
 
+  // Adopt from Next.js' getClientStyleLoader
+  // https://github.com/vercel/next.js/blob/0572e218afe130656be53f7367bf18c4ea389f7d/packages/next/build/webpack/config/blocks/css/loaders/client.ts#L4
   if (!options.isServer) {
-    outputLoaders.unshift({
-      // Logic adopted from https://git.io/JfD9r
-      ...getClientStyleLoader({
-        hasAppDir,
-        // In development model Next.js uses style-loader, which inserts each
-        // CSS file as its own style tag, which means the CSS won't be sorted
-        // and causes issues with determinism when using media queries and
-        // pseudo selectors. Setting isDevelopment means MiniCssExtractPlugin is
-        // used instead.
-        isDevelopment: false,
-        assetPrefix: options.config.assetPrefix
-      }),
-      loader: MiniCssExtractPlugin.loader
+    loaders.push({
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: `${options.assetPrefix}/_next/`,
+        esModule: false
+      }
     });
   }
 
-  return outputLoaders;
+  loaders.push({
+    // https://github.com/vercel/next.js/blob/0572e218afe130656be53f7367bf18c4ea389f7d/packages/next/build/webpack/config/blocks/css/loaders/global.ts#L29-L38
+    loader: cssLoader,
+    options: {
+      // https://github.com/vercel/next.js/blob/88a5f263f11cb55907f0d89a4cd53647ee8e96ac/packages/next/build/webpack/config/blocks/css/index.ts#L142-L147
+      postcss: () =>
+        lazyPostCSS(
+          options.dir,
+          getSupportedBrowsers(options.dir, options.dev)
+        ),
+      importLoaders: 1,
+      modules: false
+    }
+  });
+  // We don't need postcss loader here, as style9 always produce vanilla css,
+  // and only perform sort/merge afterwards
+
+  return loaders;
 }
 
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
@@ -160,7 +159,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => {
       // Here we matches virtual css file emitted by Style9Plugin
       cssRules.unshift({
         test: /\.style9.css$/,
-        use: getStyle9VirtualCssLoader(ctx, MiniCssExtractPlugin, hasAppDir)
+        use: getStyle9VirtualCssLoader(ctx, MiniCssExtractPlugin)
       });
 
       if (outputCSS) {
