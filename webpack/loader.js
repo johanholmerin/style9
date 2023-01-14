@@ -3,6 +3,7 @@ const babel = require('@babel/core');
 const loaderUtils = require('loader-utils');
 const babelPlugin = require('../babel.js');
 const NAME = require('../package.json').name; // style9
+const loaderGetOptions = require('./loader-get-options');
 const virtualModules = require('./virtualModules.js');
 
 async function style9Loader(input, inputSourceMap) {
@@ -14,7 +15,7 @@ async function style9Loader(input, inputSourceMap) {
       plugins: ['typescript', 'jsx']
     },
     ...options
-  } = loaderUtils.getOptions(this) || {};
+  } = loaderGetOptions(this) || {};
 
   this.async();
 
