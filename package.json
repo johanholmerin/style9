@@ -39,7 +39,7 @@
     "@babel/core": "^7.10.4",
     "@babel/types": "^7.8.3",
     "@rollup/pluginutils": "^3.0.4",
-    "csstype": "^3.0.6",
+    "csstype": "^3.1.1",
     "fast-json-stable-stringify": "^2.1.0",
     "inline-style-expand-shorthand": "^1.4.0",
     "json5": "^2.2.3",
