@@ -1,7 +1,7 @@
 import type {
   StandardShorthandProperties,
   StandardLonghandProperties,
-  VendorShorthandProperties,
+  VendorLonghandProperties,
   SimplePseudos
 } from 'csstype';
 
@@ -131,7 +131,7 @@ type StylePropertiesType = {
 
 interface StylePropertiesInternal
   extends ArrayStandardLonghandProperties,
-    VendorShorthandProperties<string | number>,
+    VendorLonghandProperties<string | number>,
     ExpandedShorthands,
     ExtendedStyleProperties,
     Omit<SvgProperties, keyof ArrayStandardLonghandProperties> {}
