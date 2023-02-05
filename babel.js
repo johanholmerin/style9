@@ -15,9 +15,7 @@ module.exports = function style9BabelPlugin() {
         const bindings = path.scope.bindings[importName].referencePaths;
 
         const css = processReferences(bindings, state.opts).join('');
-        if (!state.file.metadata.style9) {
-          state.file.metadata.style9 = '';
-        }
+        state.file.metadata.style9 = state.file.metadata.style9 || '';
         state.file.metadata.style9 += css;
       },
       VariableDeclaration(path, state) {
@@ -36,9 +34,7 @@ module.exports = function style9BabelPlugin() {
             const bindings = path.scope.bindings[importName].referencePaths;
 
             const css = processReferences(bindings, state.opts).join('');
-            if (!state.file.metadata.style9) {
-              state.file.metadata.style9 = '';
-            }
+            state.file.metadata.style9 = state.file.metadata.style9 || '';
             state.file.metadata.style9 += css;
           }
         }
