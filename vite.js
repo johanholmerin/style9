@@ -32,15 +32,17 @@ async function transformStyle9(
       const { moduleGraph } = server;
       const virtualModule = moduleGraph.getModuleById(VIRTUAL_CSS_NAME);
       if (virtualModule) {
-        const { code } = virtualModule.transformResult;
-        const output = code.split('\n');
-        const finalCoe = output.reduce((acc, cur) => {
-          if (cur.startsWith('const __vite__css')) {
-            cur = `const __vite__css = '${genCSS(cssModules)}'`;
-          }
-          return (acc += cur + '\n');
-        }, '');
-        virtualModule.transformResult.code = finalCoe;
+        const { code: cssStr } = virtualModule.transformResult;
+        const latest = cssStr
+          .split('\n')
+          .map(str => {
+            if (str.startsWith('const __vite__css')) {
+              str = `const __vite__css = '${genCSS(cssModules)}'`;
+            }
+            return str;
+          })
+          .join('\n');
+        virtualModule.transformResult.code = latest;
       }
     }
   }
@@ -50,10 +52,7 @@ async function transformStyle9(
   };
 }
 function genCSS(cssModule) {
-  const chunk = Array.from(cssModule.values()).reduce(
-    (acc, cur) => (acc += cur),
-    ''
-  );
+  const chunk = Array.from(cssModule.values()).join('');
   return processCSS(chunk, { from: undefined }).css;
 }
 module.exports = function style9Plugin(opts = {}) {
