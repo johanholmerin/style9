@@ -22,33 +22,23 @@ async function transformStyle9(
   if (!res) {
     return;
   }
-  const { code: _code, map, metadata } = res;
-  const output = [_code];
+  const { map, metadata } = res;
   const css = metadata.style9;
   if (css) {
     cssModules.set(id, css);
-    output.unshift(`import '${VIRTUAL_MODULE_NAME}'`);
+    res.code += `\nimport ${JSON.stringify(VIRTUAL_MODULE_NAME)};\n`;
     if (server) {
       const { moduleGraph } = server;
       const virtualModule = moduleGraph.getModuleById(VIRTUAL_CSS_NAME);
       if (virtualModule) {
-        const { code: cssStr } = virtualModule.transformResult;
-        const latest = cssStr
-          .split('\n')
-          .map(str => {
-            if (str.startsWith('const __vite__css')) {
-              str = `const __vite__css = '${genCSS(cssModules)}'`;
-            }
-            return str;
-          })
-          .join('\n');
-        virtualModule.transformResult.code = latest;
+        moduleGraph.invalidateModule(virtualModule);
+        virtualModule.lastHMRTimestamp = Date.now();
       }
     }
   }
   return {
-    map,
-    code: output.join('\n')
+    code: res.code,
+    map
   };
 }
 function genCSS(cssModule) {
@@ -71,18 +61,14 @@ module.exports = function style9Plugin(opts = {}) {
   return {
     name: NAME,
     async resolveId(id) {
-      if (id === VIRTUAL_MODULE_NAME) {
-        return `${VIRTUAL_CSS_NAME}?t=${Date.now()}`;
-      }
+      if (id === VIRTUAL_MODULE_NAME) return VIRTUAL_CSS_NAME;
       return null;
     },
     configureServer(viteServer) {
       server = viteServer;
     },
     async load(id) {
-      if (id.startsWith(VIRTUAL_CSS_NAME)) {
-        return '';
-      }
+      if (id === VIRTUAL_CSS_NAME) return genCSS(cssModules);
       return null;
     },
     transform(code, id) {
