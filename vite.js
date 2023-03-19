@@ -4,91 +4,97 @@ const processCSS = require('./src/process-css');
 const babelPlugin = require('./babel.js');
 const NAME = require('./package.json').name;
 
-const VIRTUAL_MODULE_NAME = '@virtual-style9';
+const VIRTUAL_MODULE_NAME = '\0plugin-style9:virtual-module';
+const VIRTUAL_CSS_NAME = VIRTUAL_MODULE_NAME + '.css';
 
+async function transformStyle9(
+  code,
+  id,
+  { parserOptions, restOptions, server, cssModules }
+) {
+  const res = await babel.transformAsync(code, {
+    plugins: [[babelPlugin, restOptions]],
+    filename: id,
+    sourceMaps: true,
+    parserOpts: parserOptions,
+    babelrc: false
+  });
+  if (!res) {
+    return;
+  }
+  const { map, metadata } = res;
+  const css = metadata.style9;
+  if (css) {
+    cssModules.set(id, css);
+    res.code += `\nimport ${JSON.stringify(VIRTUAL_MODULE_NAME)};\n`;
+    if (server) {
+      const { moduleGraph } = server;
+      const virtualModule = moduleGraph.getModuleById(VIRTUAL_CSS_NAME);
+      if (virtualModule) {
+        moduleGraph.invalidateModule(virtualModule);
+        virtualModule.lastHMRTimestamp = Date.now();
+      }
+    }
+  }
+  return {
+    code: res.code,
+    map
+  };
+}
+function genCSS(cssModule) {
+  const chunk = Array.from(cssModule.values()).join('');
+  return processCSS(chunk, { from: undefined }).css;
+}
 module.exports = function style9Plugin(opts = {}) {
   const {
     include = /\.[jt]sx?$/,
     exclude,
+    fileName = VIRTUAL_CSS_NAME,
     parserOptions = {
       plugins: ['typescript', 'jsx']
     },
     ...restOptions
   } = opts;
-
   const filter = createFilter(include, exclude);
-
   const cssModules = new Map();
-
   let server = null;
-
   return {
     name: NAME,
-    enforce: 'pre',
-    resolveId(id) {
-      if (id === VIRTUAL_MODULE_NAME) {
-        return `\0${id}.css`;
-      }
+    async resolveId(id) {
+      if (id === VIRTUAL_MODULE_NAME) return VIRTUAL_CSS_NAME;
       return null;
     },
     configureServer(viteServer) {
       server = viteServer;
     },
-    load(id) {
-      if (id.startsWith(`\0${VIRTUAL_MODULE_NAME}`)) {
-        const css = [...cssModules.values()].reduce(
-          (acc, cur) => (acc += cur),
-          ''
-        );
-        return processCSS(css, { from: undefined }).css;
-      }
+    async load(id) {
+      if (id === VIRTUAL_CSS_NAME) return genCSS(cssModules);
       return null;
     },
-    async transform(stdin, id) {
-      if (!filter(id)) return;
-      const res = await babel.transformAsync(stdin, {
-        plugins: [[babelPlugin, restOptions]],
-        filename: id,
-        sourceMaps: true,
-        parserOpts: parserOptions,
-        babelrc: false
+    transform(code, id) {
+      if (!filter(id)) {
+        return;
+      }
+      return transformStyle9(code, id, {
+        parserOptions,
+        restOptions,
+        cssModules,
+        server
       });
-      if (!res) return;
-      const { code, map, metadata } = res;
-      const cssStr = metadata.style9 || '';
-      if (cssStr) {
-        cssModules.set(id, cssStr);
-        if (server) {
-          const { moduleGraph, ws } = server;
-          const virtualStyle9 = moduleGraph.getModulesByFile(
-            `\0${VIRTUAL_MODULE_NAME}.css`
-          );
-          if (virtualStyle9) {
-            const seen = new Set();
-            virtualStyle9.forEach(mod =>
-              moduleGraph.invalidateModule(mod, seen)
-            );
-            ws.send({ type: 'full-reload' });
-          }
-        }
-        const output = `import '${VIRTUAL_MODULE_NAME}';\n ${code}`;
-        return {
-          code: output,
-          map
-        };
-      }
-      return { code, map };
     },
-    generateBundle(_, bundles) {
-      let css = '';
-      cssModules.forEach(v => (css += v));
-      for (const bundle in bundles) {
-        const module = bundles[bundle];
-        if (module.name === `_${VIRTUAL_MODULE_NAME}.css`) {
-          module.source = processCSS(css, { from: undefined }).css;
+    renderChunk(_, chunk) {
+      const ids = Object.keys(chunk.modules);
+      for (const id of ids) {
+        if (id.startsWith(VIRTUAL_CSS_NAME)) {
+          delete chunk.modules[id];
         }
-        break;
       }
+      const referenceId = this.emitFile({
+        name: fileName,
+        type: 'asset',
+        source: genCSS(cssModules)
+      });
+      chunk.viteMetadata.importedCss.add(this.getFileName(referenceId));
     }
   };
 };
