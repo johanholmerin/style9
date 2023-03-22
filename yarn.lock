@@ -3850,10 +3850,10 @@ ini@^1.3.4, ini@^1.3.5:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
-inline-style-expand-shorthand@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/inline-style-expand-shorthand/-/inline-style-expand-shorthand-1.4.0.tgz#9ee2eca4a8e65e17a353ff02031f8ca82900a8d2"
-  integrity sha512-FBxbgh1+ziiPFA09s0JgYtB7gRYfbfVrcO1sTv2JnPwbbz0M35zSYVUR3oyrTfLo/S+sbY4JG1W16hY91Hbh/Q==
+inline-style-expand-shorthand@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/inline-style-expand-shorthand/-/inline-style-expand-shorthand-1.6.0.tgz#0891f8fa6858cb4c64266c13c5d5eb6b95c16b02"
+  integrity sha512-REormb3TCk/CIeL5/Q1rdHYM9tW8YKGKzbvgAH4IXrDsJmq9BnV69yhIGGMzV2IRkR/J6MuLNhY7UfoIJjunog==
 
 inquirer@^7.0.0:
   version "7.3.3"
