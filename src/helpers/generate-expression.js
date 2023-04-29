@@ -60,9 +60,10 @@ function generateExpression(args, classObject) {
       )
     );
 
-  const binaryExpression = conditionals.reduceRight((acc, expr) =>
-    t.binaryExpression('+', expr, acc)
-  );
+  const binaryExpression = conditionals.reduceRight((acc, expr) => {
+    if (t.isStringLiteral(expr) && expr.value === '') return acc;
+    return t.binaryExpression('+', expr, acc);
+  });
 
   return t.expressionStatement(binaryExpression);
 }
