@@ -50,7 +50,7 @@ function getObjectsProp(object, prop) {
 }
 
 function generateExpression(args, classObject) {
-  const conditionals = listObjectsProperties(classObject)
+  const originalConditionals = listObjectsProperties(classObject)
     .map(prop => getObjectsProp(classObject, prop))
     .map(classes => getConditionalArgs(args, classes))
     .filter(conditionalArgs => conditionalArgs.length)
@@ -60,8 +60,34 @@ function generateExpression(args, classObject) {
       )
     );
 
-  const binaryExpression = conditionals.reduceRight((acc, expr) => {
-    if (t.isStringLiteral(expr) && expr.value === '') return acc;
+  const simplifiedConditionals = [];
+
+  if (originalConditionals.length > 0) {
+    let stringBuffer = '';
+
+    for (let i = 0; i < originalConditionals.length; i++) {
+      const conditional = originalConditionals[i];
+      if (t.isStringLiteral(conditional)) {
+        stringBuffer += conditional.value;
+      } else {
+        if (stringBuffer !== '') {
+          simplifiedConditionals.push(t.stringLiteral(stringBuffer));
+          stringBuffer = '';
+        }
+        simplifiedConditionals.push(conditional);
+      }
+    }
+
+    if (stringBuffer !== '') {
+      simplifiedConditionals.push(t.stringLiteral(stringBuffer));
+    }
+  }
+
+  if (simplifiedConditionals.length === 0) {
+    return t.expressionStatement(t.stringLiteral(''));
+  }
+
+  const binaryExpression = simplifiedConditionals.reduceRight((acc, expr) => {
     return t.binaryExpression('+', expr, acc);
   });
 
