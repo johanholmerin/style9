@@ -61,26 +61,23 @@ function generateExpression(args, classObject) {
     );
 
   const simplifiedConditionals = [];
+  let stringBuffer = '';
 
-  if (originalConditionals.length > 0) {
-    let stringBuffer = '';
-
-    for (let i = 0; i < originalConditionals.length; i++) {
-      const conditional = originalConditionals[i];
-      if (t.isStringLiteral(conditional)) {
-        stringBuffer += conditional.value;
-      } else {
-        if (stringBuffer !== '') {
-          simplifiedConditionals.push(t.stringLiteral(stringBuffer));
-          stringBuffer = '';
-        }
-        simplifiedConditionals.push(conditional);
+  for (let i = 0; i < originalConditionals.length; i++) {
+    const conditional = originalConditionals[i];
+    if (t.isStringLiteral(conditional)) {
+      stringBuffer += conditional.value;
+    } else {
+      if (stringBuffer !== '') {
+        simplifiedConditionals.push(t.stringLiteral(stringBuffer));
+        stringBuffer = '';
       }
+      simplifiedConditionals.push(conditional);
     }
+  }
 
-    if (stringBuffer !== '') {
-      simplifiedConditionals.push(t.stringLiteral(stringBuffer));
-    }
+  if (stringBuffer !== '') {
+    simplifiedConditionals.push(t.stringLiteral(stringBuffer));
   }
 
   if (simplifiedConditionals.length === 0) {
