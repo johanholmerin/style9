@@ -81,9 +81,7 @@ module.exports = function style9Plugin(opts = {}) {
       return null;
     },
     transform(code, id) {
-      if (!filter(id)) {
-        return;
-      }
+      if (!filter(id) || !/style9/.test(code)) return;
       return transformStyle9(code, id, {
         parserOptions,
         restOptions,
