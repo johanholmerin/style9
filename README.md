@@ -1,6 +1,9 @@
 # style9
 
-CSS-in-JS compiler inspired by Facebook's [stylex][stylex], with near-zero runtime, atomic CSS extraction and TypeScript support. Framework agnostic.
+CSS-in-JS compiler inspired by Meta's [StyleX][stylex], with near-zero runtime, atomic CSS extraction and TypeScript support. Framework agnostic.
+
+> [!NOTE]
+> [StyleX][stylex] was open-sourced on 2023-12-5. Consider using that instead
 
 ## Basic usage
 
@@ -100,6 +103,6 @@ module.exports = {
 
 Look at the [FAQ](docs/FAQ.md), [search][search] the repo, or ask in [discussions][discussions].
 
-[stylex]: https://www.youtube.com/watch?v=9JZHodNR184
+[stylex]: https://github.com/facebook/stylex
 [search]: https://github.com/johanholmerin/style9/search
 [discussions]: https://github.com/johanholmerin/style9/discussions
