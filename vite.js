@@ -49,7 +49,6 @@ module.exports = function style9Plugin(opts = {}) {
   const {
     include = /\.[jt]sx?$/,
     exclude,
-    fileName = VIRTUAL_CSS_NAME,
     parserOptions = {
       plugins: ['typescript', 'jsx']
     },
@@ -58,8 +57,18 @@ module.exports = function style9Plugin(opts = {}) {
   const filter = createFilter(include, exclude);
   const cssModules = new Map();
   let server = null;
+  let cssPlugin = null;
+  let cssPluginPost = null;
   return {
     name: NAME,
+    configResolved(config) {
+      // get vite internal css plugin
+      // we need use it to process css.
+      cssPlugin = config.plugins.find(plugin => plugin.name === 'vite:css');
+      cssPluginPost = config.plugins.find(
+        plugin => plugin.name === 'vite:css-post'
+      );
+    },
     async resolveId(id) {
       if (id === VIRTUAL_MODULE_NAME) return VIRTUAL_CSS_NAME;
       return null;
@@ -72,9 +81,7 @@ module.exports = function style9Plugin(opts = {}) {
       return null;
     },
     transform(code, id) {
-      if (!filter(id)) {
-        return;
-      }
+      if (!filter(id) || !/style9/.test(code)) return;
       return transformStyle9(code, id, {
         parserOptions,
         restOptions,
@@ -82,19 +89,32 @@ module.exports = function style9Plugin(opts = {}) {
         server
       });
     },
-    renderChunk(_, chunk) {
+    async renderChunk(_, chunk) {
       const ids = Object.keys(chunk.modules);
+      // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/css.ts#L482-L489
       for (const id of ids) {
         if (id.startsWith(VIRTUAL_CSS_NAME)) {
+          // fool the css plugin to generate the css in corresponding chunk
+          const fakeCssId = `${chunk.fileName}.css`;
+          if (cssPlugin && cssPluginPost) {
+            const { code: css } = await cssPlugin.transform(
+              genCSS(cssModules),
+              fakeCssId
+            );
+            // code minify
+            await cssPluginPost.transform(css, fakeCssId);
+          }
           delete chunk.modules[id];
+          chunk.modules[fakeCssId] = {
+            code: null,
+            originalLength: 0,
+            removedExports: [],
+            renderedExports: [],
+            renderedLength: 0
+          };
         }
       }
-      const referenceId = this.emitFile({
-        name: fileName,
-        type: 'asset',
-        source: genCSS(cssModules)
-      });
-      chunk.viteMetadata.importedCss.add(this.getFileName(referenceId));
+      return null;
     }
   };
 };
